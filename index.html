@@ -357,9 +357,18 @@
   .ventana-acciones{ display:flex; flex-direction:column; gap:0.5rem; }
   .pago-toggle{
     display:flex; flex-wrap:wrap; gap:0.6rem;
-    padding:0 6vw 1.6rem;
-    margin-top:-0.6rem;
   }
+  .pago-global-bar{
+    background:var(--yellow-pale);
+    border-bottom:1px solid var(--line);
+    padding:0.9rem 6vw;
+  }
+  .pago-global-inner{
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; flex-wrap:wrap; gap:0.8rem;
+  }
+  .pago-global-label{ font-family:'Poppins', sans-serif; font-weight:700; font-size:0.85rem; color:var(--teal); }
+  @media(max-width:640px){ .pago-global-bar{ padding:0.8rem 4vw; } }
   .pago-btn{
     font-family:'Poppins', sans-serif; font-size:0.83rem; font-weight:600;
     background:var(--white); border:1.5px solid var(--line); color:var(--teal);
@@ -603,6 +612,59 @@
     width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   }
   .cart-close:hover{background:rgba(255,255,255,0.15);}
+
+  /* ---------- Detalle de producto (prototipo Salas) ---------- */
+  .card[data-cat="salas"]{ cursor:pointer; position:relative; }
+  .card[data-cat="salas"] .plate::after{
+    content:"👁 Ver detalle"; position:absolute; top:0.7rem; right:0.7rem;
+    background:var(--teal); color:var(--white); font-family:'Poppins',sans-serif;
+    font-size:0.68rem; font-weight:600; padding:0.35rem 0.6rem; border-radius:999px;
+    opacity:0; transform:translateY(-4px); transition:all .18s ease; pointer-events:none;
+  }
+  .card[data-cat="salas"]:hover .plate::after{ opacity:1; transform:translateY(0); }
+
+  .producto-overlay{
+    position:fixed; inset:0; background:rgba(4,53,57,0.55);
+    z-index:70; display:none; opacity:0; transition:opacity .2s ease;
+    align-items:center; justify-content:center; padding:2rem 1rem;
+  }
+  .producto-overlay.abierto{display:flex; opacity:1;}
+  .producto-modal{
+    background:var(--bg); border-radius:20px; max-width:900px; width:100%;
+    max-height:90vh; overflow-y:auto; position:relative;
+    box-shadow:0 30px 60px -12px rgba(4,53,57,0.5);
+    transform:scale(0.96) translateY(10px); transition:transform .22s ease;
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  .producto-overlay.abierto .producto-modal{transform:scale(1) translateY(0);}
+  @media(max-width:760px){ .producto-modal{ grid-template-columns:1fr; } }
+  .producto-close{
+    position:absolute; top:1rem; right:1rem; z-index:2;
+    background:var(--white); border:none; width:38px; height:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    box-shadow:0 4px 12px rgba(4,53,57,0.2); font-size:1.1rem; color:var(--teal);
+  }
+  .producto-close:hover{ background:var(--yellow); }
+  .producto-img-wrap{
+    background:var(--white); display:flex; align-items:center; justify-content:center;
+    padding:2.5rem; border-radius:20px 0 0 20px;
+  }
+  @media(max-width:760px){ .producto-img-wrap{ border-radius:20px 20px 0 0; padding:2rem; } }
+  .producto-img-wrap img{ max-width:100%; max-height:380px; object-fit:contain; }
+  .producto-info{ padding:2.2rem 2rem 2.4rem; display:flex; flex-direction:column; gap:0.7rem; }
+  .producto-code{ font-size:0.7rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-weight:600; }
+  .producto-info h2{ font-size:1.5rem; margin:0; color:var(--teal); line-height:1.2; }
+  .producto-dim{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--ink);
+    background:var(--yellow-pale); display:inline-block; padding:0.3rem 0.7rem; border-radius:8px; width:fit-content;
+  }
+  .producto-desc{ color:var(--ink-soft); line-height:1.65; font-size:0.92rem; margin:0.2rem 0; }
+  .producto-precio-box{ margin-top:0.3rem; }
+  .producto-precio-box .price{ font-size:1.9rem; display:block; }
+  .producto-qty{ display:flex; align-items:center; gap:0.9rem; margin-top:0.3rem; }
+  .producto-qty span:first-child{ font-size:0.85rem; color:var(--ink-soft); font-weight:600; }
+  .producto-acciones{ display:flex; flex-direction:column; gap:0.6rem; margin-top:0.6rem; }
+  .producto-agregar-btn{ padding:0.95rem; font-size:0.95rem; }
   .cart-body{flex:1; overflow-y:auto; padding:1.2rem 1.4rem;}
   .cart-empty{color:var(--ink-soft); font-size:0.9rem; text-align:center; padding:3rem 1rem;}
   .cart-item{
@@ -628,6 +690,11 @@
 
   .cart-foot{border-top:1px solid var(--line); padding:1.2rem 1.4rem 1.5rem; background:var(--white);}
   .cart-total{display:flex; justify-content:space-between; font-weight:700; font-size:1.05rem; margin-bottom:1rem;}
+  .cart-ahorro{
+    background:var(--yellow-pale); color:var(--teal); border-radius:10px;
+    padding:0.55rem 0.8rem; font-size:0.8rem; font-weight:600;
+    margin:-0.4rem 0 1rem; text-align:center;
+  }
   .cart-total span:last-child{color:var(--teal);}
   .btn-primary{
     width:100%; background:var(--teal); color:var(--white); border:none;
@@ -672,7 +739,7 @@
   .btn-email:hover{background:var(--teal-3);}
 
   @media print{
-    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados{display:none !important;}
+    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .wa-fab, .pago-global-bar, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados{display:none !important;}
     .card, .categoria{page-break-inside:avoid; display:block !important;}
     .grid{display:grid !important;}
     .add-btn{display:none !important;}
@@ -748,6 +815,16 @@
     </div>
   </div>
 
+  <div class="pago-global-bar">
+    <div class="pago-global-inner">
+      <span class="pago-global-label">💳 Forma de pago:</span>
+      <div class="pago-toggle" role="group" aria-label="Forma de pago">
+        <button type="button" class="pago-btn activo" data-modo="lista">Precio Lista <span class="pago-sub">tarjeta</span></button>
+        <button type="button" class="pago-btn" data-modo="contado">Precio de Contado <span class="pago-sub">pago único, 20% off</span></button>
+      </div>
+    </div>
+  </div>
+
   <main>
 
     <div class="sin-resultados" id="sinResultados">
@@ -788,7 +865,7 @@
             <h3>Módulo Rack "L"</h3>
             <p class="desc">Combinación de repisas en L, ideal para decoración y equipos chicos.</p>
             <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$82,600</span></div>
-            <button class="add-btn" data-code="SA-02" data-name="Módulo Rack "L"" data-price="82600" data-unit="">+ Agregar</button>
+            <button class="add-btn" data-code="SA-02" data-name="Módulo Rack &quot;L&quot;" data-price="82600" data-unit="">+ Agregar</button>
           </div>
         </article>
         <article class="card" data-cat="salas">
@@ -1180,12 +1257,7 @@
       <div class="categoria-head">
         <span class="categoria-num">05</span>
         <h2 class="categoria-titulo">Aberturas a Medida</h2>
-        <p class="categoria-desc">Ventanas de aluminio y aberturas de madera. Elegí la medida y la forma de pago: el precio se actualiza al instante. También podés descargar el listado completo en PDF para elegir por WhatsApp.</p>
-      </div>
-
-      <div class="pago-toggle" role="group" aria-label="Forma de pago">
-        <button type="button" class="pago-btn activo" data-modo="lista">Precio Lista <span class="pago-sub">pago con tarjeta</span></button>
-        <button type="button" class="pago-btn" data-modo="contado">Precio de Contado <span class="pago-sub">pago único</span></button>
+        <p class="categoria-desc">Ventanas de aluminio, ventanas de madera, puertas de madera y aireadores, cada uno por separado para elegir sin confusiones. Elegí la medida y el precio se actualiza al instante según la forma de pago que elegiste arriba. También podés descargar el listado completo en PDF.</p>
       </div>
 
       <div class="grid">
@@ -1220,19 +1292,67 @@
             <svg viewBox="0 0 100 100"><rect x="22" y="10" width="56" height="80" rx="2"/><line x1="50" y1="10" x2="50" y2="90"/><circle cx="44" cy="50" r="2.2"/></svg>
           </div>
           <div class="card-body">
-            <span class="code" id="ventCodigoMadera">VM-01</span>
-            <h3>Aberturas de Madera</h3>
-            <p class="desc">Puertas, ventanas y aireadores en madera de pino. Elegí el producto y el precio se actualiza solo.</p>
+            <span class="code" id="ventCodigoVentanaMadera">VMV-01</span>
+            <h3>Ventanas de Madera</h3>
+            <p class="desc">Pino con vidrio simple. Elegí la medida (ancho × alto) y el precio se actualiza solo.</p>
             <div class="ventana-selector">
-              <label for="selMadera">Producto y medida</label>
-              <select id="selMadera"></select>
+              <label for="selVentanaMadera">Medida (Ancho × Alto)</label>
+              <select id="selVentanaMadera"></select>
             </div>
             <div class="ventana-precio-row">
-              <span class="dim" id="ventDetalleMadera">Precio Lista</span>
-              <span class="price" id="ventPrecioMadera">$172.500</span>
+              <span class="dim" id="ventDetalleVentanaMadera">Precio Lista</span>
+              <span class="price" id="ventPrecioVentanaMadera">$150.938</span>
             </div>
             <div class="ventana-acciones">
-              <button class="add-btn" id="ventBtnMadera" data-code="VM-01" data-name="Puerta Maciza Pino 0,8x2 primera" data-price="172500" data-unit="">+ Agregar</button>
+              <button class="add-btn" id="ventBtnVentanaMadera" data-code="VMV-01" data-name="Ventana Pino Vidrio 1x1" data-price="150938" data-unit="">+ Agregar</button>
+              <a class="btn-pdf" href="ventanas-a-medida-emy-hogar.pdf" download="ventanas-a-medida-emy-hogar.pdf" target="_blank" rel="noopener">⬇ Descargar PDF con precios</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ventanas">
+          <div class="plate">
+            <span class="badge">A medida</span>
+            <svg viewBox="0 0 100 100"><rect x="26" y="10" width="48" height="80" rx="2"/><path d="M46 10 L46 90"/><circle cx="40" cy="50" r="2.2"/></svg>
+          </div>
+          <div class="card-body">
+            <span class="code" id="ventCodigoPuerta">VP-01</span>
+            <h3>Puertas de Madera</h3>
+            <p class="desc">Macizas, placa o chapa. Elegí el producto y el precio se actualiza solo.</p>
+            <div class="ventana-selector">
+              <label for="selPuerta">Producto y medida</label>
+              <select id="selPuerta"></select>
+            </div>
+            <div class="ventana-precio-row">
+              <span class="dim" id="ventDetallePuerta">Precio Lista</span>
+              <span class="price" id="ventPrecioPuerta">$172.500</span>
+            </div>
+            <div class="ventana-acciones">
+              <button class="add-btn" id="ventBtnPuerta" data-code="VP-01" data-name="Puerta Maciza Pino 0,8x2 primera" data-price="172500" data-unit="">+ Agregar</button>
+              <a class="btn-pdf" href="ventanas-a-medida-emy-hogar.pdf" download="ventanas-a-medida-emy-hogar.pdf" target="_blank" rel="noopener">⬇ Descargar PDF con precios</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="ventanas">
+          <div class="plate">
+            <span class="badge">A medida</span>
+            <svg viewBox="0 0 100 100"><rect x="20" y="26" width="60" height="48" rx="4"/><path d="M20 38 L80 38 M20 50 L80 50 M20 62 L80 62"/></svg>
+          </div>
+          <div class="card-body">
+            <span class="code" id="ventCodigoAireador">VAI-01</span>
+            <h3>Aireadores</h3>
+            <p class="desc">Con reja y mosquitero. Elegí la medida y el precio se actualiza solo.</p>
+            <div class="ventana-selector">
+              <label for="selAireador">Medida</label>
+              <select id="selAireador"></select>
+            </div>
+            <div class="ventana-precio-row">
+              <span class="dim" id="ventDetalleAireador">Precio Lista</span>
+              <span class="price" id="ventPrecioAireador">$70.811</span>
+            </div>
+            <div class="ventana-acciones">
+              <button class="add-btn" id="ventBtnAireador" data-code="VAI-01" data-name="Aireador con Reja y Mosquitero 40x26" data-price="70811" data-unit="">+ Agregar</button>
               <a class="btn-pdf" href="ventanas-a-medida-emy-hogar.pdf" download="ventanas-a-medida-emy-hogar.pdf" target="_blank" rel="noopener">⬇ Descargar PDF con precios</a>
             </div>
           </div>
@@ -1391,6 +1511,39 @@
 
 <!-- ---------- Carrito ---------- -->
 <a class="wa-fab" id="waFab" href="#" aria-label="Escribinos por WhatsApp" target="_blank" rel="noopener">📲</a>
+<!-- ---------- Detalle de producto (prototipo, solo Salas) ---------- -->
+<div class="producto-overlay" id="productoOverlay">
+  <div class="producto-modal">
+    <button class="producto-close" id="productoClose" aria-label="Cerrar">✕</button>
+    <div class="producto-img-wrap">
+      <img id="productoImg" src="" alt="">
+    </div>
+    <div class="producto-info">
+      <span class="producto-code" id="productoCode"></span>
+      <h2 id="productoNombre"></h2>
+      <span class="dim producto-dim" id="productoDim"></span>
+      <p class="producto-desc" id="productoDesc"></p>
+      <div class="producto-precio-box">
+        <span class="precio-lista-tag" id="productoTag">Precio Lista</span>
+        <span class="price" id="productoPrecio"></span>
+      </div>
+      <div class="producto-qty">
+        <span>Cantidad:</span>
+        <button type="button" class="qty-btn" id="productoQtyMenos">−</button>
+        <span class="qty-val" id="productoQtyVal">1</span>
+        <button type="button" class="qty-btn" id="productoQtyMas">+</button>
+      </div>
+      <div class="producto-acciones">
+        <button class="add-btn producto-agregar-btn" id="productoAgregarBtn" data-skip-global="1">+ Agregar al carrito</button>
+        <div class="wa-quick-row">
+          <a class="wa-quick-btn" id="productoConsultar" href="#">📲 Consultar</a>
+          <a class="wa-quick-btn" id="productoCompartir" href="#">↗ Compartir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <button class="cart-fab" id="cartFab" aria-label="Ver carrito">
   🛒<span class="cart-count" id="cartCount" style="display:none;">0</span>
 </button>
@@ -1409,6 +1562,7 @@
       </div>
       <div class="cart-foot">
         <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+        <div class="cart-ahorro" id="cartAhorro" style="display:none;"></div>
         <button class="btn-primary" id="irCheckout" disabled>Continuar con mis datos</button>
       </div>
     </div>
@@ -1506,6 +1660,7 @@
 
   function actualizarBotonesAgregar(){
     document.querySelectorAll('.add-btn').forEach(btn => {
+      if(btn.dataset.skipGlobal) return;
       const code = btn.dataset.code;
       btn.classList.toggle('en-carrito', !!carrito[code]);
       btn.textContent = carrito[code] ? `✓ En el carrito (${carrito[code].qty})` : '+ Agregar';
@@ -1521,6 +1676,7 @@
     const items = Object.entries(carrito);
     let total = 0;
     let count = 0;
+    let ahorro = 0;
 
     if(items.length === 0){
       cont.innerHTML = '<p class="cart-empty">Aún no has agregado productos.<br>Toca "+ Agregar" en cualquier pieza del catálogo.</p>';
@@ -1528,12 +1684,15 @@
       cont.innerHTML = items.map(([code, it]) => {
         total += it.price * it.qty;
         count += it.qty;
+        const listaRef = it.priceLista || it.price;
+        ahorro += Math.max(0, (listaRef - it.price)) * it.qty;
+        const modoTxt = it.modo === 'contado' ? ' · precio contado' : '';
         return `
           <div class="cart-item">
             <div class="cart-item-info">
               <p class="cart-item-name">${it.name}</p>
               <span class="cart-item-code">${code}</span>
-              <p class="cart-item-price">${formatoMoneda(it.price)}${it.unit} c/u</p>
+              <p class="cart-item-price">${formatoMoneda(it.price)}${it.unit} c/u${modoTxt}</p>
               <div class="qty-ctrl">
                 <button class="qty-btn" onclick="cambiarCantidad('${code}', -1)">−</button>
                 <span class="qty-val">${it.qty}</span>
@@ -1546,6 +1705,13 @@
     }
 
     document.getElementById('cartTotal').textContent = formatoMoneda(total);
+    const cartAhorro = document.getElementById('cartAhorro');
+    if(ahorro > 0){
+      cartAhorro.style.display = 'block';
+      cartAhorro.textContent = `💰 Ahorrás ${formatoMoneda(ahorro)} pagando de contado`;
+    } else {
+      cartAhorro.style.display = 'none';
+    }
     const badge = document.getElementById('cartCount');
     if(count > 0){ badge.style.display='flex'; badge.textContent = count; } else { badge.style.display='none'; }
     document.getElementById('irCheckout').disabled = items.length === 0;
@@ -1566,6 +1732,7 @@
   }
 
   document.querySelectorAll('.add-btn').forEach(btn => {
+    if(btn.dataset.skipGlobal) return;
     btn.addEventListener('click', () => {
       const code = btn.dataset.code;
       if(carrito[code]){
@@ -1574,6 +1741,8 @@
         carrito[code] = {
           name: btn.dataset.name,
           price: parseInt(btn.dataset.price, 10),
+          priceLista: parseInt(btn.dataset.priceLista || btn.dataset.price, 10),
+          modo: btn.dataset.modo || 'lista',
           unit: btn.dataset.unit || '',
           qty: 1
         };
@@ -1888,7 +2057,7 @@
       dormitorios: ['dormitorio','dormitorios','cama','recamara','recámara','cuarto','habitacion','habitación','closet','clóset'],
       oficina: ['oficina','escritorio','estudio','silla de oficina'],
       cocina: ['cocina','multifuncion','multifunción','combo cocina','microondas'],
-      ventanas: ['ventana','ventanas','abertura','aberturas','aluminio']
+      ventanas: ['ventana','ventanas','abertura','aberturas','aluminio','puerta','puertas','aireador','aireadores','madera']
     };
 
     // --- FAQ: edita estos textos con tu información real ---
@@ -2091,7 +2260,7 @@
 </script>
 
 <script>
-  // ======= Aberturas a medida: mismos precios que el PDF descargable =======
+  // ======= Forma de pago global (Lista / Contado) + Aberturas a medida =======
   (function(){
     const VENTANAS_ALUMINIO = [
       { nombre:'2 x 2 m', precioLista:416156, precioContado:332925 },
@@ -2122,7 +2291,18 @@
       { nombre:'0,60 x 0,30 m', precioLista:73097, precioContado:58478 },
     ];
 
-    const ABERTURAS_MADERA = [
+    const VENTANAS_MADERA = [
+      { nombre:'Ventana Pino Vidrio 1x1', precioLista:150938, precioContado:120750 },
+      { nombre:'Ventana Pino Vidrio 1,2x1', precioLista:166031, precioContado:132825 },
+      { nombre:'Ventana Pino Vidrio 1,5x1', precioLista:178969, precioContado:143175 },
+      { nombre:'Ventana Pino Vidrio 1,2x1,2', precioLista:217350, precioContado:173880 },
+      { nombre:'Ventana Pino Vidrio 1,5x1,2', precioLista:271688, precioContado:217350 },
+      { nombre:'Ventana Pino Vidrio 1,5x1,5', precioLista:339609, precioContado:271688 },
+      { nombre:'Ventana Pino Vidrio 0,5x1', precioLista:97031, precioContado:77625 },
+      { nombre:'Ventiluz Pino Vidrio 0,6x0,4', precioLista:81938, precioContado:65550 },
+    ];
+
+    const PUERTAS_MADERA = [
       { nombre:'Puerta Maciza Pino 0,8x2 primera', precioLista:172500, precioContado:138000 },
       { nombre:'Puerta Maciza Pino 0,9x2 primera', precioLista:183281, precioContado:146625 },
       { nombre:'Puerta Maciza Pino 1x2 primera', precioLista:194063, precioContado:155250 },
@@ -2136,20 +2316,6 @@
       { nombre:'Puerta Maciza Pino Rayito 0,9x2,05', precioLista:271688, precioContado:217350 },
       { nombre:'Puerta Maciza Pino Rayito 1x2,05', precioLista:237188, precioContado:189750 },
       { nombre:'Puerta y Ventana Fuera de Estándar (x m²)', precioLista:187594, precioContado:150075 },
-      { nombre:'Ventana Pino Vidrio 1x1', precioLista:150938, precioContado:120750 },
-      { nombre:'Ventana Pino Vidrio 1,2x1', precioLista:166031, precioContado:132825 },
-      { nombre:'Ventana Pino Vidrio 1,5x1', precioLista:178969, precioContado:143175 },
-      { nombre:'Ventana Pino Vidrio 1,2x1,2', precioLista:217350, precioContado:173880 },
-      { nombre:'Ventana Pino Vidrio 1,5x1,2', precioLista:271688, precioContado:217350 },
-      { nombre:'Ventana Pino Vidrio 1,5x1,5', precioLista:339609, precioContado:271688 },
-      { nombre:'Ventana Pino Vidrio 0,5x1', precioLista:97031, precioContado:77625 },
-      { nombre:'Ventiluz Pino Vidrio 0,6x0,4', precioLista:81938, precioContado:65550 },
-      { nombre:'Aireador con Reja y Mosquitero 40x26', precioLista:70811, precioContado:56649 },
-      { nombre:'Aireador con Reja y Mosquitero 40x36', precioLista:86444, precioContado:69155 },
-      { nombre:'Aireador con Reja y Mosquitero 60x26', precioLista:78041, precioContado:62433 },
-      { nombre:'Aireador con Reja y Mosquitero 60x36', precioLista:93827, precioContado:75062 },
-      { nombre:'Aireador con Reja y Mosquitero 80x26', precioLista:88579, precioContado:70863 },
-      { nombre:'Aireador con Reja y Mosquitero 80x46', precioLista:131068, precioContado:104854 },
       { nombre:'Puerta Chapa Doble Inyec. 0,86 (para picaporte)', precioLista:291094, precioContado:232875 },
       { nombre:'Puerta Chapa Doble Inyec. 0,86m Chapa 20', precioLista:391359, precioContado:313088 },
       { nombre:'Puerta Chapa Doble Inyec. 0,86m Chapa 20 (v.2)', precioLista:391359, precioContado:313088 },
@@ -2157,18 +2323,32 @@
       { nombre:'Puerta Chapa Simple Negra o Blanca', precioLista:189750, precioContado:151800 },
     ];
 
-    let modoPago = 'lista'; // 'lista' | 'contado'
+    const AIREADORES_MADERA = [
+      { nombre:'Aireador con Reja y Mosquitero 40x26', precioLista:70811, precioContado:56649 },
+      { nombre:'Aireador con Reja y Mosquitero 40x36', precioLista:86444, precioContado:69155 },
+      { nombre:'Aireador con Reja y Mosquitero 60x26', precioLista:78041, precioContado:62433 },
+      { nombre:'Aireador con Reja y Mosquitero 60x36', precioLista:93827, precioContado:75062 },
+      { nombre:'Aireador con Reja y Mosquitero 80x26', precioLista:88579, precioContado:70863 },
+      { nombre:'Aireador con Reja y Mosquitero 80x46', precioLista:131068, precioContado:104854 },
+    ];
 
-    function money(n){ return '$' + n.toLocaleString('es-AR'); }
+    // Modo de pago global: se guarda para que quede elegido la próxima vez que entren
+    let modoPago = 'lista';
+    try {
+      const guardado = localStorage.getItem('emyhogar_modopago');
+      if(guardado === 'lista' || guardado === 'contado') modoPago = guardado;
+    } catch(e){}
+
+    function money(n){ return '$' + Math.round(n).toLocaleString('es-AR'); }
 
     function precioSegunModo(item){
       return modoPago === 'lista' ? item.precioLista : item.precioContado;
     }
 
-    const instancias = [];
+    const instanciasVentana = [];
 
     function armarVentana(config){
-      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, material, prefijo } = config;
+      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, prefijo } = config;
       select.innerHTML = '';
       datos.forEach((item, i) => {
         const opt = document.createElement('option');
@@ -2185,8 +2365,9 @@
         spanPrecio.textContent = money(precio);
         spanCodigo.textContent = codigo;
         boton.dataset.code = codigo;
-        boton.dataset.name = `${item.nombre}`;
+        boton.dataset.name = item.nombre;
         boton.dataset.price = precio;
+        boton.dataset.modo = modoPago;
         if(typeof actualizarBotonesAgregar === 'function'){
           actualizarBotonesAgregar();
         } else {
@@ -2196,7 +2377,7 @@
       }
 
       select.addEventListener('change', actualizar);
-      instancias.push(actualizar);
+      instanciasVentana.push(actualizar);
       actualizar();
     }
 
@@ -2207,31 +2388,97 @@
       spanCodigo: document.getElementById('ventCodigoAluminio'),
       boton: document.getElementById('ventBtnAluminio'),
       datos: VENTANAS_ALUMINIO,
-      material: 'Aluminio',
       prefijo: 'VA'
     });
 
     armarVentana({
-      select: document.getElementById('selMadera'),
-      spanDetalle: document.getElementById('ventDetalleMadera'),
-      spanPrecio: document.getElementById('ventPrecioMadera'),
-      spanCodigo: document.getElementById('ventCodigoMadera'),
-      boton: document.getElementById('ventBtnMadera'),
-      datos: ABERTURAS_MADERA,
-      material: 'Madera',
-      prefijo: 'VM'
+      select: document.getElementById('selVentanaMadera'),
+      spanDetalle: document.getElementById('ventDetalleVentanaMadera'),
+      spanPrecio: document.getElementById('ventPrecioVentanaMadera'),
+      spanCodigo: document.getElementById('ventCodigoVentanaMadera'),
+      boton: document.getElementById('ventBtnVentanaMadera'),
+      datos: VENTANAS_MADERA,
+      prefijo: 'VMV'
     });
 
-    // Toggle de forma de pago: Precio Lista (tarjeta) / Precio de Contado (pago unico)
+    armarVentana({
+      select: document.getElementById('selPuerta'),
+      spanDetalle: document.getElementById('ventDetallePuerta'),
+      spanPrecio: document.getElementById('ventPrecioPuerta'),
+      spanCodigo: document.getElementById('ventCodigoPuerta'),
+      boton: document.getElementById('ventBtnPuerta'),
+      datos: PUERTAS_MADERA,
+      prefijo: 'VP'
+    });
+
+    armarVentana({
+      select: document.getElementById('selAireador'),
+      spanDetalle: document.getElementById('ventDetalleAireador'),
+      spanPrecio: document.getElementById('ventPrecioAireador'),
+      spanCodigo: document.getElementById('ventCodigoAireador'),
+      boton: document.getElementById('ventBtnAireador'),
+      datos: AIREADORES_MADERA,
+      prefijo: 'VAI'
+    });
+
+    // ---- Productos del catálogo (muebles): Precio Contado = Precio Lista - 20% ----
+    // Misma proporción exacta que usa el proveedor en ventanas y puertas.
+
+    // Etiqueta "Precio Lista"/"Precio Contado" arriba de cada precio (si no existe todavía)
+    document.querySelectorAll('.meta .price').forEach(span => {
+      if(span.dataset.tagged) return;
+      span.dataset.tagged = '1';
+      const tag = document.createElement('span');
+      tag.className = 'precio-lista-tag';
+      tag.textContent = 'Precio Lista';
+      span.parentElement.insertBefore(tag, span);
+    });
+
+    const botonesProducto = Array.from(document.querySelectorAll('.add-btn'))
+      .filter(b => (!b.id || !b.id.startsWith('ventBtn')) && !b.dataset.skipGlobal);
+
+    botonesProducto.forEach(btn => {
+      if(!btn.dataset.priceLista){
+        btn.dataset.priceLista = btn.dataset.price;
+      }
+      const cardBody = btn.closest('.card-body');
+      const tag = cardBody ? cardBody.querySelector('.precio-lista-tag') : null;
+      const priceSpan = cardBody ? cardBody.querySelector('.meta .price') : null;
+      if(tag) btn.dataset.tagRef = '1';
+      btn._tagEl = tag;
+      btn._priceEl = priceSpan;
+    });
+
+    function actualizarPreciosProductos(){
+      botonesProducto.forEach(btn => {
+        const lista = parseInt(btn.dataset.priceLista, 10);
+        if(isNaN(lista)) return;
+        const precio = modoPago === 'lista' ? lista : Math.round(lista * 0.8);
+        btn.dataset.price = precio;
+        btn.dataset.modo = modoPago;
+        if(btn._priceEl) btn._priceEl.textContent = money(precio);
+        if(btn._tagEl) btn._tagEl.textContent = modoPago === 'lista' ? 'Precio Lista' : 'Precio Contado';
+      });
+    }
+
+    function aplicarModoPago(){
+      instanciasVentana.forEach(fn => fn());
+      actualizarPreciosProductos();
+    }
+
+    // Estado inicial de los botones de forma de pago
     document.querySelectorAll('.pago-btn').forEach(btn => {
+      btn.classList.toggle('activo', btn.dataset.modo === modoPago);
       btn.addEventListener('click', () => {
-        if(btn.classList.contains('activo')) return;
-        document.querySelectorAll('.pago-btn').forEach(b => b.classList.remove('activo'));
-        btn.classList.add('activo');
+        if(btn.dataset.modo === modoPago) return;
         modoPago = btn.dataset.modo;
-        instancias.forEach(fn => fn());
+        try { localStorage.setItem('emyhogar_modopago', modoPago); } catch(e){}
+        document.querySelectorAll('.pago-btn').forEach(b => b.classList.toggle('activo', b.dataset.modo === modoPago));
+        aplicarModoPago();
       });
     });
+
+    actualizarPreciosProductos();
   })();
 </script>
 
@@ -2247,21 +2494,12 @@
       waFab.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`;
     }
 
-    // Etiqueta "Precio Lista" en todos los productos con precio único (no aplica a las tarjetas de ventanas,
-    // que ya muestran Precio Lista / Precio Contado con el selector propio)
-    document.querySelectorAll('.meta .price').forEach(span => {
-      if(span.dataset.tagged) return;
-      span.dataset.tagged = '1';
-      const tag = document.createElement('span');
-      tag.className = 'precio-lista-tag';
-      tag.textContent = 'Precio Lista';
-      span.parentElement.insertBefore(tag, span);
-    });
+    // Etiqueta "Precio Lista" ya se agrega en el script de forma de pago global
 
     // Consultar / Compartir por WhatsApp en cada producto
     if(typeof WHATSAPP_NUMERO !== 'undefined'){
       document.querySelectorAll('.add-btn').forEach(btn => {
-        if(btn.dataset.waAdded) return;
+        if(btn.dataset.waAdded || btn.dataset.skipGlobal) return;
         btn.dataset.waAdded = '1';
 
         const row = document.createElement('div');
@@ -2296,6 +2534,113 @@
         btn.insertAdjacentElement('afterend', row);
       });
     }
+  })();
+</script>
+
+<script>
+  // ======= Detalle de producto (prototipo): al tocar una card de Salas, se abre con más info =======
+  (function(){
+    const overlay = document.getElementById('productoOverlay');
+    if(!overlay) return;
+
+    const imgEl = document.getElementById('productoImg');
+    const codeEl = document.getElementById('productoCode');
+    const nombreEl = document.getElementById('productoNombre');
+    const dimEl = document.getElementById('productoDim');
+    const descEl = document.getElementById('productoDesc');
+    const tagEl = document.getElementById('productoTag');
+    const precioEl = document.getElementById('productoPrecio');
+    const qtyVal = document.getElementById('productoQtyVal');
+    const qtyMenos = document.getElementById('productoQtyMenos');
+    const qtyMas = document.getElementById('productoQtyMas');
+    const agregarBtn = document.getElementById('productoAgregarBtn');
+    const consultarBtn = document.getElementById('productoConsultar');
+    const compartirBtn = document.getElementById('productoCompartir');
+    const closeBtn = document.getElementById('productoClose');
+
+    let cantidad = 1;
+    let cardActual = null;
+
+    function refrescarDesdeCard(card){
+      const img = card.querySelector('.plate img');
+      const svg = card.querySelector('.plate svg');
+      const badge = card.querySelector('.plate .badge');
+      const codigo = card.querySelector('.code');
+      const nombre = card.querySelector('h3');
+      const desc = card.querySelector('.desc');
+      const dim = card.querySelector('.meta .dim');
+      const tag = card.querySelector('.meta .precio-lista-tag');
+      const price = card.querySelector('.meta .price');
+
+      if(img){
+        imgEl.style.display = '';
+        imgEl.src = img.src;
+        imgEl.alt = img.alt;
+      } else if(svg){
+        imgEl.style.display = 'none';
+      }
+      codeEl.textContent = codigo ? `Código: ${codigo.textContent}` : '';
+      nombreEl.textContent = nombre ? nombre.textContent : '';
+      descEl.textContent = desc ? desc.textContent : '';
+      dimEl.textContent = dim ? dim.textContent : '';
+      tagEl.textContent = tag ? tag.textContent : 'Precio Lista';
+      precioEl.textContent = price ? price.textContent : '';
+    }
+
+    function abrirDesdeCard(card){
+      cardActual = card;
+      cantidad = 1;
+      qtyVal.textContent = cantidad;
+      refrescarDesdeCard(card);
+      overlay.classList.add('abierto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrar(){
+      overlay.classList.remove('abierto');
+      document.body.style.overflow = '';
+      cardActual = null;
+    }
+
+    document.querySelectorAll('.card[data-cat="salas"]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if(e.target.closest('.add-btn') || e.target.closest('.wa-quick-row')) return;
+        abrirDesdeCard(card);
+      });
+    });
+
+    closeBtn.addEventListener('click', cerrar);
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrar(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && overlay.classList.contains('abierto')) cerrar(); });
+
+    qtyMenos.addEventListener('click', () => {
+      if(cantidad > 1){ cantidad--; qtyVal.textContent = cantidad; }
+    });
+    qtyMas.addEventListener('click', () => {
+      if(cantidad < 20){ cantidad++; qtyVal.textContent = cantidad; }
+    });
+
+    agregarBtn.addEventListener('click', () => {
+      if(!cardActual) return;
+      const btnOriginal = cardActual.querySelector('.add-btn');
+      if(btnOriginal){
+        for(let i = 0; i < cantidad; i++){ btnOriginal.click(); }
+      }
+      cerrar();
+    });
+
+    consultarBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(!cardActual) return;
+      const original = cardActual.querySelector('.wa-quick-row .wa-quick-btn:first-child');
+      if(original) original.click();
+    });
+    compartirBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(!cardActual) return;
+      const botones = cardActual.querySelectorAll('.wa-quick-row .wa-quick-btn');
+      if(botones[1]) botones[1].click();
+    });
   })();
 </script>
 
