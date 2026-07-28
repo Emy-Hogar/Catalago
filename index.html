@@ -133,6 +133,48 @@
     padding:0.4rem 0.85rem; border-radius:999px;
   }
 
+  /* ---------- Banner de descuento del mes ---------- */
+  .promo-banner{
+    position:relative; overflow:hidden;
+    background:linear-gradient(100deg, var(--yellow) 0%, var(--yellow-soft) 60%, var(--yellow) 100%);
+    padding:1.1rem 6vw;
+  }
+  .promo-banner-shine{
+    position:absolute; top:0; left:-30%; width:30%; height:100%;
+    background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+    animation:promoShine 4.5s ease-in-out infinite;
+  }
+  @keyframes promoShine{
+    0%{ left:-30%; }
+    35%{ left:120%; }
+    100%{ left:120%; }
+  }
+  .promo-banner-inner{
+    position:relative; max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+  }
+  .promo-banner-icon{ font-size:1.8rem; line-height:1; flex-shrink:0; }
+  .promo-banner-text{ display:flex; flex-direction:column; gap:0.1rem; flex:1; min-width:200px; }
+  .promo-banner-text strong{ font-family:'Poppins',sans-serif; font-size:1.05rem; font-weight:800; color:var(--teal); }
+  .promo-banner-text span{ font-size:0.8rem; color:var(--teal-2); font-weight:500; }
+  .promo-banner-cta{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:0.85rem;
+    background:var(--teal); color:var(--white); text-decoration:none;
+    padding:0.65rem 1.3rem; border-radius:999px; white-space:nowrap;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .promo-banner-cta:hover{ background:var(--teal-2); transform:translateY(-2px); }
+  @media(max-width:640px){
+    .promo-banner{ padding:0.9rem 4vw; }
+    .promo-banner-icon{ font-size:1.5rem; }
+    .promo-banner-text strong{ font-size:0.92rem; }
+    .promo-banner-text span{ font-size:0.74rem; }
+    .promo-banner-cta{ width:100%; text-align:center; }
+  }
+  @media(prefers-reduced-motion: reduce){
+    .promo-banner-shine{ animation:none; display:none; }
+  }
+
   /* ---------- Filtros ---------- */
   .filtro-bar{
     position:sticky; top:0; z-index:20;
@@ -328,6 +370,7 @@
   }
   .card-body{padding:1.1rem 1.2rem 1.3rem; display:flex; flex-direction:column; gap:0.4rem; flex:1;}
   .code{ font-family:'IBM Plex Mono', monospace; font-size:0.66rem; letter-spacing:0.08em; color:var(--teal-3); font-weight:500; }
+  .card-body > .code{ display:none; }
   .card-body h3{ font-weight:700; font-size:1.08rem; margin:0; line-height:1.25; }
   .desc{ font-size:0.83rem; line-height:1.5; color:var(--ink-soft); margin:0; flex:1; }
   .meta{
@@ -335,7 +378,23 @@
     margin-top:0.3rem; padding-top:0.7rem; border-top:1px dashed var(--line);
   }
   .dim{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--ink-soft); }
-  .price{ font-size:1rem; font-weight:700; color:var(--teal); }
+  .price{ font-size:1.15rem; font-weight:800; color:var(--teal); line-height:1; }
+
+  .precio-box{ display:flex; flex-direction:column; align-items:flex-end; gap:0.2rem; }
+  .precio-tachado{
+    font-size:0.76rem; color:var(--ink-soft); text-decoration:line-through;
+    font-weight:500; opacity:0.85;
+  }
+  .precio-contado-wrap{ display:flex; align-items:baseline; gap:0.4rem; }
+  .badge-descuento{
+    display:inline-block; background:#1FAA55; color:var(--white);
+    font-family:'Poppins', sans-serif; font-size:0.66rem; font-weight:700;
+    padding:0.14rem 0.4rem; border-radius:5px; letter-spacing:0.02em; white-space:nowrap;
+  }
+  .precio-contado-label{
+    font-size:0.64rem; color:#178F47; text-transform:uppercase;
+    letter-spacing:0.03em; font-weight:700;
+  }
 
   /* ---------- Tarjetas de Ventanas a Medida ---------- */
   .ventana-selector{ display:flex; flex-direction:column; gap:0.3rem; margin:0.2rem 0 0.4rem; }
@@ -350,7 +409,7 @@
   }
   .ventana-selector select:focus{ border-color:var(--teal); }
   .ventana-precio-row{
-    display:flex; justify-content:space-between; align-items:baseline;
+    display:flex; justify-content:space-between; align-items:flex-end;
     padding:0.5rem 0; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line);
     margin-bottom:0.6rem;
   }
@@ -417,6 +476,63 @@
     padding-top:1.6rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.6rem;
     font-size:0.72rem; color:#8FB0AE;
   }
+  .admin-link{
+    background:none; border:none; color:#4C6A6C; opacity:0.5;
+    font-size:0.8rem; cursor:pointer; padding:0.2rem 0.4rem; margin-left:auto;
+  }
+  .admin-link:hover{ opacity:1; }
+
+  /* ---------- Panel del dueño (stock) ---------- */
+  .admin-overlay{
+    position:fixed; inset:0; background:rgba(4,53,57,0.7);
+    z-index:90; display:none; align-items:center; justify-content:center; padding:1.5rem;
+  }
+  .admin-overlay.abierto{ display:flex; }
+  .admin-modal{
+    background:var(--bg); border-radius:18px; max-width:520px; width:100%;
+    max-height:88vh; overflow-y:auto; padding:1.6rem;
+    box-shadow:0 30px 60px -12px rgba(4,53,57,0.6);
+  }
+  .admin-modal h3{ color:var(--teal); margin:0 0 0.4rem; font-size:1.2rem; }
+  .admin-aviso{
+    background:var(--yellow-pale); border:1px solid var(--yellow); border-radius:10px;
+    padding:0.7rem 0.9rem; font-size:0.78rem; color:var(--ink); line-height:1.5; margin-bottom:1.1rem;
+  }
+  .admin-pin-box{ display:flex; flex-direction:column; gap:0.8rem; align-items:center; text-align:center; padding:1rem 0; }
+  .admin-pin-box input{
+    font-family:'IBM Plex Mono', monospace; font-size:1.4rem; letter-spacing:0.4em;
+    text-align:center; padding:0.7rem; border-radius:10px; border:1.5px solid var(--line); width:180px;
+  }
+  .admin-lista{ display:flex; flex-direction:column; gap:0.5rem; max-height:55vh; overflow-y:auto; }
+  .admin-item{
+    display:flex; align-items:center; gap:0.7rem; padding:0.55rem 0.6rem;
+    border:1px solid var(--line); border-radius:10px;
+  }
+  .admin-item-nombre{ flex:1; font-size:0.83rem; font-weight:600; color:var(--ink); }
+  .admin-item-cat{ font-size:0.66rem; color:var(--ink-soft); text-transform:uppercase; display:block; font-weight:500; }
+  .admin-item input{
+    width:64px; font-family:'IBM Plex Mono', monospace; font-size:0.9rem;
+    text-align:center; padding:0.4rem; border-radius:8px; border:1.5px solid var(--line);
+  }
+  .admin-item-badge{ font-size:0.64rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:999px; white-space:nowrap; min-width:88px; text-align:center; }
+  .admin-buscador{
+    width:100%; padding:0.6rem 0.8rem; border-radius:10px; border:1.5px solid var(--line);
+    font-family:'Poppins',sans-serif; font-size:0.85rem; margin-bottom:0.8rem;
+  }
+  .admin-cerrar{
+    margin-top:1.2rem; width:100%; background:var(--teal); color:var(--white); border:none;
+    padding:0.75rem; border-radius:999px; font-family:'Poppins',sans-serif; font-weight:700; cursor:pointer;
+  }
+
+  .stock-badge{
+    position:absolute; top:0.7rem; left:0.7rem; z-index:2;
+    font-family:'Poppins',sans-serif; font-size:0.64rem; font-weight:700;
+    padding:0.28rem 0.6rem; border-radius:999px; color:var(--white);
+  }
+  .stock-badge.disponible{ background:#1FAA55; }
+  .stock-badge.ultimas{ background:#E8952B; }
+  .stock-badge.agotado{ background:#C0392B; }
+  .add-btn.sin-stock{ background:var(--line) !important; color:var(--ink-soft) !important; cursor:not-allowed; }
 
   .add-btn{
     margin-top:0.7rem; width:100%;
@@ -652,14 +768,17 @@
   @media(max-width:760px){ .producto-img-wrap{ border-radius:20px 20px 0 0; padding:2rem; } }
   .producto-img-wrap img{ max-width:100%; max-height:380px; object-fit:contain; }
   .producto-info{ padding:2.2rem 2rem 2.4rem; display:flex; flex-direction:column; gap:0.7rem; }
-  .producto-code{ font-size:0.7rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-weight:600; }
+  .producto-code{ display:none; }
   .producto-info h2{ font-size:1.5rem; margin:0; color:var(--teal); line-height:1.2; }
   .producto-dim{
     font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--ink);
     background:var(--yellow-pale); display:inline-block; padding:0.3rem 0.7rem; border-radius:8px; width:fit-content;
   }
   .producto-desc{ color:var(--ink-soft); line-height:1.65; font-size:0.92rem; margin:0.2rem 0; }
-  .producto-precio-box{ margin-top:0.3rem; }
+  .producto-precio-box{ margin-top:0.3rem; display:flex; flex-direction:column; align-items:flex-start; gap:0.25rem; }
+  .producto-precio-box .precio-tachado{ font-size:0.9rem; }
+  .producto-precio-box .badge-descuento{ font-size:0.72rem; padding:0.18rem 0.5rem; }
+  .producto-precio-box .precio-contado-label{ font-size:0.7rem; }
   .producto-precio-box .price{ font-size:1.9rem; display:block; }
   .producto-qty{ display:flex; align-items:center; gap:0.9rem; margin-top:0.3rem; }
   .producto-qty span:first-child{ font-size:0.85rem; color:var(--ink-soft); font-weight:600; }
@@ -739,7 +858,7 @@
   .btn-email:hover{background:var(--teal-3);}
 
   @media print{
-    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .wa-fab, .pago-global-bar, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados{display:none !important;}
+    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .wa-fab, .pago-global-bar, .promo-banner, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados{display:none !important;}
     .card, .categoria{page-break-inside:avoid; display:block !important;}
     .grid{display:grid !important;}
     .add-btn{display:none !important;}
@@ -777,6 +896,18 @@
       </div>
     </div>
   </header>
+
+  <div class="promo-banner" id="promoBanner">
+    <div class="promo-banner-shine"></div>
+    <div class="promo-banner-inner">
+      <span class="promo-banner-icon">🏷️</span>
+      <div class="promo-banner-text">
+        <strong>20% OFF pagando de contado</strong>
+        <span>Válido este mes en todo el catálogo: muebles, ventanas y aberturas</span>
+      </div>
+      <a href="#salas" class="promo-banner-cta">Ver productos</a>
+    </div>
+  </div>
 
   <div class="filtro-bar">
     <div class="buscador-row">
@@ -1276,8 +1407,15 @@
               <select id="selAluminio"></select>
             </div>
             <div class="ventana-precio-row">
-              <span class="dim" id="ventDetalleAluminio">Precio Lista</span>
-              <span class="price" id="ventPrecioAluminio">$416.156</span>
+              <span class="dim" id="ventDetalleAluminio">Medida seleccionada</span>
+              <div class="precio-box">
+                <span class="precio-tachado"></span>
+                <div class="precio-contado-wrap">
+                  <span class="badge-descuento">-20%</span>
+                  <span class="price" id="ventPrecioAluminio">$416.156</span>
+                </div>
+                <span class="precio-contado-label">20% off pagando contado</span>
+              </div>
             </div>
             <div class="ventana-acciones">
               <button class="add-btn" id="ventBtnAluminio" data-code="VA-01" data-name="Ventana de Aluminio 2 x 2 m" data-price="416156" data-unit="">+ Agregar</button>
@@ -1300,8 +1438,15 @@
               <select id="selVentanaMadera"></select>
             </div>
             <div class="ventana-precio-row">
-              <span class="dim" id="ventDetalleVentanaMadera">Precio Lista</span>
-              <span class="price" id="ventPrecioVentanaMadera">$150.938</span>
+              <span class="dim" id="ventDetalleVentanaMadera">Medida seleccionada</span>
+              <div class="precio-box">
+                <span class="precio-tachado"></span>
+                <div class="precio-contado-wrap">
+                  <span class="badge-descuento">-20%</span>
+                  <span class="price" id="ventPrecioVentanaMadera">$150.938</span>
+                </div>
+                <span class="precio-contado-label">20% off pagando contado</span>
+              </div>
             </div>
             <div class="ventana-acciones">
               <button class="add-btn" id="ventBtnVentanaMadera" data-code="VMV-01" data-name="Ventana Pino Vidrio 1x1" data-price="150938" data-unit="">+ Agregar</button>
@@ -1324,8 +1469,15 @@
               <select id="selPuerta"></select>
             </div>
             <div class="ventana-precio-row">
-              <span class="dim" id="ventDetallePuerta">Precio Lista</span>
-              <span class="price" id="ventPrecioPuerta">$172.500</span>
+              <span class="dim" id="ventDetallePuerta">Medida seleccionada</span>
+              <div class="precio-box">
+                <span class="precio-tachado"></span>
+                <div class="precio-contado-wrap">
+                  <span class="badge-descuento">-20%</span>
+                  <span class="price" id="ventPrecioPuerta">$172.500</span>
+                </div>
+                <span class="precio-contado-label">20% off pagando contado</span>
+              </div>
             </div>
             <div class="ventana-acciones">
               <button class="add-btn" id="ventBtnPuerta" data-code="VP-01" data-name="Puerta Maciza Pino 0,8x2 primera" data-price="172500" data-unit="">+ Agregar</button>
@@ -1348,8 +1500,15 @@
               <select id="selAireador"></select>
             </div>
             <div class="ventana-precio-row">
-              <span class="dim" id="ventDetalleAireador">Precio Lista</span>
-              <span class="price" id="ventPrecioAireador">$70.811</span>
+              <span class="dim" id="ventDetalleAireador">Medida seleccionada</span>
+              <div class="precio-box">
+                <span class="precio-tachado"></span>
+                <div class="precio-contado-wrap">
+                  <span class="badge-descuento">-20%</span>
+                  <span class="price" id="ventPrecioAireador">$70.811</span>
+                </div>
+                <span class="precio-contado-label">20% off pagando contado</span>
+              </div>
             </div>
             <div class="ventana-acciones">
               <button class="add-btn" id="ventBtnAireador" data-code="VAI-01" data-name="Aireador con Reja y Mosquitero 40x26" data-price="70811" data-unit="">+ Agregar</button>
@@ -1506,6 +1665,7 @@
     <div class="footer-bottom">
       <span>Emy Hogar — Catálogo Colección 2026</span>
       <span>Los mejores precios y mejor calidad</span>
+      <button type="button" class="admin-link" id="adminLink" aria-label="Acceso dueño">🔒</button>
     </div>
   </footer>
 
@@ -1524,8 +1684,12 @@
       <span class="dim producto-dim" id="productoDim"></span>
       <p class="producto-desc" id="productoDesc"></p>
       <div class="producto-precio-box">
-        <span class="precio-lista-tag" id="productoTag">Precio Lista</span>
-        <span class="price" id="productoPrecio"></span>
+        <span class="precio-tachado" id="productoTachado"></span>
+        <div class="precio-contado-wrap">
+          <span class="badge-descuento" id="productoBadge">-20%</span>
+          <span class="price" id="productoPrecio"></span>
+        </div>
+        <span class="precio-contado-label" id="productoLabelContado">20% off pagando contado</span>
       </div>
       <div class="producto-qty">
         <span>Cantidad:</span>
@@ -1540,6 +1704,30 @@
           <a class="wa-quick-btn" id="productoCompartir" href="#">↗ Compartir</a>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- Panel del dueño (stock) ---------- -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+    <div id="adminPinPantalla">
+      <h3>🔒 Acceso del dueño</h3>
+      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá el PIN para administrar el stock.</p>
+      <div class="admin-pin-box">
+        <input type="password" inputmode="numeric" maxlength="6" id="adminPinInput" placeholder="••••">
+        <button type="button" class="admin-cerrar" id="adminPinEntrar" style="margin-top:0;">Entrar</button>
+        <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">PIN incorrecto</span>
+      </div>
+    </div>
+    <div id="adminStockPantalla" style="display:none;">
+      <h3>📦 Stock del catálogo</h3>
+      <div class="admin-aviso">
+        <strong>Importante:</strong> esto se guarda solo en este celular/computadora, no se sincroniza con otros dispositivos. Para que un cliente vea el stock actualizado, tenés que cargarlo desde el mismo aparato donde él lo va a ver, o publicar el sitio de nuevo con estos datos.
+      </div>
+      <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto...">
+      <div class="admin-lista" id="adminLista"></div>
+      <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
     </div>
   </div>
 </div>
@@ -2063,12 +2251,14 @@
     // --- FAQ: edita estos textos con tu información real ---
     const faq = [
       { claves:['envio','envios','entrega','entregan','demora','tiempo'], resp:'Los envíos se coordinan según tu zona; normalmente la entrega tarda entre 5 y 10 días hábiles. Decime tu ciudad y te confirmo tiempos exactos.' },
-      { claves:['pago','pagos','tarjeta','efectivo','transferencia','cuotas'], resp:'Aceptamos efectivo, transferencia y tarjeta. Para pedidos grandes también podemos coordinar cuotas — contanos qué producto te interesa y lo vemos por WhatsApp.' },
+      { claves:['descuento','descuentos','oferta','ofertas','promo','promocion','promoción','20%','contado'], resp:'Este mes tenés 20% OFF pagando de contado en todo el catálogo: muebles, ventanas y aberturas. En cada producto vas a ver el precio de lista tachado y el precio de contado ya con el descuento aplicado.' },
+      { claves:['pago','pagos','tarjeta','efectivo','transferencia','cuotas'], resp:'Aceptamos tarjeta (precio de lista) y efectivo/transferencia en pago único (precio de contado, con 20% de descuento). Elegí la forma de pago arriba del catálogo y vas a ver el precio actualizado en cada producto.' },
       { claves:['garantia','garantía'], resp:'Todos los muebles tienen garantía por defectos de fabricación. El tiempo exacto varía según el producto; te lo confirmamos al armar tu pedido.' },
       { claves:['horario','horarios','abren','atienden'], resp:'Podés escribirnos por WhatsApp en cualquier momento; te respondemos a la brevedad en horario comercial.' },
       { claves:['direccion','dirección','ubicacion','ubicación','local','tienda'], resp:'Trabajamos con showroom y entregas a domicilio. Escribinos por WhatsApp y coordinamos según tu zona.' },
       { claves:['contacto','whatsapp','telefono','teléfono','hablar con alguien','humano','persona'], resp:'Claro, te dejo el contacto directo por WhatsApp para hablar con nosotros.', accion:'whatsapp' },
       { claves:['devolucion','devolución','cambio','cambios'], resp:'Si tu producto llega con algún problema, contactanos dentro de las 48hs de recibido y lo resolvemos sin costo extra.' },
+      { claves:['stock','disponible','disponibilidad','quedan','hay'], resp:'La disponibilidad puede variar. Decime qué producto te interesa y te confirmamos el stock por WhatsApp antes de que hagas tu pedido.' },
     ];
 
     // --- Estado del chat ---
@@ -2152,8 +2342,8 @@
     }
 
     function saludar(){
-      agregarMensaje('¡Hola! 👋 Soy el asistente de Emy Hogar. Puedo ayudarte a encontrar muebles del catálogo o responder preguntas sobre envíos, pagos y garantía.', 'bot');
-      agregarChips(['Salas', 'Comedores', 'Envíos', 'Formas de pago']);
+      agregarMensaje('¡Hola! 👋 Soy el asistente de Emy Hogar. Este mes tenés 20% OFF pagando de contado en todo el catálogo. Puedo ayudarte a encontrar muebles o responder preguntas sobre envíos, pagos y garantía.', 'bot');
+      agregarChips(['Salas', 'Ventanas', 'Descuentos', 'Formas de pago']);
     }
 
     function buscarProductos(consulta){
@@ -2357,16 +2547,19 @@
         select.appendChild(opt);
       });
 
+      const box = spanPrecio.closest('.precio-box');
+      const tachado = box ? box.querySelector('.precio-tachado') : null;
+
       function actualizar(){
         const item = datos[select.value];
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
-        const precio = precioSegunModo(item);
-        spanDetalle.textContent = modoPago === 'lista' ? 'Precio Lista (tarjeta)' : 'Precio de Contado (pago único)';
-        spanPrecio.textContent = money(precio);
+        const precioParaCarrito = precioSegunModo(item);
+        spanPrecio.textContent = money(item.precioContado);
+        if(tachado) tachado.textContent = money(item.precioLista);
         spanCodigo.textContent = codigo;
         boton.dataset.code = codigo;
         boton.dataset.name = item.nombre;
-        boton.dataset.price = precio;
+        boton.dataset.price = precioParaCarrito;
         boton.dataset.modo = modoPago;
         if(typeof actualizarBotonesAgregar === 'function'){
           actualizarBotonesAgregar();
@@ -2424,15 +2617,49 @@
     // ---- Productos del catálogo (muebles): Precio Contado = Precio Lista - 20% ----
     // Misma proporción exacta que usa el proveedor en ventanas y puertas.
 
-    // Etiqueta "Precio Lista"/"Precio Contado" arriba de cada precio (si no existe todavía)
-    document.querySelectorAll('.meta .price').forEach(span => {
-      if(span.dataset.tagged) return;
-      span.dataset.tagged = '1';
-      const tag = document.createElement('span');
-      tag.className = 'precio-lista-tag';
-      tag.textContent = 'Precio Lista';
-      span.parentElement.insertBefore(tag, span);
-    });
+    // Construye, en cada producto, el bloque de precio estilo "MercadoLibre":
+    // precio de lista tachado + insignia de descuento + precio de contado destacado.
+    function construirCajaPrecio(meta){
+      if(meta.querySelector('.precio-box')) {
+        return {
+          tachado: meta.querySelector('.precio-tachado'),
+          priceSpan: meta.querySelector('.price')
+        };
+      }
+      const priceSpan = meta.querySelector('.price');
+      if(!priceSpan) return null;
+
+      const oldTag = meta.querySelector('.precio-lista-tag');
+      if(oldTag) oldTag.remove();
+
+      const box = document.createElement('div');
+      box.className = 'precio-box';
+
+      const tachado = document.createElement('span');
+      tachado.className = 'precio-tachado';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'precio-contado-wrap';
+
+      const badge = document.createElement('span');
+      badge.className = 'badge-descuento';
+      badge.textContent = '-20%';
+
+      meta.removeChild(priceSpan);
+      wrap.appendChild(badge);
+      wrap.appendChild(priceSpan);
+
+      const label = document.createElement('span');
+      label.className = 'precio-contado-label';
+      label.textContent = '20% off pagando contado';
+
+      box.appendChild(tachado);
+      box.appendChild(wrap);
+      box.appendChild(label);
+      meta.appendChild(box);
+
+      return { tachado, priceSpan, box };
+    }
 
     const botonesProducto = Array.from(document.querySelectorAll('.add-btn'))
       .filter(b => (!b.id || !b.id.startsWith('ventBtn')) && !b.dataset.skipGlobal);
@@ -2442,22 +2669,23 @@
         btn.dataset.priceLista = btn.dataset.price;
       }
       const cardBody = btn.closest('.card-body');
-      const tag = cardBody ? cardBody.querySelector('.precio-lista-tag') : null;
-      const priceSpan = cardBody ? cardBody.querySelector('.meta .price') : null;
-      if(tag) btn.dataset.tagRef = '1';
-      btn._tagEl = tag;
-      btn._priceEl = priceSpan;
+      const meta = cardBody ? cardBody.querySelector('.meta') : null;
+      const cajaPrecio = meta ? construirCajaPrecio(meta) : null;
+      btn._tachadoEl = cajaPrecio ? cajaPrecio.tachado : null;
+      btn._priceEl = cajaPrecio ? cajaPrecio.priceSpan : null;
+      btn._boxEl = cajaPrecio ? cajaPrecio.box : null;
     });
 
     function actualizarPreciosProductos(){
       botonesProducto.forEach(btn => {
         const lista = parseInt(btn.dataset.priceLista, 10);
         if(isNaN(lista)) return;
-        const precio = modoPago === 'lista' ? lista : Math.round(lista * 0.8);
-        btn.dataset.price = precio;
+        const contado = Math.round(lista * 0.8);
+        const precioParaCarrito = modoPago === 'lista' ? lista : contado;
+        btn.dataset.price = precioParaCarrito;
         btn.dataset.modo = modoPago;
-        if(btn._priceEl) btn._priceEl.textContent = money(precio);
-        if(btn._tagEl) btn._tagEl.textContent = modoPago === 'lista' ? 'Precio Lista' : 'Precio Contado';
+        if(btn._tachadoEl) btn._tachadoEl.textContent = money(lista);
+        if(btn._priceEl) btn._priceEl.textContent = money(contado);
       });
     }
 
@@ -2548,7 +2776,8 @@
     const nombreEl = document.getElementById('productoNombre');
     const dimEl = document.getElementById('productoDim');
     const descEl = document.getElementById('productoDesc');
-    const tagEl = document.getElementById('productoTag');
+    const tachadoEl = document.getElementById('productoTachado');
+    const precioBoxEl = document.querySelector('.producto-precio-box');
     const precioEl = document.getElementById('productoPrecio');
     const qtyVal = document.getElementById('productoQtyVal');
     const qtyMenos = document.getElementById('productoQtyMenos');
@@ -2569,7 +2798,7 @@
       const nombre = card.querySelector('h3');
       const desc = card.querySelector('.desc');
       const dim = card.querySelector('.meta .dim');
-      const tag = card.querySelector('.meta .precio-lista-tag');
+      const tachado = card.querySelector('.meta .precio-tachado');
       const price = card.querySelector('.meta .price');
 
       if(img){
@@ -2583,7 +2812,7 @@
       nombreEl.textContent = nombre ? nombre.textContent : '';
       descEl.textContent = desc ? desc.textContent : '';
       dimEl.textContent = dim ? dim.textContent : '';
-      tagEl.textContent = tag ? tag.textContent : 'Precio Lista';
+      tachadoEl.textContent = tachado ? tachado.textContent : '';
       precioEl.textContent = price ? price.textContent : '';
     }
 
@@ -2641,6 +2870,177 @@
       const botones = cardActual.querySelectorAll('.wa-quick-row .wa-quick-btn');
       if(botones[1]) botones[1].click();
     });
+  })();
+</script>
+
+<script>
+  // ======= Sistema de stock (solo dueño, guardado local en este dispositivo) =======
+  (function(){
+    // Cambiá este PIN por uno que solo vos conozcas.
+    const ADMIN_PIN = '2026';
+    const STOCK_KEY = 'emyhogar_stock';
+    const UMBRAL_ULTIMAS = 3; // 1 a este número = "Últimas unidades"
+
+    function leerStock(){
+      try{
+        return JSON.parse(localStorage.getItem(STOCK_KEY) || '{}');
+      }catch(e){ return {}; }
+    }
+    function guardarStock(stock){
+      try{ localStorage.setItem(STOCK_KEY, JSON.stringify(stock)); }catch(e){}
+    }
+
+    function estadoStock(cantidad){
+      if(cantidad === undefined || cantidad === null || cantidad === '') return null;
+      const n = parseInt(cantidad, 10);
+      if(isNaN(n)) return null;
+      if(n <= 0) return { clase:'agotado', texto:'Sin stock' };
+      if(n <= UMBRAL_ULTIMAS) return { clase:'ultimas', texto:'Últimas unidades' };
+      return { clase:'disponible', texto:'Disponible' };
+    }
+
+    // Lista de productos administrables: los 39 muebles de catálogo (no ventanas/puertas, que son a medida)
+    function listaProductos(){
+      return Array.from(document.querySelectorAll('.add-btn'))
+        .filter(b => !b.id && !b.dataset.skipGlobal)
+        .map(btn => {
+          const article = btn.closest('article.card');
+          const catSeccion = article ? article.closest('section.categoria') : null;
+          const catTitulo = catSeccion ? catSeccion.querySelector('.categoria-titulo').textContent : '';
+          return {
+            code: btn.dataset.code,
+            name: btn.dataset.name,
+            cat: catTitulo,
+            btn,
+            article
+          };
+        });
+    }
+
+    function aplicarBadgesEnCatalogo(){
+      const stock = leerStock();
+      listaProductos().forEach(p => {
+        if(!p.article) return;
+        const plate = p.article.querySelector('.plate');
+        if(!plate) return;
+        let badgeEl = plate.querySelector('.stock-badge');
+        const estado = estadoStock(stock[p.code]);
+
+        if(!estado){
+          if(badgeEl) badgeEl.remove();
+          p.btn.classList.remove('sin-stock');
+          p.btn.disabled = false;
+          return;
+        }
+        if(!badgeEl){
+          badgeEl = document.createElement('span');
+          plate.appendChild(badgeEl);
+        }
+        badgeEl.className = `stock-badge ${estado.clase}`;
+        badgeEl.textContent = estado.texto;
+
+        if(estado.clase === 'agotado'){
+          p.btn.classList.add('sin-stock');
+          p.btn.disabled = true;
+          p.btn.textContent = 'Sin stock';
+        } else {
+          p.btn.classList.remove('sin-stock');
+          p.btn.disabled = false;
+        }
+      });
+    }
+
+    aplicarBadgesEnCatalogo();
+
+    // ---- Panel del dueño ----
+    const adminLink = document.getElementById('adminLink');
+    const overlay = document.getElementById('adminOverlay');
+    const pinPantalla = document.getElementById('adminPinPantalla');
+    const stockPantalla = document.getElementById('adminStockPantalla');
+    const pinInput = document.getElementById('adminPinInput');
+    const pinEntrar = document.getElementById('adminPinEntrar');
+    const pinError = document.getElementById('adminPinError');
+    const buscador = document.getElementById('adminBuscador');
+    const lista = document.getElementById('adminLista');
+    const cerrar2 = document.getElementById('adminCerrar2');
+
+    function renderListaAdmin(filtro){
+      const stock = leerStock();
+      const texto = (filtro || '').toLowerCase();
+      lista.innerHTML = '';
+      listaProductos()
+        .filter(p => !texto || p.name.toLowerCase().includes(texto))
+        .forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'admin-item';
+
+          const nombre = document.createElement('div');
+          nombre.className = 'admin-item-nombre';
+          nombre.innerHTML = `${p.name}<span class="admin-item-cat">${p.cat}</span>`;
+
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.min = '0';
+          input.placeholder = '—';
+          if(stock[p.code] !== undefined) input.value = stock[p.code];
+
+          const badgePrev = document.createElement('span');
+          function refrescarBadgePrev(){
+            const est = estadoStock(input.value);
+            if(!est){
+              badgePrev.textContent = 'Sin definir';
+              badgePrev.style.background = 'var(--line)';
+              badgePrev.style.color = 'var(--ink-soft)';
+            } else {
+              badgePrev.textContent = est.texto;
+              badgePrev.style.color = '#fff';
+              badgePrev.style.background = est.clase === 'disponible' ? '#1FAA55' : est.clase === 'ultimas' ? '#E8952B' : '#C0392B';
+            }
+          }
+          badgePrev.className = 'admin-item-badge';
+          refrescarBadgePrev();
+
+          input.addEventListener('input', () => {
+            const s = leerStock();
+            if(input.value === ''){ delete s[p.code]; } else { s[p.code] = input.value; }
+            guardarStock(s);
+            refrescarBadgePrev();
+            aplicarBadgesEnCatalogo();
+          });
+
+          row.appendChild(nombre);
+          row.appendChild(input);
+          row.appendChild(badgePrev);
+          lista.appendChild(row);
+        });
+    }
+
+    function abrirAdmin(){
+      overlay.classList.add('abierto');
+      pinPantalla.style.display = '';
+      stockPantalla.style.display = 'none';
+      pinInput.value = '';
+      pinError.style.display = 'none';
+      setTimeout(() => pinInput.focus(), 100);
+    }
+    function cerrarAdmin(){ overlay.classList.remove('abierto'); }
+
+    adminLink.addEventListener('click', abrirAdmin);
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrarAdmin(); });
+    cerrar2.addEventListener('click', cerrarAdmin);
+
+    function intentarEntrar(){
+      if(pinInput.value === ADMIN_PIN){
+        pinPantalla.style.display = 'none';
+        stockPantalla.style.display = '';
+        renderListaAdmin('');
+      } else {
+        pinError.style.display = 'inline';
+      }
+    }
+    pinEntrar.addEventListener('click', intentarEntrar);
+    pinInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') intentarEntrar(); });
+    buscador.addEventListener('input', () => renderListaAdmin(buscador.value));
   })();
 </script>
 
