@@ -32,6 +32,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Firebase (para sincronizar el stock en todos los dispositivos). Ver instrucciones al final del archivo. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
   :root{
     --teal: #043539;
@@ -126,11 +131,43 @@
     max-width:32rem; margin:1.3rem 0 0; font-size:1.02rem; line-height:1.65;
     color:#D7E7E5; font-weight:400;
   }
-  .hero-chips{margin-top:2.2rem; display:flex; flex-wrap:wrap; gap:0.6rem;}
-  .hero-chip{
-    font-size:0.78rem; font-weight:500; color:var(--white);
-    border:1px solid rgba(255,255,255,0.28);
-    padding:0.4rem 0.85rem; border-radius:999px;
+
+  /* ---------- Carrusel de promos del hero ---------- */
+  .hero-carousel{
+    position:relative; margin-top:2.2rem; max-width:560px;
+    border-radius:16px; overflow:hidden;
+    box-shadow:0 20px 40px -14px rgba(0,0,0,0.45);
+  }
+  .hero-carousel-track{
+    display:flex; touch-action:pan-y;
+    transition:transform .45s cubic-bezier(.65,0,.35,1);
+  }
+  .hero-carousel-slide{
+    width:100%; flex:0 0 100%; aspect-ratio:3/2; object-fit:cover;
+    display:block; user-select:none; -webkit-user-drag:none;
+  }
+  .hero-carousel-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:34px; height:34px; border-radius:50%; border:none;
+    background:rgba(4,53,57,0.55); color:var(--white); font-size:1.3rem;
+    line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(2px); transition:background .15s ease;
+  }
+  .hero-carousel-arrow:hover{ background:rgba(4,53,57,0.85); }
+  .hero-carousel-arrow.prev{ left:0.6rem; }
+  .hero-carousel-arrow.next{ right:0.6rem; }
+  .hero-carousel-dots{
+    position:absolute; bottom:0.7rem; left:0; right:0;
+    display:flex; justify-content:center; gap:0.4rem;
+  }
+  .hero-carousel-dot{
+    width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.45);
+    border:none; padding:0; cursor:pointer; transition:all .2s ease;
+  }
+  .hero-carousel-dot.activo{ background:var(--yellow); width:20px; border-radius:4px; }
+  @media(max-width:640px){
+    .hero-carousel{ margin-top:1.6rem; max-width:100%; border-radius:12px; }
+    .hero-carousel-arrow{ width:28px; height:28px; font-size:1.1rem; }
   }
 
   /* ---------- Banner de descuento del mes ---------- */
@@ -395,6 +432,15 @@
     font-size:0.64rem; color:#178F47; text-transform:uppercase;
     letter-spacing:0.03em; font-weight:700;
   }
+  .precio-cuotas{
+    font-size:0.66rem; color:var(--teal-3); font-weight:600;
+    line-height:1.5; text-align:right;
+  }
+  .precio-descuento-nota{
+    font-size:0.68rem; color:#178F47; font-weight:700;
+    line-height:1.5; text-align:right; display:block;
+  }
+  .producto-precio-box .precio-descuento-nota{ text-align:left; font-size:0.78rem; }
 
   /* ---------- Tarjetas de Ventanas a Medida ---------- */
   .ventana-selector{ display:flex; flex-direction:column; gap:0.3rem; margin:0.2rem 0 0.4rem; }
@@ -777,6 +823,7 @@
   .producto-desc{ color:var(--ink-soft); line-height:1.65; font-size:0.92rem; margin:0.2rem 0; }
   .producto-precio-box{ margin-top:0.3rem; display:flex; flex-direction:column; align-items:flex-start; gap:0.25rem; }
   .producto-precio-box .precio-tachado{ font-size:0.9rem; }
+  .producto-precio-box .precio-cuotas{ font-size:0.78rem; text-align:left; }
   .producto-precio-box .badge-descuento{ font-size:0.72rem; padding:0.18rem 0.5rem; }
   .producto-precio-box .precio-contado-label{ font-size:0.7rem; }
   .producto-precio-box .price{ font-size:1.9rem; display:block; }
@@ -808,6 +855,9 @@
   .item-remove:hover{color:var(--teal);}
 
   .cart-foot{border-top:1px solid var(--line); padding:1.2rem 1.4rem 1.5rem; background:var(--white);}
+  .cart-pago-toggle{ display:flex; gap:0.5rem; margin-bottom:0.9rem; }
+  .cart-pago-btn{ flex:1; text-align:center; justify-content:center; padding:0.6rem 0.5rem; font-size:0.78rem; }
+  .cart-pago-btn .pago-sub{ font-size:0.7rem; }
   .cart-total{display:flex; justify-content:space-between; font-weight:700; font-size:1.05rem; margin-bottom:1rem;}
   .cart-ahorro{
     background:var(--yellow-pale); color:var(--teal); border-radius:10px;
@@ -858,7 +908,7 @@
   .btn-email:hover{background:var(--teal-3);}
 
   @media print{
-    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .wa-fab, .pago-global-bar, .promo-banner, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados{display:none !important;}
+    .filtro-bar, .print-btn, .topbar-nav, .cart-fab, .wa-fab, .pago-global-bar, .promo-banner, .cart-overlay, .chat-fab, .chat-panel, .sin-resultados, .hero-carousel-arrow, .hero-carousel-dots{display:none !important;}
     .card, .categoria{page-break-inside:avoid; display:block !important;}
     .grid{display:grid !important;}
     .add-btn{display:none !important;}
@@ -888,11 +938,14 @@
     <div class="hero-inner">
       <span class="hero-eyebrow">Catálogo digital</span>
       <h1 class="hero-title">Muebles con <span class="em">carácter</span>,<br>para tu hogar.</h1>
-      <p class="hero-sub">En Emy Hogar diseñamos y armamos sillas, sillones y mueblería para cada rincón de tu casa. Elige, compara y encuentra la pieza ideal.</p>
-      <div class="hero-chips">
-        <span class="hero-chip">Entrega a domicilio</span>
-        <span class="hero-chip">Piezas a pedido</span>
-        <span class="hero-chip">Garantía de taller</span>
+      <div class="hero-carousel" id="heroCarousel">
+        <div class="hero-carousel-track" id="heroCarouselTrack">
+          <img src="imagenes/promos/promo-calidad-envios.jpg" alt="Calidad garantizada. Envíos a todo San Juan." class="hero-carousel-slide">
+          <img src="imagenes/promos/promo-cuotas-descuento.jpg" alt="Hasta 3 a 6 cuotas con tarjetas seleccionadas. 20% OFF pagando en efectivo." class="hero-carousel-slide">
+        </div>
+        <button type="button" class="hero-carousel-arrow prev" id="heroCarouselPrev" aria-label="Anterior">‹</button>
+        <button type="button" class="hero-carousel-arrow next" id="heroCarouselNext" aria-label="Siguiente">›</button>
+        <div class="hero-carousel-dots" id="heroCarouselDots"></div>
       </div>
     </div>
   </header>
@@ -1409,12 +1462,9 @@
             <div class="ventana-precio-row">
               <span class="dim" id="ventDetalleAluminio">Medida seleccionada</span>
               <div class="precio-box">
-                <span class="precio-tachado"></span>
-                <div class="precio-contado-wrap">
-                  <span class="badge-descuento">-20%</span>
-                  <span class="price" id="ventPrecioAluminio">$416.156</span>
-                </div>
-                <span class="precio-contado-label">20% off pagando contado</span>
+                <span class="price" id="ventPrecioAluminio">$416.156</span>
+                <span class="precio-cuotas"></span>
+                <span class="precio-descuento-nota"></span>
               </div>
             </div>
             <div class="ventana-acciones">
@@ -1440,12 +1490,9 @@
             <div class="ventana-precio-row">
               <span class="dim" id="ventDetalleVentanaMadera">Medida seleccionada</span>
               <div class="precio-box">
-                <span class="precio-tachado"></span>
-                <div class="precio-contado-wrap">
-                  <span class="badge-descuento">-20%</span>
-                  <span class="price" id="ventPrecioVentanaMadera">$150.938</span>
-                </div>
-                <span class="precio-contado-label">20% off pagando contado</span>
+                <span class="price" id="ventPrecioVentanaMadera">$150.938</span>
+                <span class="precio-cuotas"></span>
+                <span class="precio-descuento-nota"></span>
               </div>
             </div>
             <div class="ventana-acciones">
@@ -1471,12 +1518,9 @@
             <div class="ventana-precio-row">
               <span class="dim" id="ventDetallePuerta">Medida seleccionada</span>
               <div class="precio-box">
-                <span class="precio-tachado"></span>
-                <div class="precio-contado-wrap">
-                  <span class="badge-descuento">-20%</span>
-                  <span class="price" id="ventPrecioPuerta">$172.500</span>
-                </div>
-                <span class="precio-contado-label">20% off pagando contado</span>
+                <span class="price" id="ventPrecioPuerta">$172.500</span>
+                <span class="precio-cuotas"></span>
+                <span class="precio-descuento-nota"></span>
               </div>
             </div>
             <div class="ventana-acciones">
@@ -1502,12 +1546,9 @@
             <div class="ventana-precio-row">
               <span class="dim" id="ventDetalleAireador">Medida seleccionada</span>
               <div class="precio-box">
-                <span class="precio-tachado"></span>
-                <div class="precio-contado-wrap">
-                  <span class="badge-descuento">-20%</span>
-                  <span class="price" id="ventPrecioAireador">$70.811</span>
-                </div>
-                <span class="precio-contado-label">20% off pagando contado</span>
+                <span class="price" id="ventPrecioAireador">$70.811</span>
+                <span class="precio-cuotas"></span>
+                <span class="precio-descuento-nota"></span>
               </div>
             </div>
             <div class="ventana-acciones">
@@ -1684,12 +1725,9 @@
       <span class="dim producto-dim" id="productoDim"></span>
       <p class="producto-desc" id="productoDesc"></p>
       <div class="producto-precio-box">
-        <span class="precio-tachado" id="productoTachado"></span>
-        <div class="precio-contado-wrap">
-          <span class="badge-descuento" id="productoBadge">-20%</span>
-          <span class="price" id="productoPrecio"></span>
-        </div>
-        <span class="precio-contado-label" id="productoLabelContado">20% off pagando contado</span>
+        <span class="price" id="productoPrecio"></span>
+        <span class="precio-cuotas" id="productoCuotas"></span>
+        <span class="precio-descuento-nota" id="productoDescuentoNota"></span>
       </div>
       <div class="producto-qty">
         <span>Cantidad:</span>
@@ -1713,11 +1751,13 @@
   <div class="admin-modal">
     <div id="adminPinPantalla">
       <h3>🔒 Acceso del dueño</h3>
-      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá el PIN para administrar el stock.</p>
+      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con el usuario que creaste en Firebase.</p>
       <div class="admin-pin-box">
-        <input type="password" inputmode="numeric" maxlength="6" id="adminPinInput" placeholder="••••">
+        <input type="email" id="adminEmailInput" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
+        <input type="password" id="adminPinInput" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
         <button type="button" class="admin-cerrar" id="adminPinEntrar" style="margin-top:0;">Entrar</button>
-        <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">PIN incorrecto</span>
+        <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">Usuario o contraseña incorrectos</span>
+        <span id="adminSinConfigurar" style="color:#C0392B; font-size:0.78rem; display:none;">Todavía no conectaste Firebase — mirá las instrucciones que te pasé.</span>
       </div>
     </div>
     <div id="adminStockPantalla" style="display:none;">
@@ -1749,6 +1789,10 @@
         <p class="cart-empty">Aún no has agregado productos.<br>Toca "+ Agregar" en cualquier pieza del catálogo.</p>
       </div>
       <div class="cart-foot">
+        <div class="cart-pago-toggle" role="group" aria-label="Forma de pago del pedido">
+          <button type="button" class="pago-btn cart-pago-btn" data-modo="lista">💳 Tarjeta</button>
+          <button type="button" class="pago-btn cart-pago-btn" data-modo="contado">💵 Efectivo <span class="pago-sub">-20%</span></button>
+        </div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
         <div class="cart-ahorro" id="cartAhorro" style="display:none;"></div>
         <button class="btn-primary" id="irCheckout" disabled>Continuar con mis datos</button>
@@ -2548,19 +2592,21 @@
       });
 
       const box = spanPrecio.closest('.precio-box');
-      const tachado = box ? box.querySelector('.precio-tachado') : null;
+      const cuotas = box ? box.querySelector('.precio-cuotas') : null;
+      const descuento = box ? box.querySelector('.precio-descuento-nota') : null;
 
       function actualizar(){
         const item = datos[select.value];
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
-        const precioParaCarrito = precioSegunModo(item);
-        spanPrecio.textContent = money(item.precioContado);
-        if(tachado) tachado.textContent = money(item.precioLista);
+        spanPrecio.textContent = money(item.precioLista);
+        if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
+        if(descuento) descuento.textContent = '20% de descuento pagando de contado';
         spanCodigo.textContent = codigo;
         boton.dataset.code = codigo;
         boton.dataset.name = item.nombre;
-        boton.dataset.price = precioParaCarrito;
-        boton.dataset.modo = modoPago;
+        boton.dataset.price = item.precioLista;
+        boton.dataset.priceLista = item.precioLista;
+        boton.dataset.modo = 'lista';
         if(typeof actualizarBotonesAgregar === 'function'){
           actualizarBotonesAgregar();
         } else {
@@ -2622,7 +2668,8 @@
     function construirCajaPrecio(meta){
       if(meta.querySelector('.precio-box')) {
         return {
-          tachado: meta.querySelector('.precio-tachado'),
+          cuotas: meta.querySelector('.precio-cuotas'),
+          descuento: meta.querySelector('.precio-descuento-nota'),
           priceSpan: meta.querySelector('.price')
         };
       }
@@ -2635,30 +2682,19 @@
       const box = document.createElement('div');
       box.className = 'precio-box';
 
-      const tachado = document.createElement('span');
-      tachado.className = 'precio-tachado';
+      const cuotas = document.createElement('span');
+      cuotas.className = 'precio-cuotas';
 
-      const wrap = document.createElement('div');
-      wrap.className = 'precio-contado-wrap';
-
-      const badge = document.createElement('span');
-      badge.className = 'badge-descuento';
-      badge.textContent = '-20%';
+      const descuento = document.createElement('span');
+      descuento.className = 'precio-descuento-nota';
 
       meta.removeChild(priceSpan);
-      wrap.appendChild(badge);
-      wrap.appendChild(priceSpan);
-
-      const label = document.createElement('span');
-      label.className = 'precio-contado-label';
-      label.textContent = '20% off pagando contado';
-
-      box.appendChild(tachado);
-      box.appendChild(wrap);
-      box.appendChild(label);
+      box.appendChild(priceSpan);
+      box.appendChild(cuotas);
+      box.appendChild(descuento);
       meta.appendChild(box);
 
-      return { tachado, priceSpan, box };
+      return { cuotas, descuento, priceSpan, box };
     }
 
     const botonesProducto = Array.from(document.querySelectorAll('.add-btn'))
@@ -2671,7 +2707,8 @@
       const cardBody = btn.closest('.card-body');
       const meta = cardBody ? cardBody.querySelector('.meta') : null;
       const cajaPrecio = meta ? construirCajaPrecio(meta) : null;
-      btn._tachadoEl = cajaPrecio ? cajaPrecio.tachado : null;
+      btn._cuotasEl = cajaPrecio ? cajaPrecio.cuotas : null;
+      btn._descuentoEl = cajaPrecio ? cajaPrecio.descuento : null;
       btn._priceEl = cajaPrecio ? cajaPrecio.priceSpan : null;
       btn._boxEl = cajaPrecio ? cajaPrecio.box : null;
     });
@@ -2680,18 +2717,26 @@
       botonesProducto.forEach(btn => {
         const lista = parseInt(btn.dataset.priceLista, 10);
         if(isNaN(lista)) return;
-        const contado = Math.round(lista * 0.8);
-        const precioParaCarrito = modoPago === 'lista' ? lista : contado;
-        btn.dataset.price = precioParaCarrito;
-        btn.dataset.modo = modoPago;
-        if(btn._tachadoEl) btn._tachadoEl.textContent = money(lista);
-        if(btn._priceEl) btn._priceEl.textContent = money(contado);
+        btn.dataset.price = lista;
+        btn.dataset.modo = 'lista';
+        if(btn._cuotasEl) btn._cuotasEl.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
+        if(btn._descuentoEl) btn._descuentoEl.textContent = '20% de descuento pagando de contado';
+        if(btn._priceEl) btn._priceEl.textContent = money(lista);
       });
     }
 
     function aplicarModoPago(){
       instanciasVentana.forEach(fn => fn());
       actualizarPreciosProductos();
+      if(typeof carrito === 'object' && typeof renderCarrito === 'function'){
+        Object.keys(carrito).forEach(code => {
+          const item = carrito[code];
+          if(item.priceLista === undefined || item.priceLista === null) return;
+          item.price = modoPago === 'lista' ? item.priceLista : Math.round(item.priceLista * 0.8);
+          item.modo = modoPago;
+        });
+        renderCarrito();
+      }
     }
 
     // Estado inicial de los botones de forma de pago
@@ -2776,7 +2821,8 @@
     const nombreEl = document.getElementById('productoNombre');
     const dimEl = document.getElementById('productoDim');
     const descEl = document.getElementById('productoDesc');
-    const tachadoEl = document.getElementById('productoTachado');
+    const cuotasEl = document.getElementById('productoCuotas');
+    const descuentoNotaEl = document.getElementById('productoDescuentoNota');
     const precioBoxEl = document.querySelector('.producto-precio-box');
     const precioEl = document.getElementById('productoPrecio');
     const qtyVal = document.getElementById('productoQtyVal');
@@ -2798,7 +2844,8 @@
       const nombre = card.querySelector('h3');
       const desc = card.querySelector('.desc');
       const dim = card.querySelector('.meta .dim');
-      const tachado = card.querySelector('.meta .precio-tachado');
+      const cuotas = card.querySelector('.meta .precio-cuotas');
+      const descuentoNota = card.querySelector('.meta .precio-descuento-nota');
       const price = card.querySelector('.meta .price');
 
       if(img){
@@ -2812,7 +2859,8 @@
       nombreEl.textContent = nombre ? nombre.textContent : '';
       descEl.textContent = desc ? desc.textContent : '';
       dimEl.textContent = dim ? dim.textContent : '';
-      tachadoEl.textContent = tachado ? tachado.textContent : '';
+      cuotasEl.innerHTML = cuotas ? cuotas.innerHTML : '';
+      descuentoNotaEl.textContent = descuentoNota ? descuentoNota.textContent : '';
       precioEl.textContent = price ? price.textContent : '';
     }
 
@@ -2874,21 +2922,48 @@
 </script>
 
 <script>
-  // ======= Sistema de stock (solo dueño, guardado local en este dispositivo) =======
-  (function(){
-    // Cambiá este PIN por uno que solo vos conozcas.
-    const ADMIN_PIN = '2026';
-    const STOCK_KEY = 'emyhogar_stock';
-    const UMBRAL_ULTIMAS = 3; // 1 a este número = "Últimas unidades"
+  // ======================================================================
+  // CONFIGURACIÓN DE FIREBASE — instrucciones completas al final del archivo
+  // (buscá "INSTRUCCIONES FIREBASE"). Sin esto, el stock funciona igual,
+  // pero solo se guarda en este dispositivo (no se sincroniza).
+  // ======================================================================
+  const FIREBASE_CONFIG = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROYECTO.firebaseapp.com",
+    projectId: "TU_PROYECTO",
+    storageBucket: "TU_PROYECTO.appspot.com",
+    messagingSenderId: "TU_SENDER_ID",
+    appId: "TU_APP_ID"
+  };
 
-    function leerStock(){
-      try{
-        return JSON.parse(localStorage.getItem(STOCK_KEY) || '{}');
-      }catch(e){ return {}; }
+  let fbListo = false, fbDb = null, fbAuth = null;
+  try {
+    if(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !== 'TU_API_KEY' && typeof firebase !== 'undefined'){
+      firebase.initializeApp(FIREBASE_CONFIG);
+      fbDb = firebase.firestore();
+      fbAuth = firebase.auth();
+      fbListo = true;
     }
-    function guardarStock(stock){
+  } catch(e){ console.warn('Firebase no se pudo inicializar:', e); }
+</script>
+
+<script>
+  // ======= Sistema de stock (sincronizado con Firebase si está configurado, si no, local) =======
+  (function(){
+    const STOCK_KEY = 'emyhogar_stock';
+    const ADMIN_PIN_RESPALDO = '2026'; // Solo se usa mientras no conectes Firebase. Cambialo si querés.
+    const UMBRAL_ULTIMAS = 3; // 1 a este número = "Últimas unidades"
+    let stockCache = {};
+    let panelAbierto = false;
+    let ultimoFiltro = '';
+
+    function leerStockLocal(){
+      try{ return JSON.parse(localStorage.getItem(STOCK_KEY) || '{}'); }catch(e){ return {}; }
+    }
+    function guardarStockLocal(stock){
       try{ localStorage.setItem(STOCK_KEY, JSON.stringify(stock)); }catch(e){}
     }
+    stockCache = leerStockLocal();
 
     function estadoStock(cantidad){
       if(cantidad === undefined || cantidad === null || cantidad === '') return null;
@@ -2907,24 +2982,17 @@
           const article = btn.closest('article.card');
           const catSeccion = article ? article.closest('section.categoria') : null;
           const catTitulo = catSeccion ? catSeccion.querySelector('.categoria-titulo').textContent : '';
-          return {
-            code: btn.dataset.code,
-            name: btn.dataset.name,
-            cat: catTitulo,
-            btn,
-            article
-          };
+          return { code: btn.dataset.code, name: btn.dataset.name, cat: catTitulo, btn, article };
         });
     }
 
     function aplicarBadgesEnCatalogo(){
-      const stock = leerStock();
       listaProductos().forEach(p => {
         if(!p.article) return;
         const plate = p.article.querySelector('.plate');
         if(!plate) return;
         let badgeEl = plate.querySelector('.stock-badge');
-        const estado = estadoStock(stock[p.code]);
+        const estado = estadoStock(stockCache[p.code]);
 
         if(!estado){
           if(badgeEl) badgeEl.remove();
@@ -2952,21 +3020,57 @@
 
     aplicarBadgesEnCatalogo();
 
+    // ---- Sincronización en vivo con Firestore (si está configurado) ----
+    if(fbListo){
+      fbDb.collection('emyhogar').doc('stock').onSnapshot(
+        (doc) => {
+          if(doc.exists){
+            stockCache = doc.data() || {};
+            guardarStockLocal(stockCache);
+            aplicarBadgesEnCatalogo();
+            if(panelAbierto) renderListaAdmin(ultimoFiltro);
+          }
+        },
+        (err) => console.warn('No se pudo leer el stock de Firebase, usando copia local:', err)
+      );
+    }
+
+    function guardarCantidad(code, valor){
+      const nuevo = Object.assign({}, stockCache);
+      if(valor === '' || valor === null || valor === undefined){ delete nuevo[code]; } else { nuevo[code] = valor; }
+      stockCache = nuevo;
+      guardarStockLocal(nuevo);
+      aplicarBadgesEnCatalogo();
+      if(fbListo && fbAuth.currentUser){
+        fbDb.collection('emyhogar').doc('stock').set(nuevo)
+          .catch(err => console.warn('No se pudo guardar en Firebase (¿estás logueado?):', err));
+      }
+    }
+
     // ---- Panel del dueño ----
     const adminLink = document.getElementById('adminLink');
     const overlay = document.getElementById('adminOverlay');
     const pinPantalla = document.getElementById('adminPinPantalla');
     const stockPantalla = document.getElementById('adminStockPantalla');
+    const emailInput = document.getElementById('adminEmailInput');
     const pinInput = document.getElementById('adminPinInput');
     const pinEntrar = document.getElementById('adminPinEntrar');
     const pinError = document.getElementById('adminPinError');
+    const sinConfigurar = document.getElementById('adminSinConfigurar');
     const buscador = document.getElementById('adminBuscador');
     const lista = document.getElementById('adminLista');
     const cerrar2 = document.getElementById('adminCerrar2');
+    const aviso = document.querySelector('.admin-aviso');
+
+    if(aviso){
+      aviso.innerHTML = fbListo
+        ? '<strong>Conectado a Firebase:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
+        : '<strong>Todavía no está conectado a Firebase:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
+    }
 
     function renderListaAdmin(filtro){
-      const stock = leerStock();
-      const texto = (filtro || '').toLowerCase();
+      ultimoFiltro = filtro || '';
+      const texto = ultimoFiltro.toLowerCase();
       lista.innerHTML = '';
       listaProductos()
         .filter(p => !texto || p.name.toLowerCase().includes(texto))
@@ -2982,7 +3086,7 @@
           input.type = 'number';
           input.min = '0';
           input.placeholder = '—';
-          if(stock[p.code] !== undefined) input.value = stock[p.code];
+          if(stockCache[p.code] !== undefined) input.value = stockCache[p.code];
 
           const badgePrev = document.createElement('span');
           function refrescarBadgePrev(){
@@ -3001,11 +3105,8 @@
           refrescarBadgePrev();
 
           input.addEventListener('input', () => {
-            const s = leerStock();
-            if(input.value === ''){ delete s[p.code]; } else { s[p.code] = input.value; }
-            guardarStock(s);
+            guardarCantidad(p.code, input.value);
             refrescarBadgePrev();
-            aplicarBadgesEnCatalogo();
           });
 
           row.appendChild(nombre);
@@ -3017,30 +3118,140 @@
 
     function abrirAdmin(){
       overlay.classList.add('abierto');
-      pinPantalla.style.display = '';
-      stockPantalla.style.display = 'none';
-      pinInput.value = '';
       pinError.style.display = 'none';
-      setTimeout(() => pinInput.focus(), 100);
+      sinConfigurar.style.display = 'none';
+
+      if(!fbListo){
+        // Sin Firebase: pedimos el PIN de respaldo (solo guarda local, no sincroniza)
+        pinPantalla.style.display = '';
+        stockPantalla.style.display = 'none';
+        emailInput.style.display = 'none';
+        pinInput.placeholder = 'PIN';
+        pinInput.value = '';
+        setTimeout(() => pinInput.focus(), 100);
+        return;
+      }
+
+      if(fbAuth.currentUser){
+        pinPantalla.style.display = 'none';
+        stockPantalla.style.display = '';
+        panelAbierto = true;
+        renderListaAdmin('');
+      } else {
+        pinPantalla.style.display = '';
+        stockPantalla.style.display = 'none';
+        emailInput.style.display = '';
+        emailInput.value = '';
+        pinInput.placeholder = 'Contraseña';
+        pinInput.value = '';
+        setTimeout(() => emailInput.focus(), 100);
+      }
     }
-    function cerrarAdmin(){ overlay.classList.remove('abierto'); }
+    function cerrarAdmin(){ overlay.classList.remove('abierto'); panelAbierto = false; }
 
     adminLink.addEventListener('click', abrirAdmin);
     overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrarAdmin(); });
     cerrar2.addEventListener('click', cerrarAdmin);
 
     function intentarEntrar(){
-      if(pinInput.value === ADMIN_PIN){
-        pinPantalla.style.display = 'none';
-        stockPantalla.style.display = '';
-        renderListaAdmin('');
-      } else {
-        pinError.style.display = 'inline';
+      if(!fbListo){
+        if(pinInput.value === ADMIN_PIN_RESPALDO){
+          pinPantalla.style.display = 'none';
+          stockPantalla.style.display = '';
+          panelAbierto = true;
+          renderListaAdmin('');
+        } else {
+          pinError.textContent = 'PIN incorrecto';
+          pinError.style.display = 'inline';
+        }
+        return;
       }
+      pinError.style.display = 'none';
+      fbAuth.signInWithEmailAndPassword(emailInput.value.trim(), pinInput.value)
+        .then(() => {
+          pinPantalla.style.display = 'none';
+          stockPantalla.style.display = '';
+          panelAbierto = true;
+          renderListaAdmin('');
+        })
+        .catch((err) => {
+          console.warn('Error de login Firebase:', err);
+          pinError.textContent = 'Usuario o contraseña incorrectos';
+          pinError.style.display = 'inline';
+        });
     }
     pinEntrar.addEventListener('click', intentarEntrar);
     pinInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') intentarEntrar(); });
     buscador.addEventListener('input', () => renderListaAdmin(buscador.value));
+  })();
+</script>
+
+<script>
+  // ======= Carrusel de promos del hero =======
+  (function(){
+    const track = document.getElementById('heroCarouselTrack');
+    const dotsWrap = document.getElementById('heroCarouselDots');
+    const prevBtn = document.getElementById('heroCarouselPrev');
+    const nextBtn = document.getElementById('heroCarouselNext');
+    if(!track) return;
+
+    const slides = track.querySelectorAll('.hero-carousel-slide');
+    const total = slides.length;
+    let index = 0;
+    let autoTimer = null;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'hero-carousel-dot' + (i === 0 ? ' activo' : '');
+      dot.setAttribute('aria-label', `Ir a la promo ${i + 1}`);
+      dot.addEventListener('click', () => irA(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = dotsWrap.querySelectorAll('.hero-carousel-dot');
+
+    function actualizar(){
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('activo', i === index));
+    }
+    function irA(i){
+      index = (i + total) % total;
+      actualizar();
+      reiniciarAuto();
+    }
+    function siguiente(){ irA(index + 1); }
+    function anterior(){ irA(index - 1); }
+
+    function reiniciarAuto(){
+      if(autoTimer) clearInterval(autoTimer);
+      if(total > 1) autoTimer = setInterval(siguiente, 5000);
+    }
+
+    if(nextBtn) nextBtn.addEventListener('click', siguiente);
+    if(prevBtn) prevBtn.addEventListener('click', anterior);
+
+    // Deslizar con el dedo en celular
+    let startX = 0, deltaX = 0, arrastrando = false;
+    track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      arrastrando = true;
+      if(autoTimer) clearInterval(autoTimer);
+    }, {passive:true});
+    track.addEventListener('touchmove', (e) => {
+      if(!arrastrando) return;
+      deltaX = e.touches[0].clientX - startX;
+    }, {passive:true});
+    track.addEventListener('touchend', () => {
+      if(!arrastrando) return;
+      arrastrando = false;
+      if(deltaX > 40) anterior();
+      else if(deltaX < -40) siguiente();
+      else reiniciarAuto();
+      deltaX = 0;
+    });
+
+    actualizar();
+    reiniciarAuto();
   })();
 </script>
 
