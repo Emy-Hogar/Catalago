@@ -775,15 +775,15 @@
   }
   .cart-close:hover{background:rgba(255,255,255,0.15);}
 
-  /* ---------- Detalle de producto (prototipo Salas) ---------- */
-  .card[data-cat="salas"]{ cursor:pointer; position:relative; }
-  .card[data-cat="salas"] .plate::after{
+  /* ---------- Detalle de producto (todos los muebles, no aberturas a medida) ---------- */
+  .card.tiene-detalle{ cursor:pointer; position:relative; }
+  .card.tiene-detalle .plate::after{
     content:"👁 Ver detalle"; position:absolute; top:0.7rem; right:0.7rem;
     background:var(--teal); color:var(--white); font-family:'Poppins',sans-serif;
     font-size:0.68rem; font-weight:600; padding:0.35rem 0.6rem; border-radius:999px;
     opacity:0; transform:translateY(-4px); transition:all .18s ease; pointer-events:none;
   }
-  .card[data-cat="salas"]:hover .plate::after{ opacity:1; transform:translateY(0); }
+  .card.tiene-detalle:hover .plate::after{ opacity:1; transform:translateY(0); }
 
   .producto-overlay{
     position:fixed; inset:0; background:rgba(4,53,57,0.55);
@@ -807,12 +807,25 @@
     box-shadow:0 4px 12px rgba(4,53,57,0.2); font-size:1.1rem; color:var(--teal);
   }
   .producto-close:hover{ background:var(--yellow); }
+  .producto-media{ background:var(--white); border-radius:20px 0 0 20px; display:flex; flex-direction:column; }
+  @media(max-width:760px){ .producto-media{ border-radius:20px 20px 0 0; } }
   .producto-img-wrap{
-    background:var(--white); display:flex; align-items:center; justify-content:center;
-    padding:2.5rem; border-radius:20px 0 0 20px;
+    display:flex; align-items:center; justify-content:center;
+    padding:2.5rem 2.5rem 1rem;
   }
-  @media(max-width:760px){ .producto-img-wrap{ border-radius:20px 20px 0 0; padding:2rem; } }
-  .producto-img-wrap img{ max-width:100%; max-height:380px; object-fit:contain; }
+  @media(max-width:760px){ .producto-img-wrap{ padding:2rem 2rem 0.8rem; } }
+  .producto-img-wrap img{ max-width:100%; max-height:340px; object-fit:contain; }
+  .producto-thumbs{
+    display:flex; gap:0.5rem; justify-content:center; padding:0 1.5rem 1.5rem; flex-wrap:wrap;
+  }
+  .producto-thumb{
+    width:52px; height:52px; border-radius:8px; overflow:hidden; cursor:pointer;
+    border:2px solid transparent; padding:0; background:var(--yellow-pale);
+    opacity:0.7; transition:all .15s ease;
+  }
+  .producto-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .producto-thumb:hover{ opacity:1; }
+  .producto-thumb.activa{ border-color:var(--teal); opacity:1; }
   .producto-info{ padding:2.2rem 2rem 2.4rem; display:flex; flex-direction:column; gap:0.7rem; }
   .producto-code{ display:none; }
   .producto-info h2{ font-size:1.5rem; margin:0; color:var(--teal); line-height:1.2; }
@@ -1712,12 +1725,15 @@
 
 <!-- ---------- Carrito ---------- -->
 <a class="wa-fab" id="waFab" href="#" aria-label="Escribinos por WhatsApp" target="_blank" rel="noopener">📲</a>
-<!-- ---------- Detalle de producto (prototipo, solo Salas) ---------- -->
+<!-- ---------- Detalle de producto (todos los muebles, no aberturas a medida) ---------- -->
 <div class="producto-overlay" id="productoOverlay">
   <div class="producto-modal">
     <button class="producto-close" id="productoClose" aria-label="Cerrar">✕</button>
-    <div class="producto-img-wrap">
-      <img id="productoImg" src="" alt="">
+    <div class="producto-media">
+      <div class="producto-img-wrap">
+        <img id="productoImg" src="" alt="">
+      </div>
+      <div class="producto-thumbs" id="productoThumbs"></div>
     </div>
     <div class="producto-info">
       <span class="producto-code" id="productoCode"></span>
@@ -2817,6 +2833,17 @@
     if(!overlay) return;
 
     const imgEl = document.getElementById('productoImg');
+    const thumbsEl = document.getElementById('productoThumbs');
+
+    // Productos con más de una foto (código del producto → lista de imágenes).
+    // La primera imagen debe coincidir con la que ya se usa en la card del catálogo.
+    const GALERIAS = {
+      'SA-01': [
+        { src: 'imagenes/productos/rack-tv-dakar.jpg', alt: 'Rack TV Dakar cerrado' },
+        { src: 'imagenes/productos/rack-tv-dakar-2.jpg', alt: 'Rack TV Dakar ambientado en living' },
+        { src: 'imagenes/productos/rack-tv-dakar-3.jpg', alt: 'Rack TV Dakar con puerta abierta' }
+      ]
+    };
     const codeEl = document.getElementById('productoCode');
     const nombreEl = document.getElementById('productoNombre');
     const dimEl = document.getElementById('productoDim');
@@ -2835,6 +2862,31 @@
 
     let cantidad = 1;
     let cardActual = null;
+
+    function armarGaleria(codigo, imgPorDefecto){
+      const fotos = GALERIAS[codigo];
+      thumbsEl.innerHTML = '';
+
+      if(!fotos || fotos.length < 2){
+        thumbsEl.style.display = 'none';
+        return;
+      }
+
+      thumbsEl.style.display = 'flex';
+      fotos.forEach((foto, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'producto-thumb' + (i === 0 ? ' activa' : '');
+        btn.innerHTML = `<img src="${foto.src}" alt="${foto.alt}">`;
+        btn.addEventListener('click', () => {
+          imgEl.src = foto.src;
+          imgEl.alt = foto.alt;
+          thumbsEl.querySelectorAll('.producto-thumb').forEach(t => t.classList.remove('activa'));
+          btn.classList.add('activa');
+        });
+        thumbsEl.appendChild(btn);
+      });
+    }
 
     function refrescarDesdeCard(card){
       const img = card.querySelector('.plate img');
@@ -2862,6 +2914,7 @@
       cuotasEl.innerHTML = cuotas ? cuotas.innerHTML : '';
       descuentoNotaEl.textContent = descuentoNota ? descuentoNota.textContent : '';
       precioEl.textContent = price ? price.textContent : '';
+      armarGaleria(codigo ? codigo.textContent : '', img);
     }
 
     function abrirDesdeCard(card){
@@ -2879,7 +2932,9 @@
       cardActual = null;
     }
 
-    document.querySelectorAll('.card[data-cat="salas"]').forEach(card => {
+    document.querySelectorAll('.card').forEach(card => {
+      if(card.dataset.cat === 'ventanas') return; // las aberturas a medida no tienen detalle, son a pedido
+      card.classList.add('tiene-detalle');
       card.addEventListener('click', (e) => {
         if(e.target.closest('.add-btn') || e.target.closest('.wa-quick-row')) return;
         abrirDesdeCard(card);
