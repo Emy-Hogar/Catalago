@@ -2811,6 +2811,57 @@
 
     // Etiqueta "Precio Lista" ya se agrega en el script de forma de pago global
 
+    // Link directo a un producto puntual del catálogo (usa la URL real del sitio, sea cual sea)
+    // URL pública real del catálogo. Se usa siempre esta, sin importar desde dónde se esté
+    // probando la página (por ejemplo un archivo local), para que el link que se comparte
+    // funcione para cualquiera que lo reciba.
+    const SITIO_URL = 'https://emy-hogar.github.io/Catalago/';
+
+    function linkProducto(codigo){
+      const url = new URL(SITIO_URL);
+      url.hash = `producto-${encodeURIComponent(codigo)}`;
+      return url.toString();
+    }
+
+    // Foto principal de un producto, a partir de su botón "+ Agregar"
+    function fotoProducto(btn){
+      const cardBody = btn.closest('.card-body');
+      const img = cardBody?.parentElement?.querySelector('.plate img');
+      return img ? img.src : null;
+    }
+
+    async function compartirProducto(btn){
+      const nombre = btn.dataset.name || 'este producto';
+      const precio = btn.dataset.price ? money(btn.dataset.price) : '';
+      const esVentana = btn.id && btn.id.startsWith('ventBtn');
+      // Las aberturas a medida cambian de código según la medida elegida, así que
+      // en vez de un link puntual mandamos a la sección de Aberturas a Medida.
+      const link = esVentana ? (() => { const u = new URL(SITIO_URL); u.hash = 'ventanas'; return u.toString(); })() : linkProducto(btn.dataset.code);
+      const textoBase = `Mirá esto en Emy Hogar: ${nombre}${precio ? ' — ' + precio : ''}`;
+      const imgSrc = esVentana ? null : fotoProducto(btn);
+
+      if(navigator.share){
+        try {
+          if(imgSrc && navigator.canShare){
+            const resp = await fetch(imgSrc);
+            const blob = await resp.blob();
+            const file = new File([blob], 'producto.jpg', { type: blob.type || 'image/jpeg' });
+            if(navigator.canShare({ files: [file] })){
+              await navigator.share({ text: `${textoBase}\n${link}`, files: [file] });
+              return;
+            }
+          }
+          await navigator.share({ text: textoBase, url: link });
+          return;
+        } catch(e){
+          if(e.name === 'AbortError') return; // el usuario cerró el cuadro de compartir, no insistir
+        }
+      }
+      // Sin Web Share API (la mayoría de las computadoras): compartir por WhatsApp con el link en el texto
+      const msg = `${textoBase}\n${link}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
     // Consultar / Compartir por WhatsApp en cada producto
     if(typeof WHATSAPP_NUMERO !== 'undefined'){
       document.querySelectorAll('.add-btn').forEach(btn => {
@@ -2828,7 +2879,8 @@
           e.preventDefault();
           const nombre = btn.dataset.name || 'este producto';
           const precio = btn.dataset.price ? money(btn.dataset.price) : '';
-          const msg = `Hola! Quiero consultar por: ${nombre}${precio ? ' (' + precio + ')' : ''}. ¿Está disponible?`;
+          const link = (btn.id && btn.id.startsWith('ventBtn')) ? '' : `\n${linkProducto(btn.dataset.code)}`;
+          const msg = `Hola! Quiero consultar por: ${nombre}${precio ? ' (' + precio + ')' : ''}. ¿Está disponible?${link}`;
           window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`, '_blank');
         });
 
@@ -2838,10 +2890,7 @@
         compartir.textContent = '↗ Compartir';
         compartir.addEventListener('click', (e) => {
           e.preventDefault();
-          const nombre = btn.dataset.name || 'este producto';
-          const precio = btn.dataset.price ? money(btn.dataset.price) : '';
-          const msg = `Mirá esto en Emy Hogar: ${nombre}${precio ? ' — ' + precio : ''}.`;
-          window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+          compartirProducto(btn);
         });
 
         row.appendChild(consultar);
@@ -3359,6 +3408,22 @@
 
     actualizar();
     reiniciarAuto();
+  })();
+</script>
+
+<script>
+  // ======= Abrir automáticamente el producto cuando se entra desde un link compartido =======
+  (function(){
+    const m = window.location.hash.match(/^#producto-(.+)$/);
+    if(!m) return;
+    const codigo = decodeURIComponent(m[1]);
+    const btn = document.querySelector(`.add-btn[data-code="${codigo}"]`);
+    const card = btn ? btn.closest('article.card') : null;
+    if(!card || !card.classList.contains('tiene-detalle')) return;
+    setTimeout(() => {
+      card.scrollIntoView({behavior:'instant', block:'center'});
+      card.click();
+    }, 350);
   })();
 </script>
 
