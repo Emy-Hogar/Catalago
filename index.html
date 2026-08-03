@@ -1684,7 +1684,7 @@
 
     <div class="nota">
       <span class="nota-icono">✻</span>
-      <p><strong>Bienvenido a nuestro catálogo. </strong> Aquí encontrarás una selección de muebles diseñados para brindar estilo, comodidad y calidad a cada espacio de tu hogar — Si tienes alguna consulta o deseas más información sobre un producto, estaremos encantados de ayudarte.</p>
+      <p><strong>Este catálogo ya tiene tu marca, pero los productos siguen siendo de ejemplo.</strong> En cuanto tengas fotos de tus piezas reales, súbelas aquí y las incorporo — reemplazando cada ilustración por su foto, y ajustando nombres, medidas y precios a tu inventario real.</p>
     </div>
 
   </main>
@@ -2311,14 +2311,16 @@
     // --- FAQ: edita estos textos con tu información real ---
     const faq = [
       { claves:['envio','envios','entrega','entregan','demora','tiempo'], resp:'Los envíos se coordinan según tu zona; normalmente la entrega tarda entre 5 y 10 días hábiles. Decime tu ciudad y te confirmo tiempos exactos.' },
-      { claves:['descuento','descuentos','oferta','ofertas','promo','promocion','promoción','20%','contado'], resp:'Este mes tenés 20% OFF pagando de contado en todo el catálogo: muebles, ventanas y aberturas. En cada producto vas a ver el precio de lista tachado y el precio de contado ya con el descuento aplicado.' },
-      { claves:['pago','pagos','tarjeta','efectivo','transferencia','cuotas'], resp:'Aceptamos tarjeta (precio de lista) y efectivo/transferencia en pago único (precio de contado, con 20% de descuento). Elegí la forma de pago arriba del catálogo y vas a ver el precio actualizado en cada producto.' },
+      { claves:['descuento','descuentos','oferta','ofertas','promo','promocion','promoción','20%','contado','efectivo','transferencia'], resp:'Este mes tenés 20% de descuento pagando de contado (efectivo) en todo el catálogo: muebles, ventanas y aberturas. En cada producto vas a ver el precio de lista y el precio de contado ya calculado.' },
+      { claves:['pago','pagos','tarjeta','cuotas','visa','mastercard','naranja','data'], resp:'Podés pagar con tarjeta (precio de lista) en hasta 6 cuotas con Visa, Mastercard y Data, o hasta 3 cuotas con Naranja. También podés pagar de contado en efectivo con 20% de descuento sobre el precio de lista.' },
       { claves:['garantia','garantía'], resp:'Todos los muebles tienen garantía por defectos de fabricación. El tiempo exacto varía según el producto; te lo confirmamos al armar tu pedido.' },
       { claves:['horario','horarios','abren','atienden'], resp:'Podés escribirnos por WhatsApp en cualquier momento; te respondemos a la brevedad en horario comercial.' },
       { claves:['direccion','dirección','ubicacion','ubicación','local','tienda'], resp:'Trabajamos con showroom y entregas a domicilio. Escribinos por WhatsApp y coordinamos según tu zona.' },
       { claves:['contacto','whatsapp','telefono','teléfono','hablar con alguien','humano','persona'], resp:'Claro, te dejo el contacto directo por WhatsApp para hablar con nosotros.', accion:'whatsapp' },
+      { claves:['instagram','facebook','redes','red social','seguinos'], resp:'Nos podés seguir en Instagram (@emyhogar_caucete) y en Facebook como Emy Hogar — subimos fotos de piezas nuevas y promos ahí. Los links están al pie de esta página.' },
       { claves:['devolucion','devolución','cambio','cambios'], resp:'Si tu producto llega con algún problema, contactanos dentro de las 48hs de recibido y lo resolvemos sin costo extra.' },
       { claves:['stock','disponible','disponibilidad','quedan','hay'], resp:'La disponibilidad puede variar. Decime qué producto te interesa y te confirmamos el stock por WhatsApp antes de que hagas tu pedido.' },
+      { claves:['medida','medidas','tamaño','tamaños','ancho','alto','a medida'], resp:'Las ventanas de aluminio, ventanas de madera, puertas de madera y aireadores son a medida: elegís el tamaño en la sección "Aberturas a Medida" y el precio se actualiza solo. También podés descargar el PDF con todas las medidas y precios desde ahí.' },
     ];
 
     // --- Estado del chat ---
@@ -2402,8 +2404,8 @@
     }
 
     function saludar(){
-      agregarMensaje('¡Hola! 👋 Soy el asistente de Emy Hogar. Este mes tenés 20% OFF pagando de contado en todo el catálogo. Puedo ayudarte a encontrar muebles o responder preguntas sobre envíos, pagos y garantía.', 'bot');
-      agregarChips(['Salas', 'Ventanas', 'Descuentos', 'Formas de pago']);
+      agregarMensaje('¡Hola! 👋 Soy el asistente de Emy Hogar. Este mes tenés 20% de descuento pagando de contado en todo el catálogo, y hasta 6 cuotas con tarjeta. Puedo ayudarte a encontrar muebles, ver medidas de ventanas a medida, o contarte sobre envíos, pagos y nuestras redes.', 'bot');
+      agregarChips(['Salas', 'Dormitorios', 'Ventanas', 'WhatsApp']);
     }
 
     function buscarProductos(consulta){
@@ -2430,12 +2432,47 @@
         return { p, score };
       });
 
-      return puntuados.filter(x => x.score > 0).sort((a,b) => b.score - a.score).slice(0, 3).map(x => x.p);
+      return puntuados.filter(x => x.score > 0).sort((a,b) => b.score - a.score).slice(0, 5).map(x => x.p);
+    }
+
+    // Detecta si la consulta menciona una categoría completa, para poder ofrecer
+    // "ver todos los productos" en vez de mostrar nada más que una muestra corta.
+    function categoriaDetectada(texto){
+      for(const [cat, sinonimos] of Object.entries(categorias)){
+        if(sinonimos.some(s => texto.includes(normalizar(s)))) return cat;
+      }
+      return null;
+    }
+
+    function verCategoriaCompleta(cat){
+      const boton = document.querySelector(`.filtro-btn[data-cat="${cat}"]`);
+      const seccion = document.querySelector(`.categoria[data-cat="${cat}"]`) || document.getElementById(cat);
+      if(boton) boton.click();
+      if(seccion) seccion.scrollIntoView({behavior:'smooth', block:'start'});
+      cerrarChat();
     }
 
     function buscarFAQ(consulta){
       const texto = normalizar(consulta);
       return faq.find(f => f.claves.some(c => texto.includes(normalizar(c))));
+    }
+
+    function botonAccion(texto, onClick){
+      const a = document.createElement('a');
+      a.href = '#';
+      a.className = 'chat-chip';
+      a.textContent = texto;
+      a.style.textDecoration = 'none';
+      a.addEventListener('click', (e) => { e.preventDefault(); onClick(); });
+      const cont = document.createElement('div');
+      cont.className = 'chat-chips';
+      cont.appendChild(a);
+      chatBody.appendChild(cont);
+      scrollAbajo();
+    }
+
+    function botonWhatsApp(texto){
+      botonAccion(texto, () => window.open(`https://wa.me/${WHATSAPP_NUMERO}`, '_blank'));
     }
 
     function responder(consulta){
@@ -2450,22 +2487,13 @@
 
       const faqMatch = buscarFAQ(texto);
       const resultados = buscarProductos(texto);
+      const cat = categoriaDetectada(texto);
 
       return () => {
         if(faqMatch){
           agregarMensaje(faqMatch.resp, 'bot');
           if(faqMatch.accion === 'whatsapp'){
-            const a = document.createElement('a');
-            a.href = `https://wa.me/${WHATSAPP_NUMERO}`;
-            a.target = '_blank';
-            a.className = 'chat-chip';
-            a.textContent = '📲 Abrir WhatsApp';
-            a.style.textDecoration = 'none';
-            const cont = document.createElement('div');
-            cont.className = 'chat-chips';
-            cont.appendChild(a);
-            chatBody.appendChild(cont);
-            scrollAbajo();
+            botonWhatsApp('📲 Abrir WhatsApp');
           }
         }
 
@@ -2474,17 +2502,15 @@
           resultados.forEach(agregarProducto);
         } else if(!faqMatch){
           agregarMensaje('No encontré algo exacto para eso. Podés preguntarme por salas, comedores, dormitorios, oficina, cocina o ventanas, o escribirnos directo por WhatsApp.', 'bot');
-          const a = document.createElement('a');
-          a.href = `https://wa.me/${WHATSAPP_NUMERO}`;
-          a.target = '_blank';
-          a.className = 'chat-chip';
-          a.textContent = '📲 Escribir por WhatsApp';
-          a.style.textDecoration = 'none';
-          const cont = document.createElement('div');
-          cont.className = 'chat-chips';
-          cont.appendChild(a);
-          chatBody.appendChild(cont);
-          scrollAbajo();
+          botonWhatsApp('📲 Escribir por WhatsApp');
+        }
+
+        // Si la consulta menciona una categoría, siempre ofrecer ver el listado completo,
+        // no solo la muestra de hasta 5 productos.
+        if(cat){
+          const seccion = document.querySelector(`.categoria[data-cat="${cat}"]`);
+          const nombreCat = seccion?.querySelector('.categoria-titulo')?.textContent || 'esa categoría';
+          botonAccion(`📂 Ver todo en ${nombreCat}`, () => verCategoriaCompleta(cat));
         }
       };
     }
