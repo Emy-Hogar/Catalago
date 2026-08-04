@@ -360,6 +360,19 @@
   .plate::before, .plate::after{
     content:""; position:absolute; clip-path:polygon(50% 2%, 97% 96%, 3% 88%);
   }
+  .juego-plate{ gap:2px; padding:0; }
+  .juego-plate::before, .juego-plate::after{ display:none; }
+  .juego-mitad{
+    position:relative; flex:1; height:100%; overflow:hidden;
+    background:var(--white);
+  }
+  .juego-mitad img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .juego-etiqueta{
+    position:absolute; bottom:0.5rem; left:0.5rem; z-index:2;
+    background:rgba(4,53,57,0.72); color:var(--white);
+    font-family:'Poppins',sans-serif; font-size:0.62rem; font-weight:700;
+    padding:0.2rem 0.55rem; border-radius:999px; letter-spacing:0.03em;
+  }
   .plate::before{
     width:68%; height:68%; background:var(--yellow);
     transform:rotate(-10deg) translate(8%, 6%); opacity:0.85;
@@ -1175,9 +1188,16 @@
       <div class="grid">
 
         <article class="card" data-cat="juegos-comedor">
-          <div class="plate">
+          <div class="plate juego-plate">
             <span class="badge">Armá tu juego</span>
-            <img id="juegoImg" src="imagenes/productos/silla-comedor-azul.jpg" alt="Juego de Comedor">
+            <div class="juego-mitad">
+              <img src="imagenes/productos/mesa-comedor-rectangular.jpg" alt="Mesa de Comedor Rectangular">
+              <span class="juego-etiqueta">Mesa</span>
+            </div>
+            <div class="juego-mitad">
+              <img id="juegoImg" src="imagenes/productos/silla-comedor-azul.jpg" alt="Juego de Comedor">
+              <span class="juego-etiqueta">Sillas</span>
+            </div>
           </div>
           <div class="card-body">
             <span class="code" id="juegoCodigo">JC-01</span>
