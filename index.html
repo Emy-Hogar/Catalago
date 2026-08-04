@@ -1002,6 +1002,7 @@
       <button class="filtro-btn activo" data-cat="todos">Todos</button>
       <button class="filtro-btn" data-cat="salas">Salas</button>
       <button class="filtro-btn" data-cat="comedores">Comedores</button>
+      <button class="filtro-btn" data-cat="juegos-comedor">Juegos de Comedor</button>
       <button class="filtro-btn" data-cat="dormitorios">Dormitorios</button>
       <button class="filtro-btn" data-cat="oficina">Oficina</button>
       <button class="filtro-btn" data-cat="ventanas">Ventanas</button>
@@ -1112,13 +1113,101 @@
           </div>
         </article>
 
+        <article class="card" data-cat="comedores">
+          <div class="plate">
+            <img src="imagenes/productos/mesa-comedor-rectangular.jpg" alt="Mesa de Comedor Rectangular" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">CO-07</span>
+            <h3>Mesa de Comedor Rectangular</h3>
+            <p class="desc">Estructura de metal con tapa símil madera. Base del Juego de Comedor armable.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$150,000</span></div>
+            <button class="add-btn" data-code="CO-07" data-name="Mesa de Comedor Rectangular" data-price="150000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="comedores">
+          <div class="plate">
+            <img src="imagenes/productos/silla-comedor-azul.jpg" alt="Silla Comedor Azul" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SC-01</span>
+            <h3>Silla Comedor Azul</h3>
+            <p class="desc">Estructura de caño negro, asiento y respaldo tapizados en símil lino azul.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
+            <button class="add-btn" data-code="SC-01" data-name="Silla Comedor Azul" data-price="25000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="comedores">
+          <div class="plate">
+            <img src="imagenes/productos/silla-comedor-circulos.jpg" alt="Silla Comedor Círculos Dorados" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SC-02</span>
+            <h3>Silla Comedor Círculos Dorados</h3>
+            <p class="desc">Estructura de caño negro, tapizado estampado de círculos dorados sobre negro.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
+            <button class="add-btn" data-code="SC-02" data-name="Silla Comedor Círculos Dorados" data-price="25000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="comedores">
+          <div class="plate">
+            <img src="imagenes/productos/silla-comedor-mostaza.jpg" alt="Silla Comedor Mostaza" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SC-03</span>
+            <h3>Silla Comedor Mostaza</h3>
+            <p class="desc">Estructura de caño negro, asiento y respaldo tapizados en símil lino mostaza.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
+            <button class="add-btn" data-code="SC-03" data-name="Silla Comedor Mostaza" data-price="25000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+
       </div>
     </section>
 
+    <!-- ============ JUEGOS DE COMEDOR ============ -->
+    <section class="categoria" id="juegos-comedor" data-cat="juegos-comedor">
+      <div class="categoria-head">
+        <span class="categoria-num">03</span>
+        <h2 class="categoria-titulo">Juegos de Comedor</h2>
+        <p class="categoria-desc">Armá tu juego: elegí el color de silla y la cantidad, y el precio se calcula solo con la Mesa de Comedor Rectangular incluida.</p>
+      </div>
+      <div class="grid">
+
+        <article class="card" data-cat="juegos-comedor">
+          <div class="plate">
+            <span class="badge">Armá tu juego</span>
+            <img id="juegoImg" src="imagenes/productos/silla-comedor-azul.jpg" alt="Juego de Comedor">
+          </div>
+          <div class="card-body">
+            <span class="code" id="juegoCodigo">JC-01</span>
+            <h3 id="juegoNombre">Mesa de Comedor Rectangular + 6 Sillas Azules</h3>
+            <p class="desc">Incluye la Mesa de Comedor Rectangular. Elegí el color de silla y la cantidad para tu juego completo.</p>
+            <div class="ventana-selector">
+              <label for="selJuego">Color y cantidad de sillas</label>
+              <select id="selJuego"></select>
+            </div>
+            <div class="ventana-precio-row">
+              <span class="dim" id="juegoDim">Mesa + sillas</span>
+              <div class="precio-box">
+                <span class="price" id="juegoPrecio">$300,000</span>
+                <span class="precio-cuotas" id="juegoCuotas"></span>
+              </div>
+            </div>
+            <div class="ventana-acciones">
+              <button class="add-btn" id="juegoBtn" data-code="JC-01" data-name="Mesa de Comedor Rectangular + 6 Sillas Azules" data-price="300000" data-unit="">+ Agregar</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    
     <!-- ============ DORMITORIOS ============ -->
     <section class="categoria" id="dormitorios" data-cat="dormitorios">
       <div class="categoria-head">
-        <span class="categoria-num">03</span>
+        <span class="categoria-num">04</span>
         <h2 class="categoria-titulo">Dormitorios</h2>
         <p class="categoria-desc">Camas, buroes y guardarropa para el descanso.</p>
       </div>
@@ -1369,7 +1458,7 @@
     <!-- ============ OFICINA ============ -->
     <section class="categoria" id="oficina" data-cat="oficina">
       <div class="categoria-head">
-        <span class="categoria-num">04</span>
+        <span class="categoria-num">05</span>
         <h2 class="categoria-titulo">Oficina &amp; Estudio</h2>
         <p class="categoria-desc">Piezas para el espacio de trabajo en casa.</p>
       </div>
@@ -1452,7 +1541,7 @@
     <!-- ============ VENTANAS A MEDIDA ============ -->
     <section class="categoria" id="ventanas" data-cat="ventanas">
       <div class="categoria-head">
-        <span class="categoria-num">05</span>
+        <span class="categoria-num">06</span>
         <h2 class="categoria-titulo">Aberturas a Medida</h2>
         <p class="categoria-desc">Ventanas de aluminio, ventanas de madera, puertas de madera y aireadores, cada uno por separado para elegir sin confusiones. Elegí la medida y el precio se actualiza al instante según la forma de pago que elegiste arriba. También podés descargar el listado completo en PDF.</p>
       </div>
@@ -1577,7 +1666,7 @@
     <!-- ============ COCINA Y MULTIFUNCION ============ -->
     <section class="categoria" id="cocina" data-cat="cocina">
       <div class="categoria-head">
-        <span class="categoria-num">06</span>
+        <span class="categoria-num">07</span>
         <h2 class="categoria-titulo">Cocina &amp; Multifunción</h2>
         <p class="categoria-desc">Muebles y combos para cocina, lavadero y planchado.</p>
       </div>
@@ -1682,7 +1771,7 @@
       </div>
     </section>
 
-    <div class="nota">
+<div class="nota">
       <span class="nota-icono">✻</span>
       <p><strong>Este catálogo ya tiene tu marca, pero los productos siguen siendo de ejemplo.</strong> En cuanto tengas fotos de tus piezas reales, súbelas aquí y las incorporo — reemplazando cada ilustración por su foto, y ajustando nombres, medidas y precios a tu inventario real.</p>
     </div>
@@ -2305,7 +2394,8 @@
       dormitorios: ['dormitorio','dormitorios','cama','recamara','recámara','cuarto','habitacion','habitación','closet','clóset'],
       oficina: ['oficina','escritorio','estudio','silla de oficina'],
       cocina: ['cocina','multifuncion','multifunción','combo cocina','microondas'],
-      ventanas: ['ventana','ventanas','abertura','aberturas','aluminio','puerta','puertas','aireador','aireadores','madera']
+      ventanas: ['ventana','ventanas','abertura','aberturas','aluminio','puerta','puertas','aireador','aireadores','madera'],
+      'juegos-comedor': ['juego de comedor','juegos de comedor','juego de mesa','combo mesa y sillas','mesa con sillas']
     };
 
     // --- FAQ: edita estos textos con tu información real ---
@@ -2479,7 +2569,7 @@
       const texto = normalizar(consulta);
 
       if(/^(hola|buenas|buen dia|buen día|buenas tardes|buenas noches|hey)\b/.test(texto)){
-        return () => agregarMensaje('¡Hola! ¿Buscás algo en particular? Puedo mostrarte salas, comedores, dormitorios, oficina, cocina o ventanas a medida.', 'bot');
+        return () => agregarMensaje('¡Hola! ¿Buscás algo en particular? Puedo mostrarte salas, comedores, dormitorios, oficina, cocina, ventanas a medida o juegos de comedor.', 'bot');
       }
       if(/gracias/.test(texto)){
         return () => agregarMensaje('¡De nada! Cualquier otra cosa, acá estoy 😊', 'bot');
@@ -2501,7 +2591,7 @@
           agregarMensaje(faqMatch ? 'Además, mirá estas opciones:' : `Encontré ${resultados.length === 1 ? 'esta opción' : 'estas opciones'} para vos:`, 'bot');
           resultados.forEach(agregarProducto);
         } else if(!faqMatch){
-          agregarMensaje('No encontré algo exacto para eso. Podés preguntarme por salas, comedores, dormitorios, oficina, cocina o ventanas, o escribirnos directo por WhatsApp.', 'bot');
+          agregarMensaje('No encontré algo exacto para eso. Podés preguntarme por salas, comedores, dormitorios, oficina, cocina, ventanas o juegos de comedor, o escribirnos directo por WhatsApp.', 'bot');
           botonWhatsApp('📲 Escribir por WhatsApp');
         }
 
@@ -3034,7 +3124,7 @@
     }
 
     document.querySelectorAll('.card').forEach(card => {
-      if(card.dataset.cat === 'ventanas') return; // las aberturas a medida no tienen detalle, son a pedido
+      if(card.dataset.cat === 'ventanas' || card.dataset.cat === 'juegos-comedor') return; // estas tarjetas tienen su propio selector, no detalle
       card.classList.add('tiene-detalle');
       card.addEventListener('click', (e) => {
         if(e.target.closest('.add-btn') || e.target.closest('.wa-quick-row')) return;
@@ -3424,6 +3514,138 @@
       card.scrollIntoView({behavior:'instant', block:'center'});
       card.click();
     }, 350);
+  })();
+</script>
+
+<script>
+  // ======================================================================
+  // JUEGOS DE COMEDOR — mesa + sillas combinables
+  //
+  // Arquitectura: en vez de generar TODAS las combinaciones posibles de
+  // cualquier mesa con cualquier silla (lo cual mezclaría estilos que no
+  // pegan entre sí), esto arma combinaciones a partir de UNA mesa base y
+  // una lista curada de sillas — mismo patrón que ya usa "Aberturas a
+  // Medida" (elegís una opción de un selector y el precio se arma solo).
+  // Para agregar otra mesa o silla más adelante, solo hay que sumarla a
+  // las listas de acá abajo; el resto (precio, cuotas, stock) es automático.
+  //
+  // PRECIOS DE EJEMPLO — reemplazalos por los reales:
+  // ======================================================================
+  (function(){
+    const PRECIO_MESA = 150000;
+    const PRECIO_SILLA_AZUL = 25000;
+    const PRECIO_SILLA_CIRCULOS = 25000;
+    const PRECIO_SILLA_MOSTAZA = 25000;
+    // ----------------------------------------------------------------
+
+    const MESA = { codigo: 'CO-07', precio: PRECIO_MESA };
+    const SILLAS = [
+      { codigo: 'SC-01', nombre: 'Sillas Azules', precio: PRECIO_SILLA_AZUL, img: 'imagenes/productos/silla-comedor-azul.jpg' },
+      { codigo: 'SC-02', nombre: 'Sillas Círculos Dorados', precio: PRECIO_SILLA_CIRCULOS, img: 'imagenes/productos/silla-comedor-circulos.jpg' },
+      { codigo: 'SC-03', nombre: 'Sillas Mostaza', precio: PRECIO_SILLA_MOSTAZA, img: 'imagenes/productos/silla-comedor-mostaza.jpg' }
+    ];
+    const CANTIDADES = [6, 8];
+
+    function money(n){ return '$' + Math.round(n).toLocaleString('es-AR'); }
+    const CUOTAS_HTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
+
+    // La mesa y cada silla también son productos individuales en Comedores;
+    // esto los mantiene sincronizados con estos mismos precios (una sola
+    // fuente de verdad, en vez de tener que editar el precio en dos lugares).
+    function sincronizarProductoIndividual(codigo, precio){
+      const btn = document.querySelector(`.add-btn[data-code="${codigo}"]`);
+      if(!btn) return;
+      btn.dataset.price = precio;
+      btn.dataset.priceLista = precio;
+      if(btn._priceEl) btn._priceEl.textContent = money(precio);
+      if(btn._cuotasEl) btn._cuotasEl.innerHTML = CUOTAS_HTML;
+      const priceSpan = btn.closest('.card-body')?.querySelector('.meta .price');
+      if(priceSpan) priceSpan.textContent = money(precio);
+    }
+    sincronizarProductoIndividual(MESA.codigo, MESA.precio);
+    SILLAS.forEach(s => sincronizarProductoIndividual(s.codigo, s.precio));
+
+    // Stock: lee el mismo panel del dueño que ya usa el resto del catálogo.
+    // Si una silla (o la mesa) está sin stock, el combo queda marcado como no disponible.
+    function leerStock(){
+      try{ return JSON.parse(localStorage.getItem('emyhogar_stock') || '{}'); }catch(e){ return {}; }
+    }
+    function disponible(codigo){
+      const s = leerStock()[codigo];
+      if(s === undefined || s === null || s === '') return true; // sin dato cargado = se asume disponible
+      return parseInt(s, 10) > 0;
+    }
+
+    // Genera automáticamente todas las combinaciones (color de silla × cantidad)
+    function generarCombos(){
+      const combos = [];
+      SILLAS.forEach(silla => {
+        CANTIDADES.forEach(cant => {
+          combos.push({
+            nombre: `Mesa de Comedor Rectangular + ${cant} ${silla.nombre}`,
+            precio: MESA.precio + silla.precio * cant,
+            img: silla.img,
+            sillaCodigo: silla.codigo,
+            cantidad: cant,
+            disponible: disponible(MESA.codigo) && disponible(silla.codigo)
+          });
+        });
+      });
+      return combos;
+    }
+
+    const select = document.getElementById('selJuego');
+    if(!select) return;
+    const imgEl = document.getElementById('juegoImg');
+    const nombreEl = document.getElementById('juegoNombre');
+    const codigoEl = document.getElementById('juegoCodigo');
+    const dimEl = document.getElementById('juegoDim');
+    const precioEl = document.getElementById('juegoPrecio');
+    const cuotasEl = document.getElementById('juegoCuotas');
+    const btn = document.getElementById('juegoBtn');
+
+    function actualizar(combos){
+      combos = combos || generarCombos();
+      const c = combos[select.value];
+      if(!c) return;
+      const codigo = `JC-${String(Number(select.value) + 1).padStart(2, '0')}`;
+      imgEl.src = c.img;
+      imgEl.alt = c.nombre;
+      nombreEl.textContent = c.nombre;
+      codigoEl.textContent = codigo;
+      dimEl.textContent = `Mesa + ${c.cantidad} sillas`;
+      precioEl.textContent = money(c.precio);
+      cuotasEl.innerHTML = CUOTAS_HTML;
+      btn.dataset.code = codigo;
+      btn.dataset.name = c.nombre;
+      btn.dataset.price = c.precio;
+      btn.dataset.priceLista = c.precio;
+      btn.dataset.modo = 'lista';
+      btn.disabled = !c.disponible;
+      btn.textContent = c.disponible ? '+ Agregar' : 'Sin stock';
+      btn.classList.toggle('sin-stock', !c.disponible);
+      if(typeof actualizarBotonesAgregar === 'function') actualizarBotonesAgregar();
+    }
+
+    function poblarSelector(){
+      const combos = generarCombos();
+      const valorPrevio = select.value;
+      select.innerHTML = '';
+      combos.forEach((c, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = c.disponible ? c.nombre : `${c.nombre} (sin stock)`;
+        opt.disabled = !c.disponible;
+        select.appendChild(opt);
+      });
+      const previoDisponible = combos[valorPrevio] && combos[valorPrevio].disponible;
+      const primerDisponible = combos.findIndex(c => c.disponible);
+      select.value = previoDisponible ? valorPrevio : (primerDisponible >= 0 ? primerDisponible : 0);
+      actualizar(combos);
+    }
+
+    select.addEventListener('change', () => actualizar());
+    poblarSelector();
   })();
 </script>
 
