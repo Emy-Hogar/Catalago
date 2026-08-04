@@ -364,9 +364,10 @@
   .juego-plate::before, .juego-plate::after{ display:none; }
   .juego-mitad{
     position:relative; flex:1; height:100%; overflow:hidden;
-    background:var(--white);
+    background:var(--white); display:flex; align-items:center; justify-content:center;
   }
   .juego-mitad img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .juego-mitad.juego-mesa img{ object-fit:contain; padding:0.4rem; }
   .juego-etiqueta{
     position:absolute; bottom:0.5rem; left:0.5rem; z-index:2;
     background:rgba(4,53,57,0.72); color:var(--white);
@@ -1126,55 +1127,6 @@
           </div>
         </article>
 
-        <article class="card" data-cat="comedores">
-          <div class="plate">
-            <img src="imagenes/productos/mesa-comedor-rectangular.jpg" alt="Mesa de Comedor Rectangular" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="code">CO-07</span>
-            <h3>Mesa de Comedor Rectangular</h3>
-            <p class="desc">Estructura de metal con tapa símil madera. Base del Juego de Comedor armable.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$150,000</span></div>
-            <button class="add-btn" data-code="CO-07" data-name="Mesa de Comedor Rectangular" data-price="150000" data-unit="">+ Agregar</button>
-          </div>
-        </article>
-        <article class="card" data-cat="comedores">
-          <div class="plate">
-            <img src="imagenes/productos/silla-comedor-azul.jpg" alt="Silla Comedor Azul" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="code">SC-01</span>
-            <h3>Silla Comedor Azul</h3>
-            <p class="desc">Estructura de caño negro, asiento y respaldo tapizados en símil lino azul.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
-            <button class="add-btn" data-code="SC-01" data-name="Silla Comedor Azul" data-price="25000" data-unit="">+ Agregar</button>
-          </div>
-        </article>
-        <article class="card" data-cat="comedores">
-          <div class="plate">
-            <img src="imagenes/productos/silla-comedor-circulos.jpg" alt="Silla Comedor Círculos Dorados" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="code">SC-02</span>
-            <h3>Silla Comedor Círculos Dorados</h3>
-            <p class="desc">Estructura de caño negro, tapizado estampado de círculos dorados sobre negro.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
-            <button class="add-btn" data-code="SC-02" data-name="Silla Comedor Círculos Dorados" data-price="25000" data-unit="">+ Agregar</button>
-          </div>
-        </article>
-        <article class="card" data-cat="comedores">
-          <div class="plate">
-            <img src="imagenes/productos/silla-comedor-mostaza.jpg" alt="Silla Comedor Mostaza" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="code">SC-03</span>
-            <h3>Silla Comedor Mostaza</h3>
-            <p class="desc">Estructura de caño negro, asiento y respaldo tapizados en símil lino mostaza.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$25,000</span></div>
-            <button class="add-btn" data-code="SC-03" data-name="Silla Comedor Mostaza" data-price="25000" data-unit="">+ Agregar</button>
-          </div>
-        </article>
-
       </div>
     </section>
 
@@ -1190,7 +1142,7 @@
         <article class="card" data-cat="juegos-comedor">
           <div class="plate juego-plate">
             <span class="badge">Armá tu juego</span>
-            <div class="juego-mitad">
+            <div class="juego-mitad juego-mesa">
               <img src="imagenes/productos/mesa-comedor-rectangular.jpg" alt="Mesa de Comedor Rectangular">
               <span class="juego-etiqueta">Mesa</span>
             </div>
@@ -1223,7 +1175,6 @@
       </div>
     </section>
 
-    
     <!-- ============ DORMITORIOS ============ -->
     <section class="categoria" id="dormitorios" data-cat="dormitorios">
       <div class="categoria-head">
@@ -3242,7 +3193,7 @@
 
     // Lista de productos administrables: los 39 muebles de catálogo (no ventanas/puertas, que son a medida)
     function listaProductos(){
-      return Array.from(document.querySelectorAll('.add-btn'))
+      const normales = Array.from(document.querySelectorAll('.add-btn'))
         .filter(b => !b.id && !b.dataset.skipGlobal)
         .map(btn => {
           const article = btn.closest('article.card');
@@ -3250,6 +3201,15 @@
           const catTitulo = catSeccion ? catSeccion.querySelector('.categoria-titulo').textContent : '';
           return { code: btn.dataset.code, name: btn.dataset.name, cat: catTitulo, btn, article };
         });
+      // La mesa y las sillas del Juego de Comedor no son tarjetas propias (solo se venden
+      // combinadas), pero igual necesitan poder marcarse sin stock desde acá.
+      const juegoComedor = document.getElementById('selJuego') ? [
+        { code: 'MESA-COMEDOR', name: 'Mesa de Comedor Rectangular (Juego de Comedor)', cat: 'Juegos de Comedor', btn: null, article: null },
+        { code: 'SC-01', name: 'Silla Comedor Azul (Juego de Comedor)', cat: 'Juegos de Comedor', btn: null, article: null },
+        { code: 'SC-02', name: 'Silla Comedor Círculos Dorados (Juego de Comedor)', cat: 'Juegos de Comedor', btn: null, article: null },
+        { code: 'SC-03', name: 'Silla Comedor Mostaza (Juego de Comedor)', cat: 'Juegos de Comedor', btn: null, article: null }
+      ] : [];
+      return normales.concat(juegoComedor);
     }
 
     function aplicarBadgesEnCatalogo(){
@@ -3294,6 +3254,7 @@
             stockCache = doc.data() || {};
             guardarStockLocal(stockCache);
             aplicarBadgesEnCatalogo();
+            if(typeof window.actualizarJuegosComedor === 'function') window.actualizarJuegosComedor();
             if(panelAbierto) renderListaAdmin(ultimoFiltro);
           }
         },
@@ -3307,6 +3268,7 @@
       stockCache = nuevo;
       guardarStockLocal(nuevo);
       aplicarBadgesEnCatalogo();
+      if(typeof window.actualizarJuegosComedor === 'function') window.actualizarJuegosComedor();
       if(fbListo && fbAuth.currentUser){
         fbDb.collection('emyhogar').doc('stock').set(nuevo)
           .catch(err => console.warn('No se pudo guardar en Firebase (¿estás logueado?):', err));
@@ -3541,13 +3503,9 @@
   // ======================================================================
   // JUEGOS DE COMEDOR — mesa + sillas combinables
   //
-  // Arquitectura: en vez de generar TODAS las combinaciones posibles de
-  // cualquier mesa con cualquier silla (lo cual mezclaría estilos que no
-  // pegan entre sí), esto arma combinaciones a partir de UNA mesa base y
-  // una lista curada de sillas — mismo patrón que ya usa "Aberturas a
-  // Medida" (elegís una opción de un selector y el precio se arma solo).
-  // Para agregar otra mesa o silla más adelante, solo hay que sumarla a
-  // las listas de acá abajo; el resto (precio, cuotas, stock) es automático.
+  // La mesa y las sillas NO existen como productos sueltos en Comedores
+  // (a propósito: solo se venden como parte del juego armado acá). Los
+  // precios de cada una viven únicamente en este bloque.
   //
   // PRECIOS DE EJEMPLO — reemplazalos por los reales:
   // ======================================================================
@@ -3558,7 +3516,7 @@
     const PRECIO_SILLA_MOSTAZA = 25000;
     // ----------------------------------------------------------------
 
-    const MESA = { codigo: 'CO-07', precio: PRECIO_MESA };
+    const MESA = { precio: PRECIO_MESA };
     const SILLAS = [
       { codigo: 'SC-01', nombre: 'Sillas Azules', precio: PRECIO_SILLA_AZUL, img: 'imagenes/productos/silla-comedor-azul.jpg' },
       { codigo: 'SC-02', nombre: 'Sillas Círculos Dorados', precio: PRECIO_SILLA_CIRCULOS, img: 'imagenes/productos/silla-comedor-circulos.jpg' },
@@ -3569,34 +3527,17 @@
     function money(n){ return '$' + Math.round(n).toLocaleString('es-AR'); }
     const CUOTAS_HTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
 
-    // La mesa y cada silla también son productos individuales en Comedores;
-    // esto los mantiene sincronizados con estos mismos precios (una sola
-    // fuente de verdad, en vez de tener que editar el precio en dos lugares).
-    function sincronizarProductoIndividual(codigo, precio){
-      const btn = document.querySelector(`.add-btn[data-code="${codigo}"]`);
-      if(!btn) return;
-      btn.dataset.price = precio;
-      btn.dataset.priceLista = precio;
-      if(btn._priceEl) btn._priceEl.textContent = money(precio);
-      if(btn._cuotasEl) btn._cuotasEl.innerHTML = CUOTAS_HTML;
-      const priceSpan = btn.closest('.card-body')?.querySelector('.meta .price');
-      if(priceSpan) priceSpan.textContent = money(precio);
-    }
-    sincronizarProductoIndividual(MESA.codigo, MESA.precio);
-    SILLAS.forEach(s => sincronizarProductoIndividual(s.codigo, s.precio));
-
     // Stock: lee el mismo panel del dueño que ya usa el resto del catálogo.
-    // Si una silla (o la mesa) está sin stock, el combo queda marcado como no disponible.
+    // Los códigos de stock para la mesa y cada silla son internos (MESA, SC-01, etc.)
     function leerStock(){
       try{ return JSON.parse(localStorage.getItem('emyhogar_stock') || '{}'); }catch(e){ return {}; }
     }
     function disponible(codigo){
       const s = leerStock()[codigo];
-      if(s === undefined || s === null || s === '') return true; // sin dato cargado = se asume disponible
+      if(s === undefined || s === null || s === '') return true;
       return parseInt(s, 10) > 0;
     }
 
-    // Genera automáticamente todas las combinaciones (color de silla × cantidad)
     function generarCombos(){
       const combos = [];
       SILLAS.forEach(silla => {
@@ -3607,7 +3548,7 @@
             img: silla.img,
             sillaCodigo: silla.codigo,
             cantidad: cant,
-            disponible: disponible(MESA.codigo) && disponible(silla.codigo)
+            disponible: disponible('MESA-COMEDOR') && disponible(silla.codigo)
           });
         });
       });
@@ -3665,6 +3606,7 @@
     }
 
     select.addEventListener('change', () => actualizar());
+    window.actualizarJuegosComedor = poblarSelector;
     poblarSelector();
   })();
 </script>
