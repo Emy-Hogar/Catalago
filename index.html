@@ -1522,7 +1522,7 @@
         <article class="card" data-cat="ventanas">
           <div class="plate">
             <span class="badge">A medida</span>
-            <svg viewBox="0 0 100 100"><rect x="18" y="14" width="64" height="72" rx="2"/><line x1="50" y1="14" x2="50" y2="86"/><line x1="18" y1="50" x2="82" y2="50"/><path d="M14 14 L22 8 M78 8 L86 14 M14 86 L22 92 M78 92 L86 86"/></svg>
+            <img src="imagenes/productos/ventana-aluminio.jpg" alt="Ventanas de Aluminio">
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoAluminio">VA-01</span>
@@ -1550,7 +1550,7 @@
         <article class="card" data-cat="ventanas">
           <div class="plate">
             <span class="badge">A medida</span>
-            <svg viewBox="0 0 100 100"><rect x="22" y="10" width="56" height="80" rx="2"/><line x1="50" y1="10" x2="50" y2="90"/><circle cx="44" cy="50" r="2.2"/></svg>
+            <img src="imagenes/productos/ventana-madera.jpg" alt="Ventanas de Madera">
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoVentanaMadera">VMV-01</span>
@@ -1578,7 +1578,7 @@
         <article class="card" data-cat="ventanas">
           <div class="plate">
             <span class="badge">A medida</span>
-            <svg viewBox="0 0 100 100"><rect x="26" y="10" width="48" height="80" rx="2"/><path d="M46 10 L46 90"/><circle cx="40" cy="50" r="2.2"/></svg>
+            <img id="puertaImg" src="imagenes/productos/puerta-placa-economica.jpg" alt="Puertas de Madera">
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoPuerta">VP-01</span>
@@ -1606,7 +1606,7 @@
         <article class="card" data-cat="ventanas">
           <div class="plate">
             <span class="badge">A medida</span>
-            <svg viewBox="0 0 100 100"><rect x="20" y="26" width="60" height="48" rx="4"/><path d="M20 38 L80 38 M20 50 L80 50 M20 62 L80 62"/></svg>
+            <img src="imagenes/productos/aireador.jpg" alt="Aireadores">
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoAireador">VAI-01</span>
@@ -2684,8 +2684,18 @@
 
     const instanciasVentana = [];
 
+    // Foto real según el tipo de puerta elegida en el selector (con reglas de
+    // respaldo para las que todavía no tienen foto propia, agrupadas por tipo).
+    function fotoParaPuerta(nombre){
+      const n = nombre.toLowerCase();
+      if(n.includes('inyec')) return 'imagenes/productos/puerta-doble-inyectada.jpg';
+      if(n.includes('simple')) return 'imagenes/productos/puerta-chapa-simple.jpg';
+      if(n.includes('maciza') || n.includes('rayito')) return 'imagenes/productos/puerta-pino-macizo.jpg';
+      return 'imagenes/productos/puerta-placa-economica.jpg';
+    }
+
     function armarVentana(config){
-      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, prefijo } = config;
+      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, prefijo, imgEl } = config;
       select.innerHTML = '';
       datos.forEach((item, i) => {
         const opt = document.createElement('option');
@@ -2702,6 +2712,7 @@
         const item = datos[select.value];
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
         spanPrecio.textContent = money(item.precioLista);
+        if(imgEl) imgEl.src = fotoParaPuerta(item.nombre);
         if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
         if(descuento) descuento.textContent = '20% de descuento pagando de contado';
         spanCodigo.textContent = codigo;
@@ -2750,7 +2761,8 @@
       spanCodigo: document.getElementById('ventCodigoPuerta'),
       boton: document.getElementById('ventBtnPuerta'),
       datos: PUERTAS_MADERA,
-      prefijo: 'VP'
+      prefijo: 'VP',
+      imgEl: document.getElementById('puertaImg')
     });
 
     armarVentana({
