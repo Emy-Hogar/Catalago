@@ -583,6 +583,12 @@
     margin-top:1.2rem; width:100%; background:var(--teal); color:var(--white); border:none;
     padding:0.75rem; border-radius:999px; font-family:'Poppins',sans-serif; font-weight:700; cursor:pointer;
   }
+  .admin-botones-row{ display:flex; gap:0.6rem; margin-top:1.2rem; }
+  .admin-botones-row .admin-cerrar{ margin-top:0; flex:1; }
+  .admin-cerrar-sesion{
+    background:var(--white); color:var(--teal); border:1.5px solid var(--teal);
+  }
+  .admin-cerrar-sesion:hover{ background:var(--yellow-pale); }
 
   .stock-badge{
     position:absolute; top:0.7rem; left:0.7rem; z-index:2;
@@ -1769,11 +1775,6 @@
       </div>
     </section>
 
-<div class="nota">
-      <span class="nota-icono">✻</span>
-      <p><strong>Este catálogo ya tiene tu marca, pero los productos siguen siendo de ejemplo.</strong> En cuanto tengas fotos de tus piezas reales, súbelas aquí y las incorporo — reemplazando cada ilustración por su foto, y ajustando nombres, medidas y precios a tu inventario real.</p>
-    </div>
-
   </main>
 
   <footer>
@@ -1861,13 +1862,12 @@
   <div class="admin-modal">
     <div id="adminPinPantalla">
       <h3>🔒 Acceso del dueño</h3>
-      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con el usuario que creaste en Firebase.</p>
+      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con tu usuario y contraseña.</p>
       <div class="admin-pin-box">
         <input type="email" id="adminEmailInput" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
         <input type="password" id="adminPinInput" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
         <button type="button" class="admin-cerrar" id="adminPinEntrar" style="margin-top:0;">Entrar</button>
         <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">Usuario o contraseña incorrectos</span>
-        <span id="adminSinConfigurar" style="color:#C0392B; font-size:0.78rem; display:none;">Todavía no conectaste Firebase — mirá las instrucciones que te pasé.</span>
       </div>
     </div>
     <div id="adminStockPantalla" style="display:none;">
@@ -1877,7 +1877,10 @@
       </div>
       <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto...">
       <div class="admin-lista" id="adminLista"></div>
-      <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
+      <div class="admin-botones-row">
+        <button type="button" class="admin-cerrar admin-cerrar-sesion" id="adminCerrarSesion">Cerrar sesión</button>
+        <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -3430,16 +3433,16 @@
     const pinInput = document.getElementById('adminPinInput');
     const pinEntrar = document.getElementById('adminPinEntrar');
     const pinError = document.getElementById('adminPinError');
-    const sinConfigurar = document.getElementById('adminSinConfigurar');
     const buscador = document.getElementById('adminBuscador');
     const lista = document.getElementById('adminLista');
     const cerrar2 = document.getElementById('adminCerrar2');
+    const cerrarSesionBtn = document.getElementById('adminCerrarSesion');
     const aviso = document.querySelector('.admin-aviso');
 
     if(aviso){
       aviso.innerHTML = fbListo
-        ? '<strong>Conectado a Firebase:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
-        : '<strong>Todavía no está conectado a Firebase:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
+        ? '<strong>Conectado:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
+        : '<strong>Todavía no está sincronizado:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
     }
 
     function renderListaAdmin(filtro){
@@ -3493,7 +3496,6 @@
     function abrirAdmin(){
       overlay.classList.add('abierto');
       pinError.style.display = 'none';
-      sinConfigurar.style.display = 'none';
 
       if(!fbListo){
         // Sin Firebase: pedimos el PIN de respaldo (solo guarda local, no sincroniza)
@@ -3523,9 +3525,23 @@
     }
     function cerrarAdmin(){ overlay.classList.remove('abierto'); panelAbierto = false; }
 
+    function cerrarSesionAdmin(){
+      if(fbListo && fbAuth.currentUser){
+        fbAuth.signOut().catch(() => {});
+      }
+      panelAbierto = false;
+      overlay.classList.remove('abierto');
+      stockPantalla.style.display = 'none';
+      pinPantalla.style.display = '';
+      pinError.style.display = 'none';
+      emailInput.value = '';
+      pinInput.value = '';
+    }
+
     adminLink.addEventListener('click', abrirAdmin);
     overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrarAdmin(); });
     cerrar2.addEventListener('click', cerrarAdmin);
+    if(cerrarSesionBtn) cerrarSesionBtn.addEventListener('click', cerrarSesionAdmin);
 
     function intentarEntrar(){
       if(!fbListo){
