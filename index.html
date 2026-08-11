@@ -840,6 +840,33 @@
   .producto-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
   .producto-thumb:hover{ opacity:1; }
   .producto-thumb.activa{ border-color:var(--teal); opacity:1; }
+
+  /* ---------- Zoom tipo lupa sobre la imagen del producto ---------- */
+  .producto-img-wrap{ position:relative; }
+  .producto-img-wrap img{ cursor:zoom-in; }
+  .zoom-hint{
+    position:absolute; bottom:0.6rem; right:0.6rem;
+    background:rgba(4,53,57,0.72); color:var(--white); font-size:0.68rem; font-weight:600;
+    padding:0.32rem 0.65rem; border-radius:999px; display:flex; align-items:center; gap:0.3rem;
+    pointer-events:none; opacity:0.92; white-space:nowrap;
+  }
+  .zoom-lens{
+    position:fixed; width:150px; height:150px; border-radius:50%;
+    border:3px solid var(--white); box-shadow:0 10px 30px rgba(4,53,57,0.45);
+    pointer-events:none; z-index:9999; display:none;
+    background-repeat:no-repeat; background-color:var(--white);
+  }
+  .zoom-overlay-movil{
+    position:fixed; inset:0; background:rgba(4,53,57,0.94); z-index:10000;
+    display:none; align-items:center; justify-content:center; padding:1.2rem;
+  }
+  .zoom-overlay-movil.abierto{ display:flex; }
+  .zoom-overlay-movil img{ max-width:100%; max-height:100%; object-fit:contain; touch-action:pinch-zoom; }
+  .zoom-overlay-close{
+    position:absolute; top:1rem; right:1rem; width:38px; height:38px; border-radius:50%;
+    background:var(--white); border:none; display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; color:var(--teal); cursor:pointer;
+  }
   .producto-info{ padding:2.2rem 2rem 2.4rem; display:flex; flex-direction:column; gap:0.7rem; }
   .producto-code{ display:none; }
   .producto-info h2{ font-size:1.5rem; margin:0; color:var(--teal); line-height:1.2; }
@@ -1792,6 +1819,7 @@
     <div class="producto-media">
       <div class="producto-img-wrap">
         <img id="productoImg" src="" alt="">
+        <span class="zoom-hint" id="zoomHint">🔍 Pasá el mouse para hacer zoom</span>
       </div>
       <div class="producto-thumbs" id="productoThumbs"></div>
     </div>
@@ -1820,6 +1848,12 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="zoom-lens" id="zoomLens"></div>
+<div class="zoom-overlay-movil" id="zoomOverlayMovil">
+  <button type="button" class="zoom-overlay-close" id="zoomOverlayClose" aria-label="Cerrar">✕</button>
+  <img id="zoomOverlayImg" src="" alt="">
 </div>
 
 <!-- ---------- Panel del dueño (stock) ---------- -->
@@ -3523,6 +3557,62 @@
     pinEntrar.addEventListener('click', intentarEntrar);
     pinInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') intentarEntrar(); });
     buscador.addEventListener('input', () => renderListaAdmin(buscador.value));
+  })();
+</script>
+
+<script>
+  // ======= Zoom tipo lupa sobre la foto del producto (estilo Mercado Libre) =======
+  (function(){
+    const wrap = document.querySelector('.producto-img-wrap');
+    const img = document.getElementById('productoImg');
+    const hint = document.getElementById('zoomHint');
+    const lens = document.getElementById('zoomLens');
+    const overlayMovil = document.getElementById('zoomOverlayMovil');
+    const imgMovil = document.getElementById('zoomOverlayImg');
+    const cerrarMovil = document.getElementById('zoomOverlayClose');
+    if(!wrap || !img || !lens) return;
+
+    const tieneHoverFino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const LENTE = 150;   // diámetro de la lupa en px
+    const ZOOM = 2.4;    // nivel de ampliación
+
+    if(hint) hint.textContent = tieneHoverFino ? '🔍 Pasá el mouse para hacer zoom' : '🔍 Tocá la foto para ampliar';
+
+    if(tieneHoverFino){
+      wrap.addEventListener('mousemove', (e) => {
+        if(img.style.display === 'none' || !img.src){ lens.style.display = 'none'; return; }
+        const rect = img.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        if(x < 0 || y < 0 || x > rect.width || y > rect.height){
+          lens.style.display = 'none';
+          return;
+        }
+        lens.style.display = 'block';
+        lens.style.backgroundImage = `url("${img.src}")`;
+        const bgW = rect.width * ZOOM;
+        const bgH = rect.height * ZOOM;
+        lens.style.backgroundSize = `${bgW}px ${bgH}px`;
+        let bgX = x * ZOOM - LENTE / 2;
+        let bgY = y * ZOOM - LENTE / 2;
+        bgX = Math.max(0, Math.min(bgX, bgW - LENTE));
+        bgY = Math.max(0, Math.min(bgY, bgH - LENTE));
+        lens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+        lens.style.left = `${e.clientX - LENTE / 2}px`;
+        lens.style.top = `${e.clientY - LENTE / 2}px`;
+      });
+      wrap.addEventListener('mouseleave', () => { lens.style.display = 'none'; });
+    } else if(overlayMovil && imgMovil){
+      // En celular: tocar la foto la abre grande a pantalla completa (con el zoom nativo del navegador/pellizco)
+      img.addEventListener('click', () => {
+        if(img.style.display === 'none' || !img.src) return;
+        imgMovil.src = img.src;
+        imgMovil.alt = img.alt;
+        overlayMovil.classList.add('abierto');
+      });
+      if(cerrarMovil) cerrarMovil.addEventListener('click', () => overlayMovil.classList.remove('abierto'));
+      overlayMovil.addEventListener('click', (e) => { if(e.target === overlayMovil) overlayMovil.classList.remove('abierto'); });
+    }
   })();
 </script>
 
