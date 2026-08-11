@@ -1026,7 +1026,7 @@
     <div class="buscador-row">
       <div class="buscador-input-wrap">
         <span class="buscador-icono">🔍</span>
-        <input type="text" id="buscadorInput" class="buscador-input" placeholder="Buscar por nombre, material, código...">
+        <input type="text" id="buscadorInput" class="buscador-input" placeholder="Buscar por nombre, material, código..." autocomplete="off" name="buscador-catalogo" data-lpignore="true" data-form-type="other">
         <button type="button" id="buscadorClear" class="buscador-clear" aria-label="Borrar búsqueda" style="display:none;">✕</button>
       </div>
       <select id="ordenSelect" class="filtro-select" aria-label="Ordenar por">
@@ -1864,8 +1864,8 @@
       <h3>🔒 Acceso del dueño</h3>
       <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con tu usuario y contraseña.</p>
       <div class="admin-pin-box">
-        <input type="email" id="adminEmailInput" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
-        <input type="password" id="adminPinInput" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
+        <input type="email" id="adminEmailInput" name="admin-email" autocomplete="username" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
+        <input type="password" id="adminPinInput" name="admin-password" autocomplete="current-password" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
         <button type="button" class="admin-cerrar" id="adminPinEntrar" style="margin-top:0;">Entrar</button>
         <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">Usuario o contraseña incorrectos</span>
       </div>
@@ -1875,7 +1875,7 @@
       <div class="admin-aviso">
         <strong>Importante:</strong> esto se guarda solo en este celular/computadora, no se sincroniza con otros dispositivos. Para que un cliente vea el stock actualizado, tenés que cargarlo desde el mismo aparato donde él lo va a ver, o publicar el sitio de nuevo con estos datos.
       </div>
-      <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto...">
+      <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto..." autocomplete="off" name="admin-buscador-stock" data-lpignore="true" data-form-type="other">
       <div class="admin-lista" id="adminLista"></div>
       <div class="admin-botones-row">
         <button type="button" class="admin-cerrar admin-cerrar-sesion" id="adminCerrarSesion">Cerrar sesión</button>
@@ -1921,15 +1921,15 @@
       <div class="cart-body">
         <div class="form-field">
           <label for="fNombre">Nombre completo *</label>
-          <input type="text" id="fNombre" placeholder="Tu nombre">
+          <input type="text" id="fNombre" name="nombre-cliente" autocomplete="name" placeholder="Tu nombre">
         </div>
         <div class="form-field">
           <label for="fTelefono">Teléfono / WhatsApp *</label>
-          <input type="tel" id="fTelefono" placeholder="Ej. 55 1234 5678">
+          <input type="tel" id="fTelefono" name="telefono-cliente" autocomplete="tel" placeholder="Ej. 55 1234 5678">
         </div>
         <div class="form-field">
           <label for="fDireccion">Dirección o zona de entrega</label>
-          <input type="text" id="fDireccion" placeholder="Colonia, ciudad">
+          <input type="text" id="fDireccion" name="direccion-cliente" autocomplete="street-address" placeholder="Colonia, ciudad">
         </div>
         <div class="form-field">
           <label for="fComentarios">Comentarios</label>
