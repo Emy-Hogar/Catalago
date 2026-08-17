@@ -604,6 +604,12 @@
   .add-btn:hover{background:var(--teal-3);}
   .add-btn:active{transform:scale(0.97);}
   .add-btn.en-carrito{background:var(--yellow); color:var(--teal);}
+  .btn-consultar-precio{
+    display:block; text-align:center; text-decoration:none; box-sizing:border-box;
+    background:#1FAA55;
+  }
+  .btn-consultar-precio:hover{ background:#178F47; }
+  .price.precio-a-confirmar{ font-size:0.95rem; font-style:italic; color:var(--ink-soft); font-weight:600; }
 
   /* ---------- Botón flotante del carrito ---------- */
   .cart-fab{
@@ -1100,8 +1106,8 @@
             <span class="code">SA-04</span>
             <h3>Sofá de Madera Rústico</h3>
             <p class="desc">Estructura de madera maciza a la vista, con almohadón de asiento y respaldo desmontables.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$220,000</span></div>
-            <button class="add-btn" data-code="SA-04" data-name="Sofá de Madera Rústico" data-price="220000" data-unit="">+ Agregar</button>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-04" data-name="Sofá de Madera Rústico" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
         <article class="card" data-cat="salas">
@@ -1112,8 +1118,8 @@
             <span class="code">SA-05</span>
             <h3>Sofá Modular con Pufs</h3>
             <p class="desc">Sofá esquinero modular con puf extra grande y 2 pufs chicos a juego, apilables debajo.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$340,000</span></div>
-            <button class="add-btn" data-code="SA-05" data-name="Sofá Modular con Pufs" data-price="340000" data-unit="">+ Agregar</button>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-05" data-name="Sofá Modular con Pufs" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
         <article class="card" data-cat="salas">
@@ -1124,8 +1130,8 @@
             <span class="code">SA-06</span>
             <h3>Sillón Esquinero Negro</h3>
             <p class="desc">Sofá rinconero tapizado en negro, con puf integrado y patas de madera.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$310,000</span></div>
-            <button class="add-btn" data-code="SA-06" data-name="Sillón Esquinero Negro" data-price="310000" data-unit="">+ Agregar</button>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-06" data-name="Sillón Esquinero Negro" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
         <article class="card" data-cat="salas">
@@ -1136,8 +1142,8 @@
             <span class="code">SA-07</span>
             <h3>Sofá Capitoné Gris con Puf</h3>
             <p class="desc">Sofá tapizado capitoné en gris, patas de madera, incluye puf a juego.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$295,000</span></div>
-            <button class="add-btn" data-code="SA-07" data-name="Sofá Capitoné Gris con Puf" data-price="295000" data-unit="">+ Agregar</button>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-07" data-name="Sofá Capitoné Gris con Puf" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
         <article class="card" data-cat="salas">
@@ -1148,32 +1154,20 @@
             <span class="code">SA-08</span>
             <h3>Sofá Living 3 Cuerpos Beige</h3>
             <p class="desc">Sofá recto de 3 cuerpos, líneas simples, tapizado beige liso.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$260,000</span></div>
-            <button class="add-btn" data-code="SA-08" data-name="Sofá Living 3 Cuerpos Beige" data-price="260000" data-unit="">+ Agregar</button>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-08" data-name="Sofá Living 3 Cuerpos Beige" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sofa-3-cuerpos-verde.jpg" alt="Sofá 3 Cuerpos Verde" loading="lazy">
+            <img src="imagenes/productos/sofa-3-cuerpos-verde.jpg" alt="Juego Living Verde: Sofá 3 Cuerpos + Sillón 1 Cuerpo" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-09</span>
-            <h3>Sofá 3 Cuerpos Verde</h3>
-            <p class="desc">Sofá clásico de 3 cuerpos, tapizado chenille verde, apoyabrazos redondeados.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$330,000</span></div>
-            <button class="add-btn" data-code="SA-09" data-name="Sofá 3 Cuerpos Verde" data-price="330000" data-unit="">+ Agregar</button>
-          </div>
-        </article>
-        <article class="card" data-cat="salas">
-          <div class="plate">
-            <img src="imagenes/productos/sillon-1-cuerpo-verde.jpg" alt="Sillón 1 Cuerpo Verde" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="code">SA-10</span>
-            <h3>Sillón 1 Cuerpo Verde</h3>
-            <p class="desc">Sillón individual a juego con el Sofá 3 Cuerpos Verde, mismo tapizado chenille.</p>
-            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$165,000</span></div>
-            <button class="add-btn" data-code="SA-10" data-name="Sillón 1 Cuerpo Verde" data-price="165000" data-unit="">+ Agregar</button>
+            <h3>Juego Living Verde (Sofá + Sillón)</h3>
+            <p class="desc">Sofá de 3 cuerpos + sillón de 1 cuerpo a juego, tapizado chenille verde, apoyabrazos redondeados. Se vende el conjunto completo, no por separado.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price precio-a-confirmar">Consultar precio</span></div>
+            <a class="add-btn btn-consultar-precio" href="#" data-code="SA-09" data-name="Juego Living Verde (Sofá 3 Cuerpos + Sillón 1 Cuerpo)" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
       </div>
@@ -3093,7 +3087,8 @@
       ],
       'SA-09': [
         { src: 'imagenes/productos/sofa-3-cuerpos-verde.jpg', alt: 'Sofá 3 Cuerpos Verde, vista frontal' },
-        { src: 'imagenes/productos/sofa-3-cuerpos-verde-2.jpg', alt: 'Sofá 3 Cuerpos Verde junto al Sillón 1 Cuerpo' }
+        { src: 'imagenes/productos/sofa-3-cuerpos-verde-2.jpg', alt: 'Sofá y sillón juntos, juego completo' },
+        { src: 'imagenes/productos/sillon-1-cuerpo-verde.jpg', alt: 'Sillón 1 Cuerpo Verde a juego' }
       ],
       'SA-03': [
         { src: 'imagenes/productos/mesa-centro-milenial.jpg', alt: 'Mesa de Centro Milenial vacía' },
@@ -3791,71 +3786,20 @@
   })();
 </script>
 
+<script>
+  // ======= Productos sin precio cargado: "Consultar precio" abre WhatsApp =======
+  (function(){
+    if(typeof WHATSAPP_NUMERO === 'undefined') return;
+    document.querySelectorAll('.btn-consultar-precio').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const nombre = btn.dataset.name || 'este producto';
+        const msg = `Hola! Quiero consultar el precio de: ${nombre}`;
+        window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`, '_blank');
+      });
+    });
+  })();
+</script>
+
 </body>
 </html>
-
-<!--
-======================================================================
-INSTRUCCIONES FIREBASE — para que el stock se vea igual en todos los
-celulares/computadoras de tus clientes, no solo en el tuyo.
-
-Es gratis (no pide tarjeta) y se hace UNA sola vez. Son unos 5-10 minutos.
-
-PASO 1 — Crear el proyecto
-  1. Andá a https://console.firebase.google.com/ e iniciá sesión con
-     tu cuenta de Google (o la de tu amigo, la que van a usar siempre).
-  2. Click en "Crear un proyecto". Ponele un nombre, por ejemplo
-     "emy-hogar". Si te pregunta por Google Analytics, podés
-     desactivarlo, no hace falta.
-
-PASO 2 — Crear la base de datos (Firestore)
-  1. En el menú de la izquierda: "Compilación" → "Firestore Database".
-  2. "Crear base de datos" → elegís modo "producción" → elegís una
-     ubicación (cualquiera cercana sirve, ej. southamerica-east1) → Listo.
-  3. Andá a la pestaña "Reglas" (arriba). Borrá todo lo que haya y
-     pegá exactamente esto, después tocá "Publicar":
-
-     rules_version = '2';
-     service cloud.firestore {
-       match /databases/{database}/documents {
-         match /emyhogar/stock {
-           allow read: if true;
-           allow write: if request.auth != null;
-         }
-       }
-     }
-
-     (Esto permite que cualquiera VEA el stock, pero solo alguien
-     logueado pueda CAMBIARLO — o sea, vos.)
-
-PASO 3 — Crear tu usuario de acceso
-  1. En el menú: "Compilación" → "Authentication" → "Comenzar".
-  2. Pestaña "Sign-in method" → "Correo electrónico/contraseña" →
-     activarlo → Guardar.
-  3. Pestaña "Users" → "Agregar usuario" → poné el email y la
-     contraseña con la que vas a entrar al panel del catálogo
-     (puede ser cualquier email, no hace falta que exista de verdad,
-     con que la recuerdes alcanza).
-
-PASO 4 — Conectar el sitio
-  1. Volvé al inicio del proyecto (ícono ⚙️ arriba a la izquierda →
-     "Configuración del proyecto").
-  2. Abajo de todo, en "Tus apps", click en el ícono </> (Web).
-  3. Ponele un nombre (ej. "sitio"), NO marques "Firebase Hosting",
-     click en "Registrar app".
-  4. Te va a aparecer un bloque de código con "firebaseConfig" y
-     varios valores (apiKey, authDomain, projectId, etc).
-  5. En este archivo, buscá el bloque que dice FIREBASE_CONFIG (cerca
-     del final, antes de "Sistema de stock") y reemplazá los 6 valores
-     de ejemplo por los tuyos, tal cual te los dio Firebase.
-  6. Guardá el archivo y subilo a GitHub pisando el anterior.
-
-Listo. Al entrar al candado 🔒 del pie de página, ahora te va a pedir
-el email y contraseña que creaste en el Paso 3, y el stock que cargues
-se va a ver al instante en cualquier dispositivo, sin volver a publicar
-nada.
-
-Si en algún momento no te acordás algún paso, pegame este mismo bloque
-de instrucciones y seguimos desde ahí.
-======================================================================
--->
