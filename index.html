@@ -583,12 +583,6 @@
     margin-top:1.2rem; width:100%; background:var(--teal); color:var(--white); border:none;
     padding:0.75rem; border-radius:999px; font-family:'Poppins',sans-serif; font-weight:700; cursor:pointer;
   }
-  .admin-botones-row{ display:flex; gap:0.6rem; margin-top:1.2rem; }
-  .admin-botones-row .admin-cerrar{ margin-top:0; flex:1; }
-  .admin-cerrar-sesion{
-    background:var(--white); color:var(--teal); border:1.5px solid var(--teal);
-  }
-  .admin-cerrar-sesion:hover{ background:var(--yellow-pale); }
 
   .stock-badge{
     position:absolute; top:0.7rem; left:0.7rem; z-index:2;
@@ -846,33 +840,6 @@
   .producto-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
   .producto-thumb:hover{ opacity:1; }
   .producto-thumb.activa{ border-color:var(--teal); opacity:1; }
-
-  /* ---------- Zoom tipo lupa sobre la imagen del producto ---------- */
-  .producto-img-wrap{ position:relative; }
-  .producto-img-wrap img{ cursor:zoom-in; }
-  .zoom-hint{
-    position:absolute; bottom:0.6rem; right:0.6rem;
-    background:rgba(4,53,57,0.72); color:var(--white); font-size:0.68rem; font-weight:600;
-    padding:0.32rem 0.65rem; border-radius:999px; display:flex; align-items:center; gap:0.3rem;
-    pointer-events:none; opacity:0.92; white-space:nowrap;
-  }
-  .zoom-lens{
-    position:fixed; width:150px; height:150px; border-radius:50%;
-    border:3px solid var(--white); box-shadow:0 10px 30px rgba(4,53,57,0.45);
-    pointer-events:none; z-index:9999; display:none;
-    background-repeat:no-repeat; background-color:var(--white);
-  }
-  .zoom-overlay-movil{
-    position:fixed; inset:0; background:rgba(4,53,57,0.94); z-index:10000;
-    display:none; align-items:center; justify-content:center; padding:1.2rem;
-  }
-  .zoom-overlay-movil.abierto{ display:flex; }
-  .zoom-overlay-movil img{ max-width:100%; max-height:100%; object-fit:contain; touch-action:pinch-zoom; }
-  .zoom-overlay-close{
-    position:absolute; top:1rem; right:1rem; width:38px; height:38px; border-radius:50%;
-    background:var(--white); border:none; display:flex; align-items:center; justify-content:center;
-    font-size:1.1rem; color:var(--teal); cursor:pointer;
-  }
   .producto-info{ padding:2.2rem 2rem 2.4rem; display:flex; flex-direction:column; gap:0.7rem; }
   .producto-code{ display:none; }
   .producto-info h2{ font-size:1.5rem; margin:0; color:var(--teal); line-height:1.2; }
@@ -984,7 +951,7 @@
       <div class="topbar-tag">Sillas, sillones y mueblería para el hogar</div>
     </div>
     <nav class="topbar-nav">
-      <a href="#salas">Salas</a>
+      <a href="#salas">Living y Salas</a>
       <a href="#comedores">Comedores</a>
       <a href="#dormitorios">Dormitorios</a>
       <a href="#oficina">Oficina</a>
@@ -1026,7 +993,7 @@
     <div class="buscador-row">
       <div class="buscador-input-wrap">
         <span class="buscador-icono">🔍</span>
-        <input type="text" id="buscadorInput" class="buscador-input" placeholder="Buscar por nombre, material, código..." autocomplete="off" name="buscador-catalogo" data-lpignore="true" data-form-type="other">
+        <input type="text" id="buscadorInput" class="buscador-input" placeholder="Buscar por nombre, material, código...">
         <button type="button" id="buscadorClear" class="buscador-clear" aria-label="Borrar búsqueda" style="display:none;">✕</button>
       </div>
       <select id="ordenSelect" class="filtro-select" aria-label="Ordenar por">
@@ -1047,7 +1014,7 @@
     <div class="categorias-row">
       <span class="filtro-label">Categoría</span>
       <button class="filtro-btn activo" data-cat="todos">Todos</button>
-      <button class="filtro-btn" data-cat="salas">Salas</button>
+      <button class="filtro-btn" data-cat="salas">Living y Salas</button>
       <button class="filtro-btn" data-cat="comedores">Comedores</button>
       <button class="filtro-btn" data-cat="juegos-comedor">Juegos de Comedor</button>
       <button class="filtro-btn" data-cat="dormitorios">Dormitorios</button>
@@ -1084,7 +1051,7 @@
     <section class="categoria" id="salas" data-cat="salas">
       <div class="categoria-head">
         <span class="categoria-num">01</span>
-        <h2 class="categoria-titulo">Salas</h2>
+        <h2 class="categoria-titulo">Living y Salas</h2>
         <p class="categoria-desc">Sofás, sillones y mesas de centro para el punto de reunión de la casa.</p>
       </div>
       <div class="grid">
@@ -1123,6 +1090,90 @@
             <p class="desc">Línea Milenial, diseño bajo con espacio interior para revistas y control remoto.</p>
             <div class="meta"><span class="dim">90 × 45 × 39 cm</span><span class="price">$112,615</span></div>
             <button class="add-btn" data-code="SA-03" data-name="Mesa de Centro Milenial" data-price="112615" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sofa-madera-rustico.jpg" alt="Sofá de Madera Rústico" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-04</span>
+            <h3>Sofá de Madera Rústico</h3>
+            <p class="desc">Estructura de madera maciza a la vista, con almohadón de asiento y respaldo desmontables.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$220,000</span></div>
+            <button class="add-btn" data-code="SA-04" data-name="Sofá de Madera Rústico" data-price="220000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sofa-modular-pufs.jpg" alt="Sofá Modular con Pufs" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-05</span>
+            <h3>Sofá Modular con Pufs</h3>
+            <p class="desc">Sofá esquinero modular con puf extra grande y 2 pufs chicos a juego, apilables debajo.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$340,000</span></div>
+            <button class="add-btn" data-code="SA-05" data-name="Sofá Modular con Pufs" data-price="340000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sillon-esquinero-negro.jpg" alt="Sillón Esquinero Negro" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-06</span>
+            <h3>Sillón Esquinero Negro</h3>
+            <p class="desc">Sofá rinconero tapizado en negro, con puf integrado y patas de madera.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$310,000</span></div>
+            <button class="add-btn" data-code="SA-06" data-name="Sillón Esquinero Negro" data-price="310000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sofa-capitone-gris.jpg" alt="Sofá Capitoné Gris con Puf" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-07</span>
+            <h3>Sofá Capitoné Gris con Puf</h3>
+            <p class="desc">Sofá tapizado capitoné en gris, patas de madera, incluye puf a juego.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$295,000</span></div>
+            <button class="add-btn" data-code="SA-07" data-name="Sofá Capitoné Gris con Puf" data-price="295000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sofa-living-beige.jpg" alt="Sofá Living 3 Cuerpos Beige" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-08</span>
+            <h3>Sofá Living 3 Cuerpos Beige</h3>
+            <p class="desc">Sofá recto de 3 cuerpos, líneas simples, tapizado beige liso.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$260,000</span></div>
+            <button class="add-btn" data-code="SA-08" data-name="Sofá Living 3 Cuerpos Beige" data-price="260000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sofa-3-cuerpos-verde.jpg" alt="Sofá 3 Cuerpos Verde" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-09</span>
+            <h3>Sofá 3 Cuerpos Verde</h3>
+            <p class="desc">Sofá clásico de 3 cuerpos, tapizado chenille verde, apoyabrazos redondeados.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$330,000</span></div>
+            <button class="add-btn" data-code="SA-09" data-name="Sofá 3 Cuerpos Verde" data-price="330000" data-unit="">+ Agregar</button>
+          </div>
+        </article>
+        <article class="card" data-cat="salas">
+          <div class="plate">
+            <img src="imagenes/productos/sillon-1-cuerpo-verde.jpg" alt="Sillón 1 Cuerpo Verde" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="code">SA-10</span>
+            <h3>Sillón 1 Cuerpo Verde</h3>
+            <p class="desc">Sillón individual a juego con el Sofá 3 Cuerpos Verde, mismo tapizado chenille.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$165,000</span></div>
+            <button class="add-btn" data-code="SA-10" data-name="Sillón 1 Cuerpo Verde" data-price="165000" data-unit="">+ Agregar</button>
           </div>
         </article>
       </div>
@@ -1775,6 +1826,11 @@
       </div>
     </section>
 
+<div class="nota">
+      <span class="nota-icono">✻</span>
+      <p><strong>Este catálogo ya tiene tu marca, pero los productos siguen siendo de ejemplo.</strong> En cuanto tengas fotos de tus piezas reales, súbelas aquí y las incorporo — reemplazando cada ilustración por su foto, y ajustando nombres, medidas y precios a tu inventario real.</p>
+    </div>
+
   </main>
 
   <footer>
@@ -1820,7 +1876,6 @@
     <div class="producto-media">
       <div class="producto-img-wrap">
         <img id="productoImg" src="" alt="">
-        <span class="zoom-hint" id="zoomHint">🔍 Pasá el mouse para hacer zoom</span>
       </div>
       <div class="producto-thumbs" id="productoThumbs"></div>
     </div>
@@ -1851,23 +1906,18 @@
   </div>
 </div>
 
-<div class="zoom-lens" id="zoomLens"></div>
-<div class="zoom-overlay-movil" id="zoomOverlayMovil">
-  <button type="button" class="zoom-overlay-close" id="zoomOverlayClose" aria-label="Cerrar">✕</button>
-  <img id="zoomOverlayImg" src="" alt="">
-</div>
-
 <!-- ---------- Panel del dueño (stock) ---------- -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-modal">
     <div id="adminPinPantalla">
       <h3>🔒 Acceso del dueño</h3>
-      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con tu usuario y contraseña.</p>
+      <p style="font-size:0.83rem; color:var(--ink-soft); margin:0;">Ingresá con el usuario que creaste en Firebase.</p>
       <div class="admin-pin-box">
-        <input type="email" id="adminEmailInput" name="admin-email" autocomplete="username" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
-        <input type="password" id="adminPinInput" name="admin-password" autocomplete="current-password" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
+        <input type="email" id="adminEmailInput" placeholder="tu-email@gmail.com" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
+        <input type="password" id="adminPinInput" placeholder="Contraseña" style="width:100%; letter-spacing:normal; font-size:0.9rem; text-align:left; font-family:'Poppins',sans-serif;">
         <button type="button" class="admin-cerrar" id="adminPinEntrar" style="margin-top:0;">Entrar</button>
         <span id="adminPinError" style="color:#C0392B; font-size:0.78rem; display:none;">Usuario o contraseña incorrectos</span>
+        <span id="adminSinConfigurar" style="color:#C0392B; font-size:0.78rem; display:none;">Todavía no conectaste Firebase — mirá las instrucciones que te pasé.</span>
       </div>
     </div>
     <div id="adminStockPantalla" style="display:none;">
@@ -1875,12 +1925,9 @@
       <div class="admin-aviso">
         <strong>Importante:</strong> esto se guarda solo en este celular/computadora, no se sincroniza con otros dispositivos. Para que un cliente vea el stock actualizado, tenés que cargarlo desde el mismo aparato donde él lo va a ver, o publicar el sitio de nuevo con estos datos.
       </div>
-      <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto..." autocomplete="off" name="admin-buscador-stock" data-lpignore="true" data-form-type="other">
+      <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto...">
       <div class="admin-lista" id="adminLista"></div>
-      <div class="admin-botones-row">
-        <button type="button" class="admin-cerrar admin-cerrar-sesion" id="adminCerrarSesion">Cerrar sesión</button>
-        <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
-      </div>
+      <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
     </div>
   </div>
 </div>
@@ -1921,15 +1968,15 @@
       <div class="cart-body">
         <div class="form-field">
           <label for="fNombre">Nombre completo *</label>
-          <input type="text" id="fNombre" name="nombre-cliente" autocomplete="name" placeholder="Tu nombre">
+          <input type="text" id="fNombre" placeholder="Tu nombre">
         </div>
         <div class="form-field">
           <label for="fTelefono">Teléfono / WhatsApp *</label>
-          <input type="tel" id="fTelefono" name="telefono-cliente" autocomplete="tel" placeholder="Ej. 55 1234 5678">
+          <input type="tel" id="fTelefono" placeholder="Ej. 55 1234 5678">
         </div>
         <div class="form-field">
           <label for="fDireccion">Dirección o zona de entrega</label>
-          <input type="text" id="fDireccion" name="direccion-cliente" autocomplete="street-address" placeholder="Colonia, ciudad">
+          <input type="text" id="fDireccion" placeholder="Colonia, ciudad">
         </div>
         <div class="form-field">
           <label for="fComentarios">Comentarios</label>
@@ -3023,38 +3070,6 @@
     // Productos con más de una foto (código del producto → lista de imágenes).
     // La primera imagen debe coincidir con la que ya se usa en la card del catálogo.
     const GALERIAS = {
-      'CK-01': [
-        { src: 'imagenes/productos/organizador-planchado.jpg', alt: 'Organizador de Planchado' },
-        { src: 'imagenes/productos/organizador-planchado-2.jpg', alt: 'Organizador de Planchado en uso, ambientado' }
-      ],
-      'CK-02': [
-        { src: 'imagenes/productos/combo-cocina-120-sin-bacha.jpg', alt: 'Combo Cocina 1,20 Mts sin bacha cerrado' },
-        { src: 'imagenes/productos/combo-cocina-120-sin-bacha-2.jpg', alt: 'Combo Cocina 1,20 Mts sin bacha con puertas abiertas' }
-      ],
-      'CK-03': [
-        { src: 'imagenes/productos/combo-cocina-120-con-bacha.jpg', alt: 'Combo Cocina 1,20 Mts con bacha cerrado' },
-        { src: 'imagenes/productos/combo-cocina-120-con-bacha-2.jpg', alt: 'Combo Cocina 1,20 Mts con bacha con puertas abiertas' }
-      ],
-      'CK-04': [
-        { src: 'imagenes/productos/combo-cocina-140-sin-bacha.jpg', alt: 'Combo Cocina 1,40 Mts sin bacha cerrado' },
-        { src: 'imagenes/productos/combo-cocina-140-sin-bacha-2.jpg', alt: 'Combo Cocina 1,40 Mts sin bacha con puertas abiertas' }
-      ],
-      'CK-05': [
-        { src: 'imagenes/productos/combo-cocina-160-sin-bacha.jpg', alt: 'Combo Cocina 1,60 Mts sin bacha cerrado' },
-        { src: 'imagenes/productos/combo-cocina-160-sin-bacha-2.jpg', alt: 'Combo Cocina 1,60 Mts sin bacha con puertas y cajones abiertos' }
-      ],
-      'CK-06': [
-        { src: 'imagenes/productos/aparador-cocina-90.jpg', alt: 'Aparador de Cocina 90 cerrado' },
-        { src: 'imagenes/productos/aparador-cocina-90-2.jpg', alt: 'Aparador de Cocina 90 con puertas y cajones abiertos' }
-      ],
-      'CK-07': [
-        { src: 'imagenes/productos/porta-microondas-grill.jpg', alt: 'Porta Microondas + Grill' },
-        { src: 'imagenes/productos/porta-microondas-grill-2.jpg', alt: 'Porta Microondas + Grill, detalle del mueble' }
-      ],
-      'CK-08': [
-        { src: 'imagenes/productos/porta-microondas-express.jpg', alt: 'Porta Microondas Express' },
-        { src: 'imagenes/productos/porta-microondas-express-2.jpg', alt: 'Porta Microondas Express, detalle del mueble' }
-      ],
       'SA-01': [
         { src: 'imagenes/productos/rack-tv-dakar.jpg', alt: 'Rack TV Dakar cerrado' },
         { src: 'imagenes/productos/rack-tv-dakar-2.jpg', alt: 'Rack TV Dakar ambientado en living' },
@@ -3063,6 +3078,22 @@
       'SA-02': [
         { src: 'imagenes/productos/modulo-rack-l.jpg', alt: 'Módulo Rack L vacío' },
         { src: 'imagenes/productos/modulo-rack-l-2.jpg', alt: 'Módulo Rack L decorado con libros y objetos' }
+      ],
+      'SA-04': [
+        { src: 'imagenes/productos/sofa-madera-rustico.jpg', alt: 'Sofá de Madera Rústico, vista de ángulo' },
+        { src: 'imagenes/productos/sofa-madera-rustico-2.jpg', alt: 'Sofá de Madera Rústico, vista frontal' }
+      ],
+      'SA-05': [
+        { src: 'imagenes/productos/sofa-modular-pufs.jpg', alt: 'Sofá Modular con Pufs, vista de ángulo' },
+        { src: 'imagenes/productos/sofa-modular-pufs-2.jpg', alt: 'Sofá Modular con Pufs, otra vista' }
+      ],
+      'SA-07': [
+        { src: 'imagenes/productos/sofa-capitone-gris.jpg', alt: 'Sofá Capitoné Gris con Puf, vista de ángulo' },
+        { src: 'imagenes/productos/sofa-capitone-gris-2.jpg', alt: 'Sofá Capitoné Gris con Puf, otra vista' }
+      ],
+      'SA-09': [
+        { src: 'imagenes/productos/sofa-3-cuerpos-verde.jpg', alt: 'Sofá 3 Cuerpos Verde, vista frontal' },
+        { src: 'imagenes/productos/sofa-3-cuerpos-verde-2.jpg', alt: 'Sofá 3 Cuerpos Verde junto al Sillón 1 Cuerpo' }
       ],
       'SA-03': [
         { src: 'imagenes/productos/mesa-centro-milenial.jpg', alt: 'Mesa de Centro Milenial vacía' },
@@ -3433,16 +3464,16 @@
     const pinInput = document.getElementById('adminPinInput');
     const pinEntrar = document.getElementById('adminPinEntrar');
     const pinError = document.getElementById('adminPinError');
+    const sinConfigurar = document.getElementById('adminSinConfigurar');
     const buscador = document.getElementById('adminBuscador');
     const lista = document.getElementById('adminLista');
     const cerrar2 = document.getElementById('adminCerrar2');
-    const cerrarSesionBtn = document.getElementById('adminCerrarSesion');
     const aviso = document.querySelector('.admin-aviso');
 
     if(aviso){
       aviso.innerHTML = fbListo
-        ? '<strong>Conectado:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
-        : '<strong>Todavía no está sincronizado:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
+        ? '<strong>Conectado a Firebase:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
+        : '<strong>Todavía no está conectado a Firebase:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
     }
 
     function renderListaAdmin(filtro){
@@ -3496,6 +3527,7 @@
     function abrirAdmin(){
       overlay.classList.add('abierto');
       pinError.style.display = 'none';
+      sinConfigurar.style.display = 'none';
 
       if(!fbListo){
         // Sin Firebase: pedimos el PIN de respaldo (solo guarda local, no sincroniza)
@@ -3525,23 +3557,9 @@
     }
     function cerrarAdmin(){ overlay.classList.remove('abierto'); panelAbierto = false; }
 
-    function cerrarSesionAdmin(){
-      if(fbListo && fbAuth.currentUser){
-        fbAuth.signOut().catch(() => {});
-      }
-      panelAbierto = false;
-      overlay.classList.remove('abierto');
-      stockPantalla.style.display = 'none';
-      pinPantalla.style.display = '';
-      pinError.style.display = 'none';
-      emailInput.value = '';
-      pinInput.value = '';
-    }
-
     adminLink.addEventListener('click', abrirAdmin);
     overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrarAdmin(); });
     cerrar2.addEventListener('click', cerrarAdmin);
-    if(cerrarSesionBtn) cerrarSesionBtn.addEventListener('click', cerrarSesionAdmin);
 
     function intentarEntrar(){
       if(!fbListo){
@@ -3573,62 +3591,6 @@
     pinEntrar.addEventListener('click', intentarEntrar);
     pinInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') intentarEntrar(); });
     buscador.addEventListener('input', () => renderListaAdmin(buscador.value));
-  })();
-</script>
-
-<script>
-  // ======= Zoom tipo lupa sobre la foto del producto (estilo Mercado Libre) =======
-  (function(){
-    const wrap = document.querySelector('.producto-img-wrap');
-    const img = document.getElementById('productoImg');
-    const hint = document.getElementById('zoomHint');
-    const lens = document.getElementById('zoomLens');
-    const overlayMovil = document.getElementById('zoomOverlayMovil');
-    const imgMovil = document.getElementById('zoomOverlayImg');
-    const cerrarMovil = document.getElementById('zoomOverlayClose');
-    if(!wrap || !img || !lens) return;
-
-    const tieneHoverFino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const LENTE = 150;   // diámetro de la lupa en px
-    const ZOOM = 2.4;    // nivel de ampliación
-
-    if(hint) hint.textContent = tieneHoverFino ? '🔍 Pasá el mouse para hacer zoom' : '🔍 Tocá la foto para ampliar';
-
-    if(tieneHoverFino){
-      wrap.addEventListener('mousemove', (e) => {
-        if(img.style.display === 'none' || !img.src){ lens.style.display = 'none'; return; }
-        const rect = img.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if(x < 0 || y < 0 || x > rect.width || y > rect.height){
-          lens.style.display = 'none';
-          return;
-        }
-        lens.style.display = 'block';
-        lens.style.backgroundImage = `url("${img.src}")`;
-        const bgW = rect.width * ZOOM;
-        const bgH = rect.height * ZOOM;
-        lens.style.backgroundSize = `${bgW}px ${bgH}px`;
-        let bgX = x * ZOOM - LENTE / 2;
-        let bgY = y * ZOOM - LENTE / 2;
-        bgX = Math.max(0, Math.min(bgX, bgW - LENTE));
-        bgY = Math.max(0, Math.min(bgY, bgH - LENTE));
-        lens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
-        lens.style.left = `${e.clientX - LENTE / 2}px`;
-        lens.style.top = `${e.clientY - LENTE / 2}px`;
-      });
-      wrap.addEventListener('mouseleave', () => { lens.style.display = 'none'; });
-    } else if(overlayMovil && imgMovil){
-      // En celular: tocar la foto la abre grande a pantalla completa (con el zoom nativo del navegador/pellizco)
-      img.addEventListener('click', () => {
-        if(img.style.display === 'none' || !img.src) return;
-        imgMovil.src = img.src;
-        imgMovil.alt = img.alt;
-        overlayMovil.classList.add('abierto');
-      });
-      if(cerrarMovil) cerrarMovil.addEventListener('click', () => overlayMovil.classList.remove('abierto'));
-      overlayMovil.addEventListener('click', (e) => { if(e.target === overlayMovil) overlayMovil.classList.remove('abierto'); });
-    }
   })();
 </script>
 
@@ -3831,3 +3793,69 @@
 
 </body>
 </html>
+
+<!--
+======================================================================
+INSTRUCCIONES FIREBASE — para que el stock se vea igual en todos los
+celulares/computadoras de tus clientes, no solo en el tuyo.
+
+Es gratis (no pide tarjeta) y se hace UNA sola vez. Son unos 5-10 minutos.
+
+PASO 1 — Crear el proyecto
+  1. Andá a https://console.firebase.google.com/ e iniciá sesión con
+     tu cuenta de Google (o la de tu amigo, la que van a usar siempre).
+  2. Click en "Crear un proyecto". Ponele un nombre, por ejemplo
+     "emy-hogar". Si te pregunta por Google Analytics, podés
+     desactivarlo, no hace falta.
+
+PASO 2 — Crear la base de datos (Firestore)
+  1. En el menú de la izquierda: "Compilación" → "Firestore Database".
+  2. "Crear base de datos" → elegís modo "producción" → elegís una
+     ubicación (cualquiera cercana sirve, ej. southamerica-east1) → Listo.
+  3. Andá a la pestaña "Reglas" (arriba). Borrá todo lo que haya y
+     pegá exactamente esto, después tocá "Publicar":
+
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /emyhogar/stock {
+           allow read: if true;
+           allow write: if request.auth != null;
+         }
+       }
+     }
+
+     (Esto permite que cualquiera VEA el stock, pero solo alguien
+     logueado pueda CAMBIARLO — o sea, vos.)
+
+PASO 3 — Crear tu usuario de acceso
+  1. En el menú: "Compilación" → "Authentication" → "Comenzar".
+  2. Pestaña "Sign-in method" → "Correo electrónico/contraseña" →
+     activarlo → Guardar.
+  3. Pestaña "Users" → "Agregar usuario" → poné el email y la
+     contraseña con la que vas a entrar al panel del catálogo
+     (puede ser cualquier email, no hace falta que exista de verdad,
+     con que la recuerdes alcanza).
+
+PASO 4 — Conectar el sitio
+  1. Volvé al inicio del proyecto (ícono ⚙️ arriba a la izquierda →
+     "Configuración del proyecto").
+  2. Abajo de todo, en "Tus apps", click en el ícono </> (Web).
+  3. Ponele un nombre (ej. "sitio"), NO marques "Firebase Hosting",
+     click en "Registrar app".
+  4. Te va a aparecer un bloque de código con "firebaseConfig" y
+     varios valores (apiKey, authDomain, projectId, etc).
+  5. En este archivo, buscá el bloque que dice FIREBASE_CONFIG (cerca
+     del final, antes de "Sistema de stock") y reemplazá los 6 valores
+     de ejemplo por los tuyos, tal cual te los dio Firebase.
+  6. Guardá el archivo y subilo a GitHub pisando el anterior.
+
+Listo. Al entrar al candado 🔒 del pie de página, ahora te va a pedir
+el email y contraseña que creaste en el Paso 3, y el stock que cargues
+se va a ver al instante en cualquier dispositivo, sin volver a publicar
+nada.
+
+Si en algún momento no te acordás algún paso, pegame este mismo bloque
+de instrucciones y seguimos desde ahí.
+======================================================================
+-->
