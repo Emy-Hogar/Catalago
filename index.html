@@ -628,18 +628,19 @@
 
   /* ---------- Panel del dueño (stock) ---------- */
   .admin-overlay{
-    position:fixed; inset:0; background:rgba(4,53,57,0.7);
+    position:fixed; inset:0; background:rgba(4,53,57,0.72);
     z-index:90; display:none; align-items:center; justify-content:center; padding:1.5rem;
+    backdrop-filter:blur(2px);
   }
   .admin-overlay.abierto{ display:flex; }
   .admin-modal{
-    background:var(--bg); border-radius:18px; max-width:520px; width:100%;
-    max-height:88vh; overflow-y:auto; padding:1.6rem;
-    box-shadow:0 30px 60px -12px rgba(4,53,57,0.6);
+    background:var(--bg); border-radius:20px; max-width:640px; width:100%;
+    max-height:88vh; overflow-y:auto; padding:1.7rem;
+    box-shadow:0 30px 70px -12px rgba(4,53,57,0.65);
   }
-  .admin-modal h3{ color:var(--teal); margin:0 0 0.4rem; font-size:1.2rem; }
+  .admin-modal h3{ color:var(--teal); margin:0 0 0.4rem; font-size:1.25rem; }
   .admin-aviso{
-    background:var(--yellow-pale); border:1px solid var(--yellow); border-radius:10px;
+    background:var(--yellow-pale); border:1px solid var(--yellow); border-radius:12px;
     padding:0.7rem 0.9rem; font-size:0.78rem; color:var(--ink); line-height:1.5; margin-bottom:1.1rem;
   }
   .admin-pin-box{ display:flex; flex-direction:column; gap:0.8rem; align-items:center; text-align:center; padding:1rem 0; }
@@ -647,26 +648,58 @@
     font-family:'IBM Plex Mono', monospace; font-size:1.4rem; letter-spacing:0.4em;
     text-align:center; padding:0.7rem; border-radius:10px; border:1.5px solid var(--line); width:180px;
   }
-  .admin-lista{ display:flex; flex-direction:column; gap:0.5rem; max-height:55vh; overflow-y:auto; }
+  .admin-contador{ font-size:0.76rem; color:var(--ink-soft); margin:0 0 0.7rem; }
+  .admin-lista{ display:flex; flex-direction:column; gap:0.45rem; max-height:60vh; overflow-y:auto; padding-right:0.2rem; }
+
+  .admin-grupo-titulo{
+    display:flex; align-items:center; gap:0.55rem; width:100%; text-align:left;
+    position:sticky; top:0; z-index:2; background:var(--teal); color:var(--white);
+    font-family:'Poppins',sans-serif; font-size:0.78rem; font-weight:700;
+    border:none; border-radius:10px; padding:0.65rem 0.8rem; margin-top:0.5rem; cursor:pointer;
+    transition:background .15s ease;
+  }
+  .admin-grupo-titulo:hover{ background:var(--teal-3); }
+  .admin-lista > .admin-grupo-titulo:first-child{ margin-top:0; }
+  .admin-grupo-flecha{ font-size:0.9rem; transition:transform .18s ease; flex-shrink:0; }
+  .admin-grupo-titulo.abierto .admin-grupo-flecha{ transform:rotate(90deg); }
+  .admin-grupo-nombre{ flex:1; text-transform:uppercase; letter-spacing:0.03em; }
+  .admin-grupo-cant{
+    background:rgba(255,255,255,0.18); border-radius:999px; padding:0.1rem 0.5rem;
+    font-size:0.7rem; font-weight:600; flex-shrink:0;
+  }
+  .admin-grupo-alerta{
+    background:#C0392B; color:var(--white); border-radius:999px; padding:0.1rem 0.5rem;
+    font-size:0.66rem; font-weight:700; flex-shrink:0; white-space:nowrap;
+  }
+  .admin-grupo-items{ display:flex; flex-direction:column; gap:0.4rem; padding:0.4rem 0 0.2rem; }
+
   .admin-item{
     display:flex; align-items:center; gap:0.7rem; padding:0.55rem 0.6rem;
-    border:1px solid var(--line); border-radius:10px;
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    transition:border-color .15s ease;
   }
-  .admin-item-nombre{ flex:1; font-size:0.83rem; font-weight:600; color:var(--ink); }
-  .admin-item-cat{ font-size:0.66rem; color:var(--ink-soft); text-transform:uppercase; display:block; font-weight:500; }
+  .admin-item:hover{ border-color:var(--yellow); }
+  .admin-item-nombre{ flex:1; font-size:0.82rem; font-weight:600; color:var(--ink); min-width:0; }
   .admin-item input{
-    width:64px; font-family:'IBM Plex Mono', monospace; font-size:0.9rem;
+    width:64px; flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:0.9rem;
     text-align:center; padding:0.4rem; border-radius:8px; border:1.5px solid var(--line);
   }
-  .admin-item-badge{ font-size:0.64rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:999px; white-space:nowrap; min-width:88px; text-align:center; }
+  .admin-item-badge{ flex-shrink:0; font-size:0.64rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:999px; white-space:nowrap; min-width:88px; text-align:center; }
   .admin-buscador{
     width:100%; padding:0.6rem 0.8rem; border-radius:10px; border:1.5px solid var(--line);
-    font-family:'Poppins',sans-serif; font-size:0.85rem; margin-bottom:0.8rem;
+    font-family:'Poppins',sans-serif; font-size:0.85rem; margin-bottom:0.5rem;
   }
   .admin-cerrar{
-    margin-top:1.2rem; width:100%; background:var(--teal); color:var(--white); border:none;
+    margin-top:0; width:100%; background:var(--teal); color:var(--white); border:none;
     padding:0.75rem; border-radius:999px; font-family:'Poppins',sans-serif; font-weight:700; cursor:pointer;
   }
+  .admin-botones-final{ display:flex; gap:0.6rem; margin-top:1.2rem; }
+  .admin-cerrar-sesion{
+    width:100%; background:none; color:#C0392B; border:1.5px solid #C0392B;
+    padding:0.75rem; border-radius:999px; font-family:'Poppins',sans-serif; font-weight:700;
+    font-size:0.85rem; cursor:pointer; white-space:nowrap; transition:background .15s ease;
+  }
+  .admin-cerrar-sesion:hover{ background:rgba(192,57,43,0.08); }
 
   .stock-badge{
     position:absolute; top:0.7rem; left:0.7rem; z-index:2;
@@ -4793,8 +4826,11 @@
         <strong>Importante:</strong> esto se guarda solo en este celular/computadora, no se sincroniza con otros dispositivos. Para que un cliente vea el stock actualizado, tenés que cargarlo desde el mismo aparato donde él lo va a ver, o publicar el sitio de nuevo con estos datos.
       </div>
       <input type="text" class="admin-buscador" id="adminBuscador" placeholder="Buscar producto...">
-      <div class="admin-lista" id="adminLista"></div>
-      <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
+      <p class="admin-contador" id="adminContador"></p>      <div class="admin-lista" id="adminLista"></div>
+      <div class="admin-botones-final">
+        <button type="button" class="admin-cerrar" id="adminCerrar2">Cerrar</button>
+        <button type="button" class="admin-cerrar-sesion" id="adminCerrarSesion">🔓 Cerrar sesión</button>
+      </div>
     </div>
   </div>
 </div>
@@ -6534,6 +6570,7 @@
     messagingSenderId: "760165507253",
     appId: "1:760165507253:web:617ff7d93122ee1fafdefc"
   };
+  const FIREBASE_ES_PLACEHOLDER = (FIREBASE_CONFIG.apiKey === 'TU_API_KEY');
 
   let fbListo = false, fbDb = null, fbAuth = null;
   try {
@@ -6573,25 +6610,58 @@
       return { clase:'disponible', texto:'Disponible' };
     }
 
-    // Lista de productos administrables: los 39 muebles de catálogo (no ventanas/puertas, que son a medida)
+    // Nombres de categoría prolijos para el panel, según el data-cat de cada sección.
+    const CATEGORIA_LABELS = {
+      salas: 'Living y Salas',
+      comedores: 'Comedores',
+      'juegos-comedor': 'Juegos de Comedor',
+      dormitorios: 'Dormitorios',
+      oficina: 'Oficina',
+      ventanas: 'Aberturas a Medida',
+      cocina: 'Cocina',
+      'muebles-lustados': 'Muebles Lustados',
+      'muebles-rusticos': 'Muebles Rústicos',
+      'respaldo-base': 'Respaldos y Bases',
+      colchones: 'Colchones y Sommiers'
+    };
+    const ORDEN_CATEGORIAS = Object.values(CATEGORIA_LABELS);
+
+    // Lista de todo lo administrable. Dos tipos de ítems:
+    // 1) Productos fijos: tienen su propio botón "+ Agregar" con código fijo.
+    // 2) Productos con selector (aberturas, juegos de comedor armables, muebles rústicos
+    //    a medida, etc.): el código cambia según lo que se elija en el desplegable, así
+    //    que se controlan por tarjeta completa — se detectan solos, sin necesidad de
+    //    listarlos a mano acá, para que cualquier selector nuevo que se agregue en el
+    //    catálogo ya aparezca automáticamente en el panel.
     function listaProductos(){
       const normales = Array.from(document.querySelectorAll('.add-btn'))
         .filter(b => !b.id && !b.dataset.skipGlobal)
         .map(btn => {
-          const article = btn.closest('article.card');
-          const catSeccion = article ? article.closest('section.categoria') : null;
-          const catTitulo = catSeccion ? catSeccion.querySelector('.categoria-titulo').textContent : '';
-          return { code: btn.dataset.code, name: btn.dataset.name, cat: catTitulo, btn, article };
+          const article = btn.closest('article');
+          const catKey = article ? article.dataset.cat : '';
+          const cat = CATEGORIA_LABELS[catKey] || 'Otros';
+          return { code: btn.dataset.code, name: btn.dataset.name, cat, btn, article, tipo:'fijo' };
         });
-      return normales;
+
+      const conSelector = Array.from(document.querySelectorAll('article'))
+        .filter(art => art.querySelector('select') && art.querySelector('.add-btn[id]'))
+        .map(art => {
+          const btn = art.querySelector('.add-btn[id]');
+          const nombre = (art.querySelector('h3')?.textContent || btn.id).trim();
+          const catKey = art.dataset.cat;
+          const cat = CATEGORIA_LABELS[catKey] || 'Otros';
+          return { code: 'SEL-' + btn.id, name: `${nombre} (todas las opciones)`, cat, btn: null, article: null, selectorBtnId: btn.id, tipo:'selector' };
+        });
+
+      return normales.concat(conSelector);
     }
 
     function aplicarBadgesEnCatalogo(){
       listaProductos().forEach(p => {
-        if(!p.article) return;
-        const plate = p.article.querySelector('.plate');
-        if(!plate) return;
-        let badgeEl = plate.querySelector('.stock-badge');
+        if(p.tipo !== 'fijo' || !p.article) return;
+        const contenedor = p.article.querySelector('.plate') || p.article.querySelector('.colchon-img-wrap');
+        if(!contenedor) return;
+        let badgeEl = contenedor.querySelector('.stock-badge');
         const estado = estadoStock(stockCache[p.code]);
 
         if(!estado){
@@ -6602,7 +6672,7 @@
         }
         if(!badgeEl){
           badgeEl = document.createElement('span');
-          plate.appendChild(badgeEl);
+          contenedor.appendChild(badgeEl);
         }
         badgeEl.className = `stock-badge ${estado.clase}`;
         badgeEl.textContent = estado.texto;
@@ -6614,6 +6684,43 @@
         } else {
           p.btn.classList.remove('sin-stock');
           p.btn.disabled = false;
+        }
+      });
+      aplicarStockSelectores();
+    }
+
+    // Refleja el stock de los productos con selector (aberturas, juegos de comedor
+    // armables, muebles a medida) sobre su propia tarjeta — se controla por tarjeta
+    // completa, ya que el código real cambia según la opción elegida.
+    function aplicarStockSelectores(){
+      listaProductos().filter(p => p.tipo === 'selector').forEach(p => {
+        const btn = document.getElementById(p.selectorBtnId);
+        if(!btn) return;
+        const article = btn.closest('article');
+        const plate = article ? article.querySelector('.plate') : null;
+        const estado = estadoStock(stockCache[p.code]);
+        if(!plate) return;
+        let badgeEl = plate.querySelector('.stock-badge');
+
+        if(!estado){
+          if(badgeEl) badgeEl.remove();
+          btn.disabled = false;
+          btn.classList.remove('sin-stock');
+          return;
+        }
+        if(!badgeEl){
+          badgeEl = document.createElement('span');
+          plate.appendChild(badgeEl);
+        }
+        badgeEl.className = `stock-badge ${estado.clase}`;
+        badgeEl.textContent = estado.texto;
+
+        if(estado.clase === 'agotado'){
+          btn.disabled = true;
+          btn.classList.add('sin-stock');
+        } else {
+          btn.disabled = false;
+          btn.classList.remove('sin-stock');
         }
       });
     }
@@ -6662,6 +6769,7 @@
     const buscador = document.getElementById('adminBuscador');
     const lista = document.getElementById('adminLista');
     const cerrar2 = document.getElementById('adminCerrar2');
+    const cerrarSesionBtn = document.getElementById('adminCerrarSesion');
     const aviso = document.querySelector('.admin-aviso');
 
     if(aviso){
@@ -6669,20 +6777,72 @@
         ? '<strong>Conectado a Firebase:</strong> el stock que cargues acá se ve al instante en el celular de tus clientes, no hace falta volver a publicar el sitio.'
         : '<strong>Todavía no está conectado a Firebase:</strong> por ahora, lo que cargues acá se guarda solo en este dispositivo y no se ve en el celular de tus clientes.';
     }
+    if(cerrarSesionBtn) cerrarSesionBtn.style.display = fbListo ? '' : 'none';
+
+    const gruposAbiertos = new Set(); // se mantiene mientras el panel esté abierto
 
     function renderListaAdmin(filtro){
       ultimoFiltro = filtro || '';
       const texto = ultimoFiltro.toLowerCase();
       lista.innerHTML = '';
-      listaProductos()
-        .filter(p => !texto || p.name.toLowerCase().includes(texto))
-        .forEach(p => {
+
+      const productos = listaProductos().filter(p => !texto || p.name.toLowerCase().includes(texto));
+
+      const contador = document.getElementById('adminContador');
+      if(contador){
+        contador.textContent = `${productos.length} ítem${productos.length === 1 ? '' : 's'} en ${new Set(productos.map(p => p.cat)).size} categorías`;
+      }
+
+      if(productos.length === 0){
+        lista.innerHTML = '<p style="text-align:center; color:var(--ink-soft); font-size:0.85rem; padding:1.2rem 0;">No encontré nada con ese nombre.</p>';
+        return;
+      }
+
+      const grupos = {};
+      productos.forEach(p => {
+        if(!grupos[p.cat]) grupos[p.cat] = [];
+        grupos[p.cat].push(p);
+      });
+      const categoriasOrdenadas = Object.keys(grupos).sort((a, b) => {
+        const ia = ORDEN_CATEGORIAS.indexOf(a), ib = ORDEN_CATEGORIAS.indexOf(b);
+        return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib);
+      });
+
+      // Si hay una búsqueda activa, mostrar los resultados directamente abiertos.
+      if(texto) categoriasOrdenadas.forEach(cat => gruposAbiertos.add(cat));
+
+      categoriasOrdenadas.forEach(cat => {
+        const items = grupos[cat];
+        const sinStock = items.filter(p => estadoStock(stockCache[p.code])?.clase === 'agotado').length;
+        const abierto = gruposAbiertos.has(cat);
+
+        const encabezado = document.createElement('button');
+        encabezado.type = 'button';
+        encabezado.className = 'admin-grupo-titulo' + (abierto ? ' abierto' : '');
+        encabezado.innerHTML = `
+          <span class="admin-grupo-flecha">›</span>
+          <span class="admin-grupo-nombre">${cat}</span>
+          <span class="admin-grupo-cant">${items.length}</span>
+          ${sinStock > 0 ? `<span class="admin-grupo-alerta">${sinStock} sin stock</span>` : ''}
+        `;
+        encabezado.addEventListener('click', () => {
+          if(gruposAbiertos.has(cat)) gruposAbiertos.delete(cat); else gruposAbiertos.add(cat);
+          renderListaAdmin(ultimoFiltro);
+        });
+        lista.appendChild(encabezado);
+
+        if(!abierto) return;
+
+        const contenedorGrupo = document.createElement('div');
+        contenedorGrupo.className = 'admin-grupo-items';
+
+        items.forEach(p => {
           const row = document.createElement('div');
           row.className = 'admin-item';
 
           const nombre = document.createElement('div');
           nombre.className = 'admin-item-nombre';
-          nombre.innerHTML = `${p.name}<span class="admin-item-cat">${p.cat}</span>`;
+          nombre.textContent = p.name;
 
           const input = document.createElement('input');
           input.type = 'number';
@@ -6714,8 +6874,11 @@
           row.appendChild(nombre);
           row.appendChild(input);
           row.appendChild(badgePrev);
-          lista.appendChild(row);
+          contenedorGrupo.appendChild(row);
         });
+
+        lista.appendChild(contenedorGrupo);
+      });
     }
 
     function abrirAdmin(){
@@ -6754,21 +6917,38 @@
     adminLink.addEventListener('click', abrirAdmin);
     overlay.addEventListener('click', (e) => { if(e.target === overlay) cerrarAdmin(); });
     cerrar2.addEventListener('click', cerrarAdmin);
+    cerrarSesionBtn.addEventListener('click', () => {
+      if(fbListo && fbAuth.currentUser){
+        fbAuth.signOut().catch(err => console.warn('No se pudo cerrar sesión:', err));
+      }
+      cerrarAdmin();
+    });
 
     function intentarEntrar(){
       if(!fbListo){
-        if(pinInput.value === ADMIN_PIN_RESPALDO){
-          pinPantalla.style.display = 'none';
-          stockPantalla.style.display = '';
-          panelAbierto = true;
-          renderListaAdmin('');
+        if(FIREBASE_ES_PLACEHOLDER){
+          // Todavía no se conectó Firebase nunca: el PIN de respaldo es válido acá.
+          if(pinInput.value === ADMIN_PIN_RESPALDO){
+            pinPantalla.style.display = 'none';
+            stockPantalla.style.display = '';
+            panelAbierto = true;
+            renderListaAdmin('');
+          } else {
+            sinConfigurar.style.display = 'none';
+            pinError.textContent = 'PIN incorrecto';
+            pinError.style.display = 'inline';
+          }
         } else {
-          pinError.textContent = 'PIN incorrecto';
-          pinError.style.display = 'inline';
+          // Ya hay Firebase configurado con datos reales, pero no se pudo conectar
+          // esta vez (problema de red o de carga) — no aceptar el PIN viejo, por seguridad.
+          pinError.style.display = 'none';
+          sinConfigurar.textContent = 'No se pudo conectar con Firebase en este momento. Recargá la página (o revisá tu conexión a internet) e intentá de nuevo.';
+          sinConfigurar.style.display = 'inline';
         }
         return;
       }
       pinError.style.display = 'none';
+      sinConfigurar.style.display = 'none';
       fbAuth.signInWithEmailAndPassword(emailInput.value.trim(), pinInput.value)
         .then(() => {
           pinPantalla.style.display = 'none';
