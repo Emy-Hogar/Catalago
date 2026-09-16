@@ -981,13 +981,13 @@
   .producto-media{ background:var(--white); border-radius:20px 0 0 20px; display:flex; flex-direction:column; }
   @media(max-width:760px){ .producto-media{ border-radius:20px 20px 0 0; } }
   .producto-img-wrap{
-    display:flex; align-items:center; justify-content:center;
-    padding:2.5rem 2.5rem 1rem;
+    aspect-ratio:4/3; width:100%; overflow:hidden; position:relative;
+    border-radius:20px 0 0 0;
   }
-  @media(max-width:760px){ .producto-img-wrap{ padding:2rem 2rem 0.8rem; } }
-  .producto-img-wrap img{ max-width:100%; max-height:340px; object-fit:contain; }
+  @media(max-width:760px){ .producto-img-wrap{ border-radius:20px 20px 0 0; } }
+  .producto-img-wrap img{ width:100%; height:100%; object-fit:cover; display:block; }
   .producto-thumbs{
-    display:flex; gap:0.5rem; justify-content:center; padding:0 1.5rem 1.5rem; flex-wrap:wrap;
+    display:flex; gap:0.5rem; justify-content:center; padding:0.8rem 1.5rem 1.5rem; flex-wrap:wrap;
   }
   .producto-thumb{
     width:52px; height:52px; border-radius:8px; overflow:hidden; cursor:pointer;
@@ -1442,8 +1442,7 @@
         
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-luisana-doble-camastro.jpg" alt="Sillón Luisana Esquinero Doble Camastro" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-luisana-doble-camastro.jpg" alt="Sillón Luisana Esquinero Doble Camastro" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-21</span>
@@ -1455,8 +1454,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-luisana-l.jpg" alt="Sillón Luisana Esquinero L" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-luisana-l.jpg" alt="Sillón Luisana Esquinero L" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-22</span>
@@ -1482,8 +1480,7 @@
         
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-individual-almohadones.jpg" alt="Sillón Nuevo Individual con Almohadones" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-individual-almohadones.jpg" alt="Sillón Nuevo Individual con Almohadones" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-25</span>
@@ -1496,8 +1493,7 @@
         
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/matera-individual-lodi.jpg" alt="Matera Individual Lodi" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/matera-individual-lodi.jpg" alt="Matera Individual Lodi" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-27</span>
@@ -1549,8 +1545,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/matera-individual-brazo-ramon.jpg" alt="Matera Individual con Brazo Ramón" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/matera-individual-brazo-ramon.jpg" alt="Matera Individual con Brazo Ramón" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-32</span>
@@ -6351,6 +6346,16 @@
     // Productos con más de una foto (código del producto → lista de imágenes).
     // La primera imagen debe coincidir con la que ya se usa en la card del catálogo.
     const GALERIAS = {
+      'SA-21': [
+        { src: 'imagenes/productos/sillon-luisana-doble-camastro.jpg', alt: 'Sillón Luisana Esquinero Doble Camastro, vista 1' },
+        { src: 'imagenes/productos/sillon-luisana-doble-camastro-2.jpg', alt: 'Sillón Luisana Esquinero Doble Camastro, vista 2' },
+        { src: 'imagenes/productos/sillon-luisana-doble-camastro-3.jpg', alt: 'Sillón Luisana Esquinero Doble Camastro, vista 3' }
+      ],
+      'SA-22': [
+        { src: 'imagenes/productos/sillon-luisana-l.jpg', alt: 'Sillón Luisana Esquinero L, vista 1' },
+        { src: 'imagenes/productos/sillon-luisana-l-2.jpg', alt: 'Sillón Luisana Esquinero L, vista 2' },
+        { src: 'imagenes/productos/sillon-luisana-l-3.jpg', alt: 'Sillón Luisana Esquinero L, vista 3' }
+      ],
       'SA-12': [
         { src: 'imagenes/productos/sillon-esquinero-combo.jpg', alt: 'Sillón Esquinero Combo, tapizado negro' },
         { src: 'imagenes/productos/sillon-esquinero-combo-2.jpg', alt: 'Sillón Esquinero Combo, tapizado bordó' }
