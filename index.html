@@ -1342,8 +1342,7 @@
         
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-esquinero-combo.jpg" alt="Sillón Esquinero Combo" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-esquinero-combo.jpg" alt="Sillón Esquinero Combo" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-12</span>
@@ -1355,8 +1354,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-esquinero-respaldo-gordo.jpg" alt="Sillón Esquinero Respaldo Gordo" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-esquinero-respaldo-gordo.jpg" alt="Sillón Esquinero Respaldo Gordo" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-13</span>
@@ -1368,8 +1366,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sillon-esquinero-patas-metalicas.jpg" alt="Sillón Esquinero Roma / Resp. Gordo con Patas Metálicas" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillon-esquinero-patas-metalicas.jpg" alt="Sillón Esquinero Roma / Resp. Gordo con Patas Metálicas" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-14</span>
@@ -1394,8 +1391,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sofa-europa-2-cuerpos.jpg" alt="Sofá Europa 2 Cuerpos con Patas Metálicas" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sofa-europa-2-cuerpos.jpg" alt="Sofá Europa 2 Cuerpos con Patas Metálicas" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-16</span>
@@ -1407,8 +1403,7 @@
         </article>
         <article class="card" data-cat="salas">
           <div class="plate">
-            <img src="imagenes/productos/sofa-combo-2-cuerpos.jpg" alt="Sofá Combo 2 Cuerpos" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🛋️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sofa-combo-2-cuerpos.jpg" alt="Sofá Combo 2 Cuerpos" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">SA-17</span>
@@ -6356,6 +6351,19 @@
     // Productos con más de una foto (código del producto → lista de imágenes).
     // La primera imagen debe coincidir con la que ya se usa en la card del catálogo.
     const GALERIAS = {
+      'SA-12': [
+        { src: 'imagenes/productos/sillon-esquinero-combo.jpg', alt: 'Sillón Esquinero Combo, tapizado negro' },
+        { src: 'imagenes/productos/sillon-esquinero-combo-2.jpg', alt: 'Sillón Esquinero Combo, tapizado bordó' }
+      ],
+      'SA-16': [
+        { src: 'imagenes/productos/sofa-europa-2-cuerpos.jpg', alt: 'Sofá Europa 2 Cuerpos con Patas Metálicas, vista 1' },
+        { src: 'imagenes/productos/sofa-europa-2-cuerpos-2.jpg', alt: 'Sofá Europa 2 Cuerpos con Patas Metálicas, vista 2' },
+        { src: 'imagenes/productos/sofa-europa-2-cuerpos-3.jpg', alt: 'Sofá Europa 2 Cuerpos con Patas Metálicas, vista 3' }
+      ],
+      'SA-17': [
+        { src: 'imagenes/productos/sofa-combo-2-cuerpos.jpg', alt: 'Sofá Combo 2 Cuerpos, tapizado beige' },
+        { src: 'imagenes/productos/sofa-combo-2-cuerpos-2.jpg', alt: 'Sofá Combo 2 Cuerpos, otra variante' }
+      ],
       'SA-01': [
         { src: 'imagenes/productos/rack-tv-dakar.jpg', alt: 'Rack TV Dakar cerrado' },
         { src: 'imagenes/productos/rack-tv-dakar-2.jpg', alt: 'Rack TV Dakar ambientado en living' },
