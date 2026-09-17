@@ -1587,13 +1587,13 @@
       <div class="grid">
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/juego-comedor-ruben.jpg" alt="Juego de Comedor Lustado Rubén" loading="lazy" onerror="imgFallback(this)">
+            <img id="imgJCRuben" src="imagenes/productos/juego-comedor-lustrado-rectangular.jpg" alt="Juego de Comedor Lustrado" loading="lazy" onerror="imgFallback(this)">
             <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoJCRuben">JCR-01</span>
-            <h3>Juego de Comedor Lustado Rubén</h3>
-            <p class="desc">Juego de comedor completo, línea Rubén: mesa + sillas tapizadas a juego.</p>
+            <h3>Juego de Comedor Lustrado</h3>
+            <p class="desc">Juego de comedor completo, línea lustrada: mesa + sillas tapizadas a juego.</p>
             <div class="ventana-selector">
               <label for="selJCRuben">Cantidad de sillas</label>
               <select id="selJCRuben"></select>
@@ -1607,19 +1607,19 @@
               </div>
             </div>
             <div class="ventana-acciones">
-              <button class="add-btn" id="ventBtnJCRuben" data-code="JCR-01" data-name="Juego de Comedor Lustado Rubén" data-price="0" data-unit="">+ Agregar</button>
+              <button class="add-btn" id="ventBtnJCRuben" data-code="JCR-01" data-name="Juego de Comedor Lustrado" data-price="0" data-unit="">+ Agregar</button>
             </div>
           </div>
         </article>
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/juego-comedor-emma.jpg" alt="Juego de Comedor Emma" loading="lazy" onerror="imgFallback(this)">
+            <img id="imgJCEmma" src="imagenes/productos/juego-comedor-emma-cuadrada.jpg" alt="Juego de Comedor Emma" loading="lazy" onerror="imgFallback(this)">
             <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
           </div>
           <div class="card-body">
             <span class="code" id="ventCodigoJCEmma">JCE-01</span>
             <h3>Juego de Comedor Emma</h3>
-            <p class="desc">Juego de comedor completo, línea Emma, mesa 1,40×1,40 m + sillas a juego.</p>
+            <p class="desc">Juego de comedor completo, línea Emma. Disponible con mesa cuadrada 1,40×1,40 m o mesa rectangular.</p>
             <div class="ventana-selector">
               <label for="selJCEmma">Cantidad de sillas</label>
               <select id="selJCEmma"></select>
@@ -1639,7 +1639,7 @@
         </article>
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/mesa-lustrada.jpg" alt="Mesa Lustrada" loading="lazy" onerror="imgFallback(this)">
+            <img id="imgMesaLustrada" src="imagenes/productos/mesa-lustrada-140x140.jpg" alt="Mesa Lustrada" loading="lazy" onerror="imgFallback(this)">
             <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
           </div>
           <div class="card-body">
@@ -1665,28 +1665,15 @@
         </article>
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/juego-comedor-daniel.jpg" alt="Juego Comedor Respaldo Inclinado (Daniel)" loading="lazy" onerror="imgFallback(this)">
+            <img src="imagenes/productos/juego-comedor-daniel-x8.jpg" alt="Juego Comedor Respaldo Inclinado (Daniel)" loading="lazy" onerror="imgFallback(this)">
             <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
           </div>
           <div class="card-body">
-            <span class="code" id="ventCodigoJCDaniel">JCD-01</span>
+            <span class="code">JCD-01</span>
             <h3>Juego Comedor Respaldo Inclinado (Daniel)</h3>
-            <p class="desc">Juego de comedor con sillas de respaldo inclinado, línea Daniel.</p>
-            <div class="ventana-selector">
-              <label for="selJCDaniel">Cantidad de sillas</label>
-              <select id="selJCDaniel"></select>
-            </div>
-            <div class="ventana-precio-row">
-              <span class="dim" id="ventDetalleJCDaniel">Opción seleccionada</span>
-              <div class="precio-box">
-                <span class="price" id="ventPrecioJCDaniel">$0</span>
-                <span class="precio-cuotas"></span>
-                <span class="precio-descuento-nota"></span>
-              </div>
-            </div>
-            <div class="ventana-acciones">
-              <button class="add-btn" id="ventBtnJCDaniel" data-code="JCD-01" data-name="Juego Comedor Respaldo Inclinado (Daniel)" data-price="0" data-unit="">+ Agregar</button>
-            </div>
+            <p class="desc">Juego de comedor con sillas de respaldo inclinado, línea Daniel. X8 sillas.</p>
+            <div class="meta"><span class="dim">Consultar medidas</span><span class="price">$418.852</span></div>
+            <button class="add-btn" data-code="JCD-01" data-name="Juego Comedor Respaldo Inclinado (Daniel)" data-price="418852" data-unit="">+ Agregar</button>
           </div>
         </article>
         <article class="card" data-cat="juegos-comedor">
@@ -1795,8 +1782,7 @@
         </article>
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/sillas-solas-emma.jpg" alt="Sillas Solas Emma X6" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillas-solas-emma.jpg" alt="Sillas Solas Emma X6" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">JC-101</span>
@@ -1808,8 +1794,7 @@
         </article>
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
-            <img src="imagenes/productos/sillas-solas-lustrada.jpg" alt="Sillas Solas Lustrada X6" loading="lazy" onerror="imgFallback(this)">
-            <div class="plate-placeholder" style="display:none;"><span class="ph-icon">🍽️</span>Imagen próximamente</div>
+            <img src="imagenes/productos/sillas-solas-lustrada.jpg" alt="Sillas Solas Lustrada X6" loading="lazy">
           </div>
           <div class="card-body">
             <span class="code">JC-102</span>
@@ -5647,7 +5632,8 @@
     }
 
     function armarVentana(config){
-      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, prefijo, imgEl } = config;
+      const { select, spanDetalle, spanPrecio, spanCodigo, boton, datos, prefijo, imgEl, fotoPara } = config;
+      const fotoParaFn = fotoPara || fotoParaPuerta;
       select.innerHTML = '';
       datos.forEach((item, i) => {
         const opt = document.createElement('option');
@@ -5711,7 +5697,7 @@
         const item = datos[select.value];
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
         spanPrecio.textContent = money(item.precioLista);
-        if(imgEl) imgEl.src = fotoParaPuerta(item.nombre);
+        if(imgEl) imgEl.src = fotoParaFn(item.nombre);
         if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
         if(descuento) descuento.textContent = '20% de descuento pagando de contado';
         spanCodigo.textContent = codigo;
@@ -5776,8 +5762,15 @@
       prefijo: 'VAI'
     });
 
+    function fotoParaJCRuben(nombre){
+      const n = nombre.toLowerCase();
+      if(n.includes('rectangular')) return 'imagenes/productos/juego-comedor-lustrado-rectangular.jpg';
+      if(n.includes('cuadrada')) return 'imagenes/productos/juego-comedor-lustrado-cuadrada.jpg';
+      return 'imagenes/productos/juego-comedor-lustrado-rectangular.jpg';
+    }
     const OPC_JCRuben = [
-      { nombre:'X8 sillas', precioLista:1067344, precioContado:853875 },
+      { nombre:'X8 sillas - Mesa Rectangular', precioLista:1067344, precioContado:853875 },
+      { nombre:'X8 sillas - Mesa Cuadrada', precioLista:1067344, precioContado:853875 },
       { nombre:'X6 sillas', precioLista:825844, precioContado:660675 },
       { nombre:'X4 sillas', precioLista:612375, precioContado:489900 },
     ];
@@ -5788,11 +5781,19 @@
       spanCodigo: document.getElementById('ventCodigoJCRuben'),
       boton: document.getElementById('ventBtnJCRuben'),
       datos: OPC_JCRuben,
-      prefijo: 'JCR'
+      prefijo: 'JCR',
+      imgEl: document.getElementById('imgJCRuben'),
+      fotoPara: fotoParaJCRuben
     });
 
+    function fotoParaJCEmma(nombre){
+      const n = nombre.toLowerCase();
+      if(n.includes('rectangular')) return 'imagenes/productos/juego-comedor-emma-rectangular.jpg';
+      return 'imagenes/productos/juego-comedor-emma-cuadrada.jpg';
+    }
     const OPC_JCEmma = [
-      { nombre:'X8 sillas', precioLista:1138500, precioContado:910800 },
+      { nombre:'X8 sillas - Mesa Cuadrada', precioLista:1138500, precioContado:910800 },
+      { nombre:'X8 sillas - Mesa Rectangular', precioLista:1138500, precioContado:910800 },
       { nombre:'X6 sillas', precioLista:937969, precioContado:750375 },
     ];
     armarVentana({
@@ -5802,9 +5803,15 @@
       spanCodigo: document.getElementById('ventCodigoJCEmma'),
       boton: document.getElementById('ventBtnJCEmma'),
       datos: OPC_JCEmma,
-      prefijo: 'JCE'
+      prefijo: 'JCE',
+      imgEl: document.getElementById('imgJCEmma'),
+      fotoPara: fotoParaJCEmma
     });
 
+    function fotoParaMesaLustrada(nombre){
+      if(nombre.includes('1,40x1,40')) return 'imagenes/productos/mesa-lustrada-140x140.jpg';
+      return 'imagenes/productos/mesa-lustrada.jpg';
+    }
     const OPC_MesaLustrada = [
       { nombre:'1,40x1,40 m - 8 personas (cuadrada)', precioLista:416156, precioContado:332925 },
       { nombre:'1,60x0,90 m - 6 personas (rectangular)', precioLista:346941, precioContado:277553 },
@@ -5817,21 +5824,9 @@
       spanCodigo: document.getElementById('ventCodigoMesaLustrada'),
       boton: document.getElementById('ventBtnMesaLustrada'),
       datos: OPC_MesaLustrada,
-      prefijo: 'MLU'
-    });
-
-    const OPC_JCDaniel = [
-      { nombre:'X8 sillas', precioLista:418852, precioContado:335081 },
-      { nombre:'X6 sillas', precioLista:373570, precioContado:298856 },
-    ];
-    armarVentana({
-      select: document.getElementById('selJCDaniel'),
-      spanDetalle: document.getElementById('ventDetalleJCDaniel'),
-      spanPrecio: document.getElementById('ventPrecioJCDaniel'),
-      spanCodigo: document.getElementById('ventCodigoJCDaniel'),
-      boton: document.getElementById('ventBtnJCDaniel'),
-      datos: OPC_JCDaniel,
-      prefijo: 'JCD'
+      prefijo: 'MLU',
+      imgEl: document.getElementById('imgMesaLustrada'),
+      fotoPara: fotoParaMesaLustrada
     });
 
     const OPC_JCRustico = [
