@@ -353,7 +353,7 @@
   .card:hover{ transform:translateY(-4px); box-shadow:0 16px 28px -16px var(--shadow); border-color:var(--yellow); }
 
   .plate{
-    aspect-ratio:1/1; background:var(--yellow-pale);
+    aspect-ratio:4/3; background:var(--yellow-pale);
     display:flex; align-items:center; justify-content:center;
     position:relative; overflow:hidden;
   }
@@ -366,7 +366,7 @@
     position:relative; flex:1; height:100%; overflow:hidden;
     background:var(--white); display:flex; align-items:center; justify-content:center;
   }
-  .juego-mitad img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .juego-mitad img{ width:100%; height:100%; object-fit:contain; display:block; }
   .juego-mitad.juego-mesa img{ object-fit:contain; padding:0.4rem; }
   .juego-etiqueta{
     position:absolute; bottom:0.5rem; left:0.5rem; z-index:2;
@@ -382,7 +382,7 @@
   }
   .plate svg{width:54%; height:54%; position:relative; z-index:1; overflow:visible;}
   .plate svg *{ fill:none; stroke:var(--teal); stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; }
-  .plate img{width:100%; height:100%; object-fit:cover; position:relative; z-index:1;}
+  .plate img{width:100%; height:100%; object-fit:contain; position:relative; z-index:1;}
   .plate-placeholder{
     display:none; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem;
     position:relative; z-index:2; font-family:'Poppins',sans-serif; font-weight:600;
@@ -393,7 +393,7 @@
   /* ---------- Carrusel de fotos ---------- */
   .carrusel{ width:100%; height:100%; position:relative; overflow:hidden; z-index:2; }
   .carrusel-track{ display:flex; width:100%; height:100%; transition:transform .35s ease; }
-  .carrusel-track img{ flex:0 0 100%; width:100%; height:100%; object-fit:cover; display:block; }
+  .carrusel-track img{ flex:0 0 100%; width:100%; height:100%; object-fit:contain; display:block; }
   .carrusel-flecha{
     position:absolute; top:50%; transform:translateY(-50%);
     width:2rem; height:2rem; border-radius:50%; border:none;
@@ -583,7 +583,7 @@
     display:flex; flex-direction:column; transition:transform .2s ease;
   }
   .colchon-img-wrap{ position:relative; aspect-ratio:4/3; background:var(--bg); }
-  .colchon-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .colchon-img{ width:100%; height:100%; object-fit:contain; display:block; }
   .colchon-img-placeholder{
     width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
     gap:0.3rem; font-size:2.2rem; color:var(--line); background:linear-gradient(135deg, var(--bg), var(--yellow-pale));
@@ -979,11 +979,11 @@
   .producto-media{ background:var(--white); border-radius:20px 0 0 20px; display:flex; flex-direction:column; }
   @media(max-width:760px){ .producto-media{ border-radius:20px 20px 0 0; } }
   .producto-img-wrap{
-    aspect-ratio:1/1; width:100%; overflow:hidden; position:relative;
+    aspect-ratio:4/3; width:100%; overflow:hidden; position:relative;
     border-radius:20px 0 0 0; background:var(--yellow-pale);
   }
   @media(max-width:760px){ .producto-img-wrap{ border-radius:20px 20px 0 0; } }
-  .producto-img-wrap img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .producto-img-wrap img{ width:100%; height:100%; object-fit:contain; display:block; }
   .producto-thumbs{
     display:flex; gap:0.5rem; justify-content:center; padding:0.8rem 1.5rem 1.5rem; flex-wrap:wrap;
   }
