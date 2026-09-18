@@ -1115,15 +1115,15 @@
   // a la del recuadro (muy panorámica o muy vertical), muestra la foto completa
   // (sin recortar) en vez de forzar un recorte agresivo.
   function ajustarEncuadre(img){
+    // Los recuadros de foto (.plate y .producto-img-wrap) son siempre cuadrados (1:1)
+    // por diseño (ver CSS), así que no hace falta medir su tamaño real en pantalla —
+    // eso fallaba en el modal porque se medía antes de que el recuadro esté visible.
     function evaluar(){
       try{
         if(!img.naturalWidth || !img.naturalHeight) return;
-        var wrap = img.parentElement;
-        if(!wrap || !wrap.clientWidth || !wrap.clientHeight) return;
-        var wrapRatio = wrap.clientWidth / wrap.clientHeight;
         var imgRatio = img.naturalWidth / img.naturalHeight;
-        var diff = Math.max(imgRatio, wrapRatio) / Math.min(imgRatio, wrapRatio);
-        img.style.objectFit = diff > 1.55 ? 'contain' : 'cover';
+        var diff = Math.max(imgRatio, 1) / Math.min(imgRatio, 1);
+        img.style.objectFit = diff > 1.4 ? 'contain' : 'cover';
       }catch(e){}
     }
     if(img.complete && img.naturalWidth){ evaluar(); }
