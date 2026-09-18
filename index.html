@@ -1110,6 +1110,30 @@
       if(ph) ph.style.display = 'flex';
     }catch(e){}
   }
+
+  // Encuadre inteligente: mide la proporción real de cada foto y, si es muy distinta
+  // a la del recuadro (muy panorámica o muy vertical), muestra la foto completa
+  // (sin recortar) en vez de forzar un recorte agresivo.
+  function ajustarEncuadre(img){
+    function evaluar(){
+      try{
+        if(!img.naturalWidth || !img.naturalHeight) return;
+        var wrap = img.parentElement;
+        if(!wrap || !wrap.clientWidth || !wrap.clientHeight) return;
+        var wrapRatio = wrap.clientWidth / wrap.clientHeight;
+        var imgRatio = img.naturalWidth / img.naturalHeight;
+        var diff = Math.max(imgRatio, wrapRatio) / Math.min(imgRatio, wrapRatio);
+        img.style.objectFit = diff > 1.55 ? 'contain' : 'cover';
+      }catch(e){}
+    }
+    if(img.complete && img.naturalWidth){ evaluar(); }
+    else{ img.addEventListener('load', evaluar); }
+  }
+  window.ajustarEncuadre = ajustarEncuadre;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.plate img').forEach(ajustarEncuadre);
+  });
 </script>
 
 
@@ -5691,7 +5715,7 @@
         const item = datos[select.value];
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
         spanPrecio.textContent = money(item.precioLista);
-        if(imgEl) imgEl.src = fotoParaFn(item.nombre);
+        if(imgEl){ imgEl.src = fotoParaFn(item.nombre); ajustarEncuadre(imgEl); }
         if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
         if(descuento) descuento.textContent = '20% de descuento pagando de contado';
         spanCodigo.textContent = codigo;
@@ -6515,6 +6539,7 @@
         btn.addEventListener('click', () => {
           imgEl.src = foto.src;
           imgEl.alt = foto.alt;
+          ajustarEncuadre(imgEl);
           thumbsEl.querySelectorAll('.producto-thumb').forEach(t => t.classList.remove('activa'));
           btn.classList.add('activa');
         });
@@ -6538,6 +6563,7 @@
         imgEl.style.display = '';
         imgEl.src = img.src;
         imgEl.alt = img.alt;
+        ajustarEncuadre(imgEl);
       } else if(svg){
         imgEl.style.display = 'none';
       }
