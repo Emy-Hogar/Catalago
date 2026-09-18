@@ -1111,19 +1111,12 @@
     }catch(e){}
   }
 
-  // Encuadre inteligente: mide la proporción real de cada foto y, si es muy distinta
-  // a la del recuadro (muy panorámica o muy vertical), muestra la foto completa
-  // (sin recortar) en vez de forzar un recorte agresivo.
+  // Encuadre: siempre se muestra la foto completa, sin recortar, sea cual sea
+  // su proporción.
   function ajustarEncuadre(img){
-    // Los recuadros de foto (.plate y .producto-img-wrap) son siempre cuadrados (1:1)
-    // por diseño (ver CSS), así que no hace falta medir su tamaño real en pantalla —
-    // eso fallaba en el modal porque se medía antes de que el recuadro esté visible.
     function evaluar(){
       try{
-        if(!img.naturalWidth || !img.naturalHeight) return;
-        var imgRatio = img.naturalWidth / img.naturalHeight;
-        var diff = Math.max(imgRatio, 1) / Math.min(imgRatio, 1);
-        img.style.objectFit = diff > 1.4 ? 'contain' : 'cover';
+        img.style.objectFit = 'contain';
       }catch(e){}
     }
     if(img.complete && img.naturalWidth){ evaluar(); }
