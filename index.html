@@ -5262,7 +5262,7 @@
     const faq = [
       { claves:['envio','envios','entrega','entregan','demora','tiempo'], resp:'Los envíos se coordinan según tu zona; normalmente la entrega tarda entre 5 y 10 días hábiles. Decime tu ciudad y te confirmo tiempos exactos.' },
       { claves:['descuento','descuentos','oferta','ofertas','promo','promocion','promoción','20%','contado','efectivo','transferencia'], resp:'Este mes tenés 20% de descuento pagando de contado (efectivo) en todo el catálogo: muebles, ventanas y aberturas. En cada producto vas a ver el precio de lista y el precio de contado ya calculado.' },
-      { claves:['pago','pagos','tarjeta','cuotas','visa','mastercard','naranja','data'], resp:'Podés pagar con tarjeta (precio de lista) en hasta 6 cuotas con Visa, Mastercard y Data, o hasta 3 cuotas con Naranja. También podés pagar de contado en efectivo con 20% de descuento sobre el precio de lista.' },
+      { claves:['pago','pagos','tarjeta','cuotas','visa','mastercard','naranja','data'], resp:'Podés pagar con tarjeta (precio de lista) en hasta 6 cuotas con Visa, Mastercard y Data, o de 3 a 6 cuotas sin interés con tarjeta Naranja. También podés pagar de contado en efectivo con 20% de descuento sobre el precio de lista.' },
       { claves:['garantia','garantía'], resp:'Todos los muebles tienen garantía por defectos de fabricación. El tiempo exacto varía según el producto; te lo confirmamos al armar tu pedido.' },
       { claves:['horario','horarios','abren','atienden'], resp:'Atendemos de lunes a sábado, de 9:00 a 13:00 y de 17:00 a 21:00. Fuera de ese horario podés dejarnos tu consulta por WhatsApp y te respondemos apenas abrimos.' },
       { claves:['direccion','dirección','ubicacion','ubicación','local','tienda'], resp:'Trabajamos con showroom y entregas a domicilio. Escribinos por WhatsApp y coordinamos según tu zona.' },
@@ -5654,7 +5654,7 @@
         const codigo = `${prefijo}-${String(Number(select.value) + 1).padStart(2, '0')}`;
         spanPrecio.textContent = money(item.precioLista);
         if(imgEl){ imgEl.src = fotoParaFn(item.nombre); ajustarEncuadre(imgEl); }
-        if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
+        if(cuotas) cuotas.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>3 a 6 cuotas sin interés con tarjeta Naranja';
         if(descuento) descuento.textContent = '20% de descuento pagando de contado';
         spanCodigo.textContent = codigo;
         boton.dataset.code = codigo;
@@ -6123,7 +6123,7 @@
         if(isNaN(lista)) return;
         btn.dataset.price = lista;
         btn.dataset.modo = 'lista';
-        if(btn._cuotasEl) btn._cuotasEl.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>Hasta 3 cuotas con Naranja';
+        if(btn._cuotasEl) btn._cuotasEl.innerHTML = 'Hasta 6 cuotas con Visa, Mastercard y Data<br>3 a 6 cuotas sin interés con tarjeta Naranja';
         if(btn._descuentoEl) btn._descuentoEl.textContent = '20% de descuento pagando de contado';
         if(btn._priceEl) btn._priceEl.textContent = money(lista);
       });
