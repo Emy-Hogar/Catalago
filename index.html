@@ -327,7 +327,7 @@
   .categoria{padding-top:5vh; scroll-margin-top:5.5rem;}
   .categoria-head{
     display:flex; align-items:center; gap:0.9rem; flex-wrap:wrap;
-    margin-bottom:2rem;
+    margin-bottom:2rem; padding-right:3.2rem;
   }
   .categoria-num{
     width:2.4rem; height:2.4rem; border-radius:50%;
@@ -479,6 +479,35 @@
     margin-bottom:0.6rem;
   }
   .ventana-acciones{ display:flex; flex-direction:column; gap:0.5rem; }
+
+  .categoria-head{ position:relative; }
+  .categoria-toggle-btn{
+    position:absolute; top:0; right:0; width:42px; height:42px;
+    border-radius:50%; border:1.5px solid var(--line); background:var(--white);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:var(--teal); font-size:1.1rem; -webkit-tap-highlight-color:transparent;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .categoria-toggle-btn:hover{ background:var(--yellow-pale); border-color:var(--teal); }
+  .categoria-toggle-flecha{ display:inline-block; transition:transform .2s ease; }
+  .categoria.colapsada .categoria-toggle-flecha{ transform:rotate(-90deg); }
+  .categoria.colapsada .categoria-contenido{ display:none; }
+
+  .cocina-grupo{ grid-column:1/-1; }
+  .cocina-grupo + .cocina-grupo{ margin-top:1.1rem; }
+  .cocina-grupo-titulo-row{
+    display:flex; align-items:baseline; gap:0.6rem;
+    padding:0.5rem 0.9rem; margin-bottom:0.7rem;
+    background:var(--yellow-pale); border-radius:12px;
+  }
+  .cocina-grupo-titulo{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal);
+  }
+  .cocina-grupo-cant{
+    margin-left:auto; font-family:'Inter',sans-serif; font-weight:500;
+    font-size:0.74rem; color:var(--ink-soft);
+  }
+  .cocina-grupo > .grid{ padding:0; margin:0; }
 
   .ver-medidas-btn{
     width:100%; margin-top:0.6rem; background:none; border:1.5px solid var(--line);
@@ -1253,7 +1282,12 @@
         <span class="categoria-num">01</span>
         <h2 class="categoria-titulo">Living y Salas</h2>
         <p class="categoria-desc">Sofás, sillones y mesas de centro para el punto de reunión de la casa.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">
 
         <article class="card" data-cat="salas">
@@ -1552,7 +1586,7 @@
             <button class="add-btn" data-code="SA-32" data-name="Matera con Apoya Brazo" data-price="198375" data-unit="">+ Agregar</button>
           </div>
         </article>
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ COMEDORES ============ -->
@@ -1561,7 +1595,12 @@
         <span class="categoria-num">02</span>
         <h2 class="categoria-titulo">Comedores</h2>
         <p class="categoria-desc">Mesas, sillas y aparadores para reunir a la mesa.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">        <article class="card" data-cat="comedores">
           <div class="plate">
             <img src="imagenes/productos/vajillero-door-130.jpg" alt="Vajillero Door 130" loading="lazy">
@@ -1599,7 +1638,7 @@
           </div>
         </article>
 
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ JUEGOS DE COMEDOR ============ -->
@@ -1608,7 +1647,12 @@
         <span class="categoria-num">03</span>
         <h2 class="categoria-titulo">Juegos de Comedor</h2>
         <p class="categoria-desc">Juegos de comedor completos, mesas y sillas de las líneas Rubén, Emma, Daniel, Nico, Sandra y Mario, tal como vienen armados de fábrica.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">
         <article class="card" data-cat="juegos-comedor">
           <div class="plate">
@@ -1945,7 +1989,7 @@
 
 
 
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ DORMITORIOS ============ -->
@@ -1954,7 +1998,12 @@
         <span class="categoria-num">04</span>
         <h2 class="categoria-titulo">Dormitorios</h2>
         <p class="categoria-desc">Camas, buroes y guardarropa para el descanso.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">        <article class="card" data-cat="dormitorios">
           <div class="plate">
             <img src="imagenes/productos/placard-22-pack.jpg" alt="Placard 22 Pack" loading="lazy">
@@ -2533,7 +2582,7 @@
           </div>
         </article>
 
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ OFICINA ============ -->
@@ -2542,7 +2591,12 @@
         <span class="categoria-num">05</span>
         <h2 class="categoria-titulo">Oficina &amp; Estudio</h2>
         <p class="categoria-desc">Piezas para el espacio de trabajo en casa.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">        <article class="card" data-cat="oficina">
           <div class="plate">
             <img src="imagenes/productos/escritorio-dakar.jpg" alt="Escritorio Dakar" loading="lazy">
@@ -2655,7 +2709,7 @@
           </div>
         </article>
 
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ VENTANAS A MEDIDA ============ -->
@@ -2664,7 +2718,12 @@
         <span class="categoria-num">06</span>
         <h2 class="categoria-titulo">Aberturas a Medida</h2>
         <p class="categoria-desc">Ventanas de aluminio, ventanas de madera, puertas de madera y aireadores, cada uno por separado para elegir sin confusiones. Elegí la medida y el precio se actualiza al instante según la forma de pago que elegiste arriba. También podés descargar el listado completo en PDF.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
 
       <div class="grid">
 
@@ -2788,7 +2847,7 @@
           </div>
         </article>
 
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ COCINA Y MULTIFUNCION ============ -->
@@ -2797,10 +2856,19 @@
         <span class="categoria-num">07</span>
         <h2 class="categoria-titulo">Cocina &amp; Multifunción</h2>
         <p class="categoria-desc">Muebles y combos para cocina, lavadero y planchado.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
-      <div class="grid">
-
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Combos de cocina</div>
+      <div class="categoria-contenido">
+      
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Combos de cocina</span>
+            <span class="cocina-grupo-cant">6 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -2876,7 +2944,14 @@
             <button class="add-btn" data-code="CK-10" data-name="Combo Cocina 1,60 Mts con bacha" data-price="941000" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Alacenas (módulos superiores)</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Alacenas (módulos superiores)</span>
+            <span class="cocina-grupo-cant">5 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -2943,7 +3018,14 @@
             <button class="add-btn" data-code="CK-14" data-name="Alacena 1,60 Mts" data-price="201400" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Bajo mesada (módulos inferiores)</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Bajo mesada (módulos inferiores)</span>
+            <span class="cocina-grupo-cant">4 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -2997,7 +3079,14 @@
             <button class="add-btn" data-code="CK-17" data-name="Bajo Mesada 1,60 Mts" data-price="331400" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Aparadores</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Aparadores</span>
+            <span class="cocina-grupo-cant">2 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3024,7 +3113,14 @@
             <button class="add-btn" data-code="CK-11" data-name="Aparador de Cocina 120" data-price="495400" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Bachas</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Bachas</span>
+            <span class="cocina-grupo-cant">1 producto</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3053,7 +3149,14 @@
           </div>
         </article>
 
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Columnas y despenseros</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Columnas y despenseros</span>
+            <span class="cocina-grupo-cant">7 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3146,7 +3249,14 @@
             <button class="add-btn" data-code="CK-29" data-name="Columna Cocina 4 Puertas" data-price="264600" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Escoberos</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Escoberos</span>
+            <span class="cocina-grupo-cant">2 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3174,7 +3284,14 @@
             <button class="add-btn" data-code="CK-26" data-name="Escobero 1,80 Mts" data-price="219200" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Organizadores</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Organizadores</span>
+            <span class="cocina-grupo-cant">3 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3215,7 +3332,14 @@
             <button class="add-btn" data-code="CK-01" data-name="Organizador de Planchado" data-price="157500" data-unit="">+ Agregar</button>
           </div>
         </article>
-        <div class="cocina-subtitulo" style="grid-column:1/-1; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--teal); margin:0.6rem 0 -0.2rem; padding-top:1rem; border-top:1px dashed var(--line);">Porta microondas</div>
+        </div>
+        </div>
+        <div class="cocina-grupo">
+          <div class="cocina-grupo-titulo-row">
+            <span class="cocina-grupo-titulo">Porta microondas</span>
+            <span class="cocina-grupo-cant">2 productos</span>
+          </div>
+          <div class="grid">
 
         <article class="card" data-cat="cocina">
           <div class="plate">
@@ -3242,6 +3366,7 @@
           </div>
         </article>
       </div>
+        </div></div>
     </section>
 
     <!-- ============ MUEBLES LUSTADOS ============ -->
@@ -3250,7 +3375,12 @@
         <span class="categoria-num">08</span>
         <h2 class="categoria-titulo">Muebles Lustados</h2>
         <p class="categoria-desc">Bahiuts, modulares, placares, camas y juegos de cocina con terminación lustrada, línea Jorge.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">
         <article class="card" data-cat="muebles-lustados">
           <div class="plate">
@@ -3499,7 +3629,7 @@
             <button class="add-btn" data-code="LU-13" data-name="Cucheta Lustrada 0,80m Desmontable" data-price="493781" data-unit="">+ Agregar</button>
           </div>
         </article>
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ MUEBLES RÚSTICOS ============ -->
@@ -3508,7 +3638,12 @@
         <span class="categoria-num">09</span>
         <h2 class="categoria-titulo">Muebles Rústicos</h2>
         <p class="categoria-desc">Placares, modulares, organizadores y estanterías de estilo rústico, carpintería Guajardo.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">
         <article class="card" data-cat="muebles-rusticos">
           <div class="plate">
@@ -3926,7 +4061,7 @@
             <button class="add-btn" data-code="RU-18" data-name="Rack TV Chico (Nuevo)" data-price="103500" data-unit="">+ Agregar</button>
           </div>
         </article>
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ RESPALDOS Y BASES ============ -->
@@ -3935,7 +4070,12 @@
         <span class="categoria-num">10</span>
         <h2 class="categoria-titulo">Respaldos y Bases</h2>
         <p class="categoria-desc">Respaldos, bases y bauleras para cama, en distintas medidas.</p>
+      
+        <button type="button" class="categoria-toggle-btn" aria-expanded="true" aria-label="Mostrar u ocultar esta sección">
+          <span class="categoria-toggle-flecha">▾</span>
+        </button>
       </div>
+      <div class="categoria-contenido">
       <div class="grid">
         <article class="card" data-cat="respaldo-base">
           <div class="plate">
@@ -4067,7 +4207,7 @@
             <a class="add-btn btn-consultar-precio" href="#" data-code="RB-02" data-name="Base Ecocuero 1,40 m" data-skip-global="1">📲 Consultar precio</a>
           </div>
         </article>
-      </div>
+      </div></div>
     </section>
 
     <!-- ============ COLCHONES Y SOMMIERS ============ -->
@@ -5084,6 +5224,15 @@
     btnNext.addEventListener('click', (e) => { e.stopPropagation(); ir(indice + 1); });
   });
 
+  // ======= Mostrar / ocultar secciones completas =======
+  document.querySelectorAll('.categoria-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sec = btn.closest('.categoria');
+      const colapsada = sec.classList.toggle('colapsada');
+      btn.setAttribute('aria-expanded', colapsada ? 'false' : 'true');
+    });
+  });
+
   // ======= Buscador + filtros completos =======
   (function(){
     function normalizar(str){
@@ -5175,6 +5324,11 @@
         const catCoincide = cat === 'todos' || sec.dataset.cat === cat;
         const algunaVisible = catCoincide && Array.from(sec.querySelectorAll('.card')).some(c => c.style.display !== 'none');
         sec.style.display = algunaVisible ? '' : 'none';
+        if ((queryNorm !== '' || precioVal !== 'todos') && algunaVisible) {
+          sec.classList.remove('colapsada');
+          const toggleBtn = sec.querySelector('.categoria-toggle-btn');
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+        }
       });
 
       resultadosContador.textContent = visibles > 0
